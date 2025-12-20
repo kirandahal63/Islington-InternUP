@@ -515,14 +515,12 @@
                                       <EmptySpace min="-2" pref="96" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                           <Component id="jPasswordField3" pref="191" max="32767" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="jTextField4" max="32767" attributes="0"/>
-                                              <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jTextField3" alignment="0" pref="191" max="32767" attributes="0"/>
-                                              <Component id="jLabel10" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jLabel11" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jButton5" alignment="0" pref="191" max="32767" attributes="0"/>
-                                          </Group>
+                                          <Component id="jTextField4" max="32767" attributes="0"/>
+                                          <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jTextField3" alignment="0" pref="191" max="32767" attributes="0"/>
+                                          <Component id="jLabel10" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel11" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jButton5" alignment="0" pref="191" max="32767" attributes="0"/>
                                       </Group>
                                       <EmptySpace pref="110" max="32767" attributes="0"/>
                                   </Group>
