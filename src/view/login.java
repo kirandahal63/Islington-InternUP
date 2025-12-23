@@ -72,6 +72,7 @@ public class login extends javax.swing.JFrame {
         jLabel5.setText("jLabel5");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         sideImagePanel.setBackground(new java.awt.Color(102, 102, 255));
         sideImagePanel.setPreferredSize(new java.awt.Dimension(250, 444));
@@ -511,7 +512,12 @@ public class login extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+         dashboard frame2 = new dashboard();     
+        frame2.setVisible(true);
+        //closes this frame
+        this.setVisible(false); 
+    
+    
     }//GEN-LAST:event_jButton1ActionPerformed
     
     /**
@@ -578,3 +584,4 @@ public class login extends javax.swing.JFrame {
     private javax.swing.JPanel sideImagePanel;
     // End of variables declaration//GEN-END:variables
 }
+
