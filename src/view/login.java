@@ -163,6 +163,11 @@ public class login extends javax.swing.JFrame {
         jButton1.setBackground(new java.awt.Color(167, 139, 250));
         jButton1.setText("Login");
         jButton1.setBorder(null);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout AdminPanelLayout = new javax.swing.GroupLayout(AdminPanel);
         AdminPanel.setLayout(AdminPanelLayout);
@@ -504,6 +509,10 @@ public class login extends javax.swing.JFrame {
         CardLayout c4 = (CardLayout)(cardPanel.getLayout());
         c4.show(cardPanel, "StudentPanel");
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
     
     /**
      * @param args the command line arguments
