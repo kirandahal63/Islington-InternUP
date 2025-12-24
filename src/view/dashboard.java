@@ -78,7 +78,11 @@ public class dashboard extends javax.swing.JFrame {
         jPanel19 = new javax.swing.JPanel();
         jPanel43 = new javax.swing.JPanel();
         jPanel44 = new javax.swing.JPanel();
+        jPanel56 = new javax.swing.JPanel();
         jPanel20 = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jTable3 = new javax.swing.JTable();
+        jLabel33 = new javax.swing.JLabel();
         manageInternship = new javax.swing.JPanel();
         jPanel23 = new javax.swing.JPanel();
         jPanel25 = new javax.swing.JPanel();
@@ -579,15 +583,37 @@ public class dashboard extends javax.swing.JFrame {
 
         jPanel19.add(jPanel43, java.awt.BorderLayout.LINE_END);
 
+        jPanel44.setPreferredSize(new java.awt.Dimension(210, 464));
+
+        jPanel56.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel56.setPreferredSize(new java.awt.Dimension(194, 337));
+
+        javax.swing.GroupLayout jPanel56Layout = new javax.swing.GroupLayout(jPanel56);
+        jPanel56.setLayout(jPanel56Layout);
+        jPanel56Layout.setHorizontalGroup(
+            jPanel56Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 178, Short.MAX_VALUE)
+        );
+        jPanel56Layout.setVerticalGroup(
+            jPanel56Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 337, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout jPanel44Layout = new javax.swing.GroupLayout(jPanel44);
         jPanel44.setLayout(jPanel44Layout);
         jPanel44Layout.setHorizontalGroup(
             jPanel44Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 190, Short.MAX_VALUE)
+            .addGroup(jPanel44Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel56, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel44Layout.setVerticalGroup(
             jPanel44Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 464, Short.MAX_VALUE)
+            .addGroup(jPanel44Layout.createSequentialGroup()
+                .addGap(69, 69, 69)
+                .addComponent(jPanel56, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         jPanel19.add(jPanel44, java.awt.BorderLayout.CENTER);
@@ -595,16 +621,43 @@ public class dashboard extends javax.swing.JFrame {
         jPanel15.add(jPanel19, java.awt.BorderLayout.LINE_END);
 
         jPanel20.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel20.setPreferredSize(new java.awt.Dimension(724, 464));
+
+        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane6.setViewportView(jTable3);
+
+        jLabel33.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel33.setText("Recent Posts");
 
         javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
         jPanel20.setLayout(jPanel20Layout);
         jPanel20Layout.setHorizontalGroup(
             jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 734, Short.MAX_VALUE)
+            .addGroup(jPanel20Layout.createSequentialGroup()
+                .addGap(44, 44, 44)
+                .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel33)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 670, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel20Layout.setVerticalGroup(
             jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 464, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel20Layout.createSequentialGroup()
+                .addContainerGap(49, Short.MAX_VALUE)
+                .addComponent(jLabel33)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(65, 65, 65))
         );
 
         jPanel15.add(jPanel20, java.awt.BorderLayout.CENTER);
@@ -1387,6 +1440,7 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1444,6 +1498,7 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel53;
     private javax.swing.JPanel jPanel54;
     private javax.swing.JPanel jPanel55;
+    private javax.swing.JPanel jPanel56;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
@@ -1453,9 +1508,11 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTable3;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextArea jTextArea4;
