@@ -27,4 +27,20 @@ public class Admin {
         return password;
     }
     
+    public String isAdminUser(String username, String password) {
+        if (username == null || username.isEmpty() || password == null || password.isEmpty()) 
+        {
+            return "Please enter both username and password";
+        }
+        if (!this.username.equals(username)) {
+            return "Username is incorrect.";
+        }
+        
+        if (!this.password.equals(password)) {
+            return "Password is incorrect.";
+        }
+
+        return null;
+    }
+    
 }

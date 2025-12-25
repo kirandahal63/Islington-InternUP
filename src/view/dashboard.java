@@ -6,17 +6,68 @@ package view;
 import javax.swing.ImageIcon;
 import java.awt.Image;
 import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import model.Internship;
+import controller.AdminController;
+import controller.InternshipController;
+import javax.swing.table.DefaultTableModel;
+
+
 /**
  *
  * @author lenovo
  */
 public class dashboard extends javax.swing.JFrame {
     private Image scaled;
+    private boolean isUpdateMode = false;
+    private int editingIndex = -1;
+
     /**
      * Creates new form dashboard
      */
+    DefaultTableModel activeTableModel;
+    DefaultTableModel archivedTableModel;
+    
     public dashboard() {
         initComponents();
+        activeTableModel = (DefaultTableModel) internshipTable.getModel();
+        loadInternshipsToTable();
+        archivedTableModel = (DefaultTableModel) deletedInternshipTable.getModel();
+        loadDeletedInternshipsToTable();
+    }
+    private void loadInternshipsToTable() {
+
+    activeTableModel.setRowCount(0);
+    for (Internship i : InternshipController.internshipList) {
+
+        Object[] row = {
+            i.getId(),
+            i.getTitle(),
+            i.getCompany(),
+            i.getType(),
+            i.getDuration(),
+            i.getDeadline()
+        };
+
+        activeTableModel.addRow(row);
+    }
+    }
+    private void loadDeletedInternshipsToTable() {
+
+    archivedTableModel.setRowCount(0);
+    for (Internship i : InternshipController.deletedInternshipList) {
+
+        Object[] row = {
+            i.getId(),
+            i.getTitle(),
+            i.getCompany(),
+            i.getType(),
+            i.getDuration(),
+            i.getDeadline()
+        };
+
+        archivedTableModel.addRow(row);
+    }
     }
 
     /**
@@ -42,9 +93,9 @@ public class dashboard extends javax.swing.JFrame {
         cardPanel2 = new javax.swing.JPanel();
         AdminPanel = new javax.swing.JPanel();
         jLabel38 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        usernameField = new javax.swing.JTextField();
         jLabel39 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        passwordField = new javax.swing.JPasswordField();
         jButton12 = new javax.swing.JButton();
         StudentPanel = new javax.swing.JPanel();
         AdminPanel1 = new javax.swing.JPanel();
@@ -116,7 +167,7 @@ public class dashboard extends javax.swing.JFrame {
         jPanel10 = new javax.swing.JPanel();
         jPanel27 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        internshipTable = new javax.swing.JTable();
         jPanel29 = new javax.swing.JPanel();
         jPanel28 = new javax.swing.JPanel();
         jPanel24 = new javax.swing.JPanel();
@@ -137,30 +188,30 @@ public class dashboard extends javax.swing.JFrame {
         jPanel38 = new javax.swing.JPanel();
         jLabel23 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        titleField = new javax.swing.JTextField();
+        companyField = new javax.swing.JTextField();
         jLabel25 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
         jPanel57 = new javax.swing.JPanel();
-        jComboBox4 = new javax.swing.JComboBox<>();
-        jComboBox5 = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
-        jTextField5 = new javax.swing.JTextField();
+        dayCombo = new javax.swing.JComboBox<>();
+        monthCombo = new javax.swing.JComboBox<>();
+        yearCombo = new javax.swing.JComboBox<>();
+        salaryField = new javax.swing.JTextField();
         jLabel27 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        typeCombo = new javax.swing.JComboBox<>();
+        durationCombo = new javax.swing.JComboBox<>();
         jPanel39 = new javax.swing.JPanel();
         jPanel41 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        add_updateButton = new javax.swing.JButton();
         jPanel40 = new javax.swing.JPanel();
         jLabel29 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        skillArea = new javax.swing.JTextArea();
         jPanel42 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        descriptionArea = new javax.swing.JTextArea();
         jLabel30 = new javax.swing.JLabel();
         deletedPanel = new javax.swing.JPanel();
         jPanel52 = new javax.swing.JPanel();
@@ -169,7 +220,7 @@ public class dashboard extends javax.swing.JFrame {
         jButton11 = new javax.swing.JButton();
         jPanel55 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        deletedInternshipTable = new javax.swing.JTable();
         applicationsView = new javax.swing.JPanel();
         settingPanel = new javax.swing.JPanel();
         jPanel45 = new javax.swing.JPanel();
@@ -340,9 +391,9 @@ public class dashboard extends javax.swing.JFrame {
 
         jLabel39.setText("Password");
 
-        jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
+        passwordField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPasswordField1ActionPerformed(evt);
+                passwordFieldActionPerformed(evt);
             }
         });
 
@@ -364,8 +415,8 @@ public class dashboard extends javax.swing.JFrame {
                 .addGroup(AdminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(AdminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel38)
                         .addComponent(jLabel39)))
                 .addContainerGap(122, Short.MAX_VALUE))
@@ -376,11 +427,11 @@ public class dashboard extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addComponent(jLabel38)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel39)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(152, Short.MAX_VALUE))
@@ -623,26 +674,25 @@ public class dashboard extends javax.swing.JFrame {
                         .addComponent(cardPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(146, 146, 146)
-                        .addComponent(jPanel60, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(164, 164, 164)
+                        .addComponent(jPanel60, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(156, 156, 156)
                         .addComponent(jButton16)
                         .addGap(0, 0, 0)
                         .addComponent(jButton15)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(267, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel60, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton16)
                     .addComponent(jButton15))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel60, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
                 .addComponent(cardPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(219, Short.MAX_VALUE))
         );
 
         jPanel58.add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -1055,18 +1105,18 @@ public class dashboard extends javax.swing.JFrame {
 
         jPanel10.add(jPanel27, java.awt.BorderLayout.LINE_START);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        internshipTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Title ", "Company", "Type", "Duration", "Deadline"
             }
         ));
-        jScrollPane5.setViewportView(jTable1);
+        jScrollPane5.setViewportView(internshipTable);
 
         jPanel10.add(jScrollPane5, java.awt.BorderLayout.CENTER);
 
@@ -1130,6 +1180,11 @@ public class dashboard extends javax.swing.JFrame {
         jPanel33.add(jButton9);
 
         jButton10.setText("Delete");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
         jPanel33.add(jButton10);
 
         javax.swing.GroupLayout jPanel30Layout = new javax.swing.GroupLayout(jPanel30);
@@ -1255,16 +1310,16 @@ public class dashboard extends javax.swing.JFrame {
         jLabel24.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jPanel38.add(jLabel24);
 
-        jTextField3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        titleField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        titleField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                titleFieldActionPerformed(evt);
             }
         });
-        jPanel38.add(jTextField3);
+        jPanel38.add(titleField);
 
-        jTextField2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jPanel38.add(jTextField2);
+        companyField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jPanel38.add(companyField);
 
         jLabel25.setText("Deadline");
         jLabel25.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
@@ -1276,21 +1331,26 @@ public class dashboard extends javax.swing.JFrame {
 
         jPanel57.setLayout(new java.awt.GridLayout(1, 3));
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Day", "1", "2", "3" }));
-        jComboBox4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jComboBox4.setPreferredSize(new java.awt.Dimension(82, 22));
-        jPanel57.add(jComboBox4);
+        dayCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Day", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
+        dayCombo.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        dayCombo.setPreferredSize(new java.awt.Dimension(82, 22));
+        jPanel57.add(dayCombo);
 
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Month", "Item 2", "Item 3", "Item 4" }));
-        jPanel57.add(jComboBox5);
+        monthCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Month", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" }));
+        jPanel57.add(monthCombo);
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Year", "Item 2", "Item 3", "Item 4" }));
-        jPanel57.add(jComboBox3);
+        yearCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Year", "2025", "2026", "2027" }));
+        yearCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                yearComboActionPerformed(evt);
+            }
+        });
+        jPanel57.add(yearCombo);
 
         jPanel38.add(jPanel57);
 
-        jTextField5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jPanel38.add(jTextField5);
+        salaryField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jPanel38.add(salaryField);
 
         jLabel27.setText("Internship Type");
         jLabel27.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
@@ -1300,16 +1360,16 @@ public class dashboard extends javax.swing.JFrame {
         jLabel28.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jPanel38.add(jLabel28);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Remote", "On Site", "International" }));
-        jPanel38.add(jComboBox1);
+        typeCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Remote", "On Site", "International" }));
+        jPanel38.add(typeCombo);
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 Month", "3 Months", "6 Months", "12 Months ", "36 Months" }));
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+        durationCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 Month", "3 Months", "6 Months", "12 Months ", "36 Months" }));
+        durationCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
+                durationComboActionPerformed(evt);
             }
         });
-        jPanel38.add(jComboBox2);
+        jPanel38.add(durationCombo);
 
         jPanel37.add(jPanel38, java.awt.BorderLayout.PAGE_START);
 
@@ -1328,9 +1388,13 @@ public class dashboard extends javax.swing.JFrame {
         });
         jPanel41.add(jButton2);
 
-        jButton1.setBackground(new java.awt.Color(153, 153, 255));
-        jButton1.setText("Post Internship");
-        jPanel41.add(jButton1);
+        add_updateButton.setBackground(new java.awt.Color(153, 153, 255));
+        add_updateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                add_updateButtonActionPerformed(evt);
+            }
+        });
+        jPanel41.add(add_updateButton);
 
         javax.swing.GroupLayout jPanel39Layout = new javax.swing.GroupLayout(jPanel39);
         jPanel39.setLayout(jPanel39Layout);
@@ -1360,18 +1424,18 @@ public class dashboard extends javax.swing.JFrame {
         jLabel29.setPreferredSize(new java.awt.Dimension(43, 50));
         jPanel40.add(jLabel29, java.awt.BorderLayout.PAGE_START);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        skillArea.setColumns(20);
+        skillArea.setRows(5);
+        jScrollPane1.setViewportView(skillArea);
 
         jPanel40.add(jScrollPane1, java.awt.BorderLayout.PAGE_END);
 
         jPanel42.setBackground(new java.awt.Color(255, 255, 255));
         jPanel42.setLayout(new java.awt.BorderLayout());
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane2.setViewportView(jTextArea2);
+        descriptionArea.setColumns(20);
+        descriptionArea.setRows(5);
+        jScrollPane2.setViewportView(descriptionArea);
 
         jPanel42.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
@@ -1473,18 +1537,18 @@ public class dashboard extends javax.swing.JFrame {
 
         deletedPanel.add(jPanel55, java.awt.BorderLayout.LINE_END);
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        deletedInternshipTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Title", "Company", "Type", "Duration", "Deadline"
             }
         ));
-        jScrollPane3.setViewportView(jTable2);
+        jScrollPane3.setViewportView(deletedInternshipTable);
 
         deletedPanel.add(jScrollPane3, java.awt.BorderLayout.CENTER);
 
@@ -2413,6 +2477,9 @@ public class dashboard extends javax.swing.JFrame {
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         CardLayout c3 = (CardLayout)(cardPanel.getLayout());
         c3.show(cardPanel, "card5");
+        isUpdateMode = false;
+        editingIndex = -1;
+        add_updateButton.setText("Post Internship");
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -2424,26 +2491,63 @@ public class dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
+        
+        int selectedRow = internshipTable.getSelectedRow();
+
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this,
+                    "Please select an internship to update.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        isUpdateMode = true;
+        editingIndex = selectedRow;
+
+        Internship i = InternshipController.internshipList.get(selectedRow);
+
+        titleField.setText(i.getTitle());
+        companyField.setText(i.getCompany());
+        salaryField.setText(String.valueOf(i.getSalary()));
+        descriptionArea.setText(i.getDescription());
+        skillArea.setText(i.getRequirement());
+        typeCombo.setSelectedItem(i.getType());
+        durationCombo.setSelectedItem(i.getDuration());
+        String[] date = i.getDeadline().split("-");
+        yearCombo.setSelectedItem(date[0]);
+        monthCombo.setSelectedItem(date[1]);
+        dayCombo.setSelectedItem(date[2]);
+
+        CardLayout c13 = (CardLayout)(cardPanel.getLayout());
+        c13.show(cardPanel, "card5");
+        add_updateButton.setText("Update");
+
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jPanel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel8MouseClicked
-      
-        //closes this frame
-        this.setVisible(false); 
+        CardLayout c14 = (CardLayout)(parentcard.getLayout());
+        c14.show(parentcard, "card4");  
     }//GEN-LAST:event_jPanel8MouseClicked
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void titleFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_titleFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_titleFieldActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        int userChoice = JOptionPane.showConfirmDialog(this,"Are you sure you want to cancel?", 
+        "Confirm Cancel",JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        
+        if (userChoice == JOptionPane.YES_OPTION) {
+            clearInternshipForm(); 
+            CardLayout cl9 = (CardLayout)(cardPanel.getLayout());
+            cl9.show(cardPanel, "card3");
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+    private void durationComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_durationComboActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox2ActionPerformed
+    }//GEN-LAST:event_durationComboActionPerformed
 
     private void jPanel21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel21MouseClicked
         CardLayout c4 = (CardLayout)(cardPanel.getLayout());
@@ -2488,15 +2592,26 @@ public class dashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jPanel76MouseClicked
 
-    private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
+    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jPasswordField1ActionPerformed
+    }//GEN-LAST:event_passwordFieldActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        CardLayout c7 = (CardLayout)(parentcard.getLayout());
-        c7.show(parentcard, "card5"); 
+       String username = usernameField.getText().trim();
+       String password = new String(passwordField.getPassword()); // for JPasswordField
 
+   
+        AdminController adminController = new AdminController();
+        String result = adminController.login(username, password);
 
+        if (result == null) {
+            JOptionPane.showMessageDialog(this, "Admin Login successful!", "Success", 
+                                          JOptionPane.INFORMATION_MESSAGE);
+            CardLayout c13 = (CardLayout)(parentcard.getLayout());
+            c13.show(parentcard, "card5");  
+        } else {
+            JOptionPane.showMessageDialog(this, result, "Login Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jPasswordField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField2ActionPerformed
@@ -2512,9 +2627,8 @@ public class dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel63FocusLost
 
     private void jLabel63MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel63MouseClicked
-        // TODO add your handling code here:
-        CardLayout c3 = (CardLayout)(cardPanel.getLayout());
-        c3.show(cardPanel, "SignupPanel");
+        CardLayout c3 = (CardLayout)(cardPanel2.getLayout());
+        c3.show(cardPanel2, "SignupPanel");
     }//GEN-LAST:event_jLabel63MouseClicked
 
     private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
@@ -2533,21 +2647,134 @@ public class dashboard extends javax.swing.JFrame {
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
         // TODO add your handling code here:
-        CardLayout c2 = (CardLayout)(cardPanel.getLayout());
-        c2.show(cardPanel, "StudentPanel");
+        CardLayout c2 = (CardLayout)(cardPanel2.getLayout());
+        c2.show(cardPanel2, "StudentPanel");
     }//GEN-LAST:event_jButton15ActionPerformed
 
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
         // TODO add your handling code here:
-        CardLayout cl = (CardLayout)(cardPanel.getLayout());
-        cl.show(cardPanel, "AdminPanel");
+        CardLayout c2 = (CardLayout)(cardPanel2.getLayout());
+        c2.show(cardPanel2, "AdminPanel");
 
     }//GEN-LAST:event_jButton16ActionPerformed
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        CardLayout cl = (CardLayout)(cardPanel.getLayout());
-        cl.show(cardPanel, "card3");
+        CardLayout c12 = (CardLayout)(parentcard.getLayout());
+        c12.show(parentcard, "card3"); 
     }//GEN-LAST:event_jButton13ActionPerformed
+    private void clearInternshipForm() {
+        titleField.setText("");
+        companyField.setText("");
+        salaryField.setText("");
+        descriptionArea.setText("");
+        skillArea.setText("");
+        typeCombo.setSelectedIndex(0);
+        durationCombo.setSelectedIndex(0);
+        yearCombo.setSelectedIndex(0);
+        monthCombo.setSelectedIndex(0);
+        dayCombo.setSelectedIndex(0);
+    }
+    private void add_updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_updateButtonActionPerformed
+        String title = titleField.getText().trim();
+        String company = companyField.getText().trim();
+        String year = yearCombo.getSelectedItem().toString();
+        String month = monthCombo.getSelectedItem().toString();
+        String day = dayCombo.getSelectedItem().toString();
+        String salaryText = salaryField.getText().trim();
+        String type = typeCombo.getSelectedItem().toString();
+        String duration = durationCombo.getSelectedItem().toString();
+        String description = descriptionArea.getText().trim();
+        String requirement = skillArea.getText().trim();
+        String deadline;
+        
+        if (title.isEmpty() || company.isEmpty() || salaryText.isEmpty() || description.isEmpty() || requirement.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill all required fields.","Error",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int salary;
+        try {
+            salary = Integer.parseInt(salaryText);
+       } 
+        catch (NumberFormatException e){
+
+            JOptionPane.showMessageDialog(this, "Salary must be a number.","Error",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (year.equals("Year") || month.equals("Month") || day.equals("Day")) 
+        {
+            JOptionPane.showMessageDialog(this, "Please select a valid date.","Error",JOptionPane.ERROR_MESSAGE);
+        }else{
+            
+            deadline = year + "-" + month + "-" + day;
+            
+            if (InternshipController.isDuplicateInternship(title, company, deadline, salary, type, duration, description, requirement)) {
+                JOptionPane.showMessageDialog(this,"This internship already exists. Cannot add duplicate.","Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (isUpdateMode == false) 
+            {
+                int userChoice1 = JOptionPane.showConfirmDialog(this,"Are you sure you want to add post new Internship.", 
+                                                                    "Confirm",JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                if (userChoice1 == JOptionPane.YES_OPTION) {
+
+                    InternshipController.addInternship(title,company,deadline, salary,type, duration, description,requirement);
+                    loadInternshipsToTable();
+                    clearInternshipForm();
+                    JOptionPane.showMessageDialog(this, "Internship added successfully.","Success", JOptionPane.INFORMATION_MESSAGE);
+                }
+
+            }
+                if(isUpdateMode == true)
+                {
+                int userChoice2 = JOptionPane.showConfirmDialog(this,"Are you sure you want to update Internship.", 
+                                                                    "Confirm",JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                    if (userChoice2 == JOptionPane.YES_OPTION) {
+                    InternshipController.updateInternship(editingIndex, title, company,deadline, salary, type, duration, description, requirement);
+                    loadInternshipsToTable();
+                    clearInternshipForm();
+                    JOptionPane.showMessageDialog(this, "Internship updated successfully.","Success", JOptionPane.INFORMATION_MESSAGE);
+
+                    isUpdateMode = false;
+                    editingIndex = -1;
+                    add_updateButton.setText("Post Internship");
+                     
+                    }
+                
+                }
+            } 
+              
+    }//GEN-LAST:event_add_updateButtonActionPerformed
+
+    private void yearComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearComboActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_yearComboActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        int selectedRow = internshipTable.getSelectedRow();
+        if (selectedRow == -1) 
+        {
+            JOptionPane.showMessageDialog(this, "Please select an internship to delete.",
+                                                "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        int choice = JOptionPane.showConfirmDialog(this,"Are you sure you want to delete this internship?",
+                "Confirm Delete", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+        if (choice == JOptionPane.YES_OPTION) {
+            boolean success = InternshipController.deleteInternship(selectedRow);
+            if (success) {
+                JOptionPane.showMessageDialog(this, "Internship deleted successfully.",
+                                              "Success", JOptionPane.INFORMATION_MESSAGE);
+                loadInternshipsToTable();
+                loadDeletedInternshipsToTable();
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed to delete internship.",
+                                              "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+    }//GEN-LAST:event_jButton10ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2575,7 +2802,7 @@ public class dashboard extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        InternshipController.addDefaultInternship();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -2596,6 +2823,7 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel StudentPanel;
     private javax.swing.JPanel StudentPanel1;
     private javax.swing.JPanel addNewInternship;
+    private javax.swing.JButton add_updateButton;
     private javax.swing.JPanel adminNavigation;
     private javax.swing.JPanel adminNavigation3;
     private javax.swing.JPanel applicationsView;
@@ -2603,12 +2831,17 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel cardPanel;
     private javax.swing.JPanel cardPanel1;
     private javax.swing.JPanel cardPanel2;
+    private javax.swing.JTextField companyField;
     private javax.swing.JPanel dashboardPanel;
     private javax.swing.JPanel dashboardPanel1;
+    private javax.swing.JComboBox<String> dayCombo;
+    private javax.swing.JTable deletedInternshipTable;
     private javax.swing.JPanel deletedPanel;
+    private javax.swing.JTextArea descriptionArea;
+    private javax.swing.JComboBox<String> durationCombo;
     private javax.swing.JPanel gridPanel;
     private javax.swing.JPanel gridPanel1;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JTable internshipTable;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
@@ -2624,11 +2857,6 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JComboBox<String> jComboBox4;
-    private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -2783,7 +3011,6 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel83;
     private javax.swing.JPanel jPanel84;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JPasswordField jPasswordField2;
     private javax.swing.JPasswordField jPasswordField3;
     private javax.swing.JScrollPane jScrollPane1;
@@ -2795,28 +3022,28 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextArea jTextArea4;
     private javax.swing.JTextArea jTextArea6;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
     private javax.swing.JPanel manageInternship;
+    private javax.swing.JComboBox<String> monthCombo;
     private javax.swing.JPanel parentcard;
+    private javax.swing.JPasswordField passwordField;
+    private javax.swing.JTextField salaryField;
     private javax.swing.JPanel settingPanel;
     private javax.swing.JPanel sideImagePanel;
+    private javax.swing.JTextArea skillArea;
     private javax.swing.JPanel studentNav1;
     private javax.swing.JPanel studentsettingPanel1;
+    private javax.swing.JTextField titleField;
+    private javax.swing.JComboBox<String> typeCombo;
+    private javax.swing.JTextField usernameField;
+    private javax.swing.JComboBox<String> yearCombo;
     // End of variables declaration//GEN-END:variables
 }

@@ -9,6 +9,7 @@ package model;
  * @author lenovo
  */
 public class Internship {
+    private String id;
     private String title;
     private String company;    
     private String deadline;
@@ -17,9 +18,11 @@ public class Internship {
     private String duration;
     private String description;
     private String requirement;
+    private static int number =1;
     
     //constructor 
     public Internship(String title, String company, String deadline,int salary, String type, String duration, String description, String requirement){
+        this.id = "EPD" + number++;
         this.title = title;
         this.company = company;
         this.deadline = deadline;
@@ -29,6 +32,10 @@ public class Internship {
         this.description = description;
         this.requirement = requirement;
                       
+    }
+    
+    public String getId() {
+        return id;
     }
     
     public String getTitle() {
@@ -60,4 +67,37 @@ public class Internship {
     public String getRequirement() {
         return requirement;
     }
+    
+    public void setTitle(String title) {
+    this.title = title;
+}
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
+    }
+
+    public void setSalary(int salary) {
+        this.salary = salary;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setRequirement(String requirement) {
+        this.requirement = requirement;
+}
+
 }

@@ -18,9 +18,9 @@ public class AdminController
         admin = new Admin("admin", "admin123");
     }
 
-    public boolean login(String username, String password) 
+    public String login(String username, String password) 
     {
-        return admin.adminValidation(username, password);
+        return admin.isAdminUser(username, password);
     }
     
 }
