@@ -7,6 +7,8 @@ import javax.swing.ImageIcon;
 import java.awt.Image;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
+import java.awt.Color;
+
 import model.Internship;
 import controller.AdminController;
 import controller.InternshipController;
@@ -19,6 +21,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class dashboard extends javax.swing.JFrame {
     private Image scaled;
+    private Color defaultColor = new Color(255, 255, 255);   
+    private Color activeColor  = new Color(153,153,255);
     private boolean isUpdateMode = false;
     private int editingIndex = -1;
 
@@ -69,6 +73,16 @@ public class dashboard extends javax.swing.JFrame {
         archivedTableModel.addRow(row);
     }
     }
+    
+    private void resetNavColors() {
+        dashboardNav.setBackground(defaultColor);
+        manageNav.setBackground(defaultColor);
+        archiveNav.setBackground(defaultColor);
+        settingsNav.setBackground(defaultColor);
+        applicationNav.setBackground(defaultColor);
+        logoutNav.setBackground(defaultColor);
+}
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -235,17 +249,17 @@ public class dashboard extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         AdminNav = new javax.swing.JPanel();
         adminNavigation = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
+        dashboardNav = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jPanel7 = new javax.swing.JPanel();
+        manageNav = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
-        jPanel51 = new javax.swing.JPanel();
+        archiveNav = new javax.swing.JPanel();
         jLabel32 = new javax.swing.JLabel();
-        jPanel6 = new javax.swing.JPanel();
+        applicationNav = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
-        jPanel21 = new javax.swing.JPanel();
+        settingsNav = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
-        jPanel8 = new javax.swing.JPanel();
+        logoutNav = new javax.swing.JPanel();
         jLabel20 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         Student = new javax.swing.JPanel();
@@ -1245,6 +1259,7 @@ public class dashboard extends javax.swing.JFrame {
         addNewInternship.setBackground(new java.awt.Color(255, 255, 255));
         addNewInternship.setLayout(new java.awt.BorderLayout());
 
+        jPanel34.setBackground(new java.awt.Color(255, 255, 255));
         jPanel34.setPreferredSize(new java.awt.Dimension(817, 40));
 
         javax.swing.GroupLayout jPanel34Layout = new javax.swing.GroupLayout(jPanel34);
@@ -1664,148 +1679,148 @@ public class dashboard extends javax.swing.JFrame {
         adminNavigation.setPreferredSize(new java.awt.Dimension(13, 185));
         adminNavigation.setLayout(new java.awt.GridLayout(6, 1, 0, 1));
 
-        jPanel3.setBackground(new java.awt.Color(153, 153, 255));
-        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel3.addMouseListener(new java.awt.event.MouseAdapter() {
+        dashboardNav.setBackground(new java.awt.Color(153, 153, 255));
+        dashboardNav.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        dashboardNav.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel3MouseClicked(evt);
+                dashboardNavMouseClicked(evt);
             }
         });
 
         jLabel2.setText("Dashboard");
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout dashboardNavLayout = new javax.swing.GroupLayout(dashboardNav);
+        dashboardNav.setLayout(dashboardNavLayout);
+        dashboardNavLayout.setHorizontalGroup(
+            dashboardNavLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dashboardNavLayout.createSequentialGroup()
                 .addGap(49, 49, 49)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(50, Short.MAX_VALUE))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        dashboardNavLayout.setVerticalGroup(
+            dashboardNavLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
         );
 
-        adminNavigation.add(jPanel3);
+        adminNavigation.add(dashboardNav);
 
-        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel7.addMouseListener(new java.awt.event.MouseAdapter() {
+        manageNav.setBackground(new java.awt.Color(255, 255, 255));
+        manageNav.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel7MouseClicked(evt);
+                manageNavMouseClicked(evt);
             }
         });
 
         jLabel18.setText("Manage Internships");
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+        javax.swing.GroupLayout manageNavLayout = new javax.swing.GroupLayout(manageNav);
+        manageNav.setLayout(manageNavLayout);
+        manageNavLayout.setHorizontalGroup(
+            manageNavLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageNavLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel18)
                 .addGap(22, 22, 22))
         );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+        manageNavLayout.setVerticalGroup(
+            manageNavLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageNavLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        adminNavigation.add(jPanel7);
+        adminNavigation.add(manageNav);
 
-        jPanel51.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel51.addMouseListener(new java.awt.event.MouseAdapter() {
+        archiveNav.setBackground(new java.awt.Color(255, 255, 255));
+        archiveNav.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel51MouseClicked(evt);
+                archiveNavMouseClicked(evt);
             }
         });
 
         jLabel32.setText("Archived Internships");
 
-        javax.swing.GroupLayout jPanel51Layout = new javax.swing.GroupLayout(jPanel51);
-        jPanel51.setLayout(jPanel51Layout);
-        jPanel51Layout.setHorizontalGroup(
-            jPanel51Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel51Layout.createSequentialGroup()
+        javax.swing.GroupLayout archiveNavLayout = new javax.swing.GroupLayout(archiveNav);
+        archiveNav.setLayout(archiveNavLayout);
+        archiveNavLayout.setHorizontalGroup(
+            archiveNavLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, archiveNavLayout.createSequentialGroup()
                 .addContainerGap(48, Short.MAX_VALUE)
                 .addComponent(jLabel32)
                 .addGap(15, 15, 15))
         );
-        jPanel51Layout.setVerticalGroup(
-            jPanel51Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel51Layout.createSequentialGroup()
+        archiveNavLayout.setVerticalGroup(
+            archiveNavLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, archiveNavLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel32, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        adminNavigation.add(jPanel51);
+        adminNavigation.add(archiveNav);
 
-        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel6.addMouseListener(new java.awt.event.MouseAdapter() {
+        applicationNav.setBackground(new java.awt.Color(255, 255, 255));
+        applicationNav.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel6MouseClicked(evt);
+                applicationNavMouseClicked(evt);
             }
         });
 
         jLabel19.setText("Application");
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
+        javax.swing.GroupLayout applicationNavLayout = new javax.swing.GroupLayout(applicationNav);
+        applicationNav.setLayout(applicationNavLayout);
+        applicationNavLayout.setHorizontalGroup(
+            applicationNavLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(applicationNavLayout.createSequentialGroup()
                 .addGap(46, 46, 46)
                 .addComponent(jLabel19)
                 .addContainerGap(64, Short.MAX_VALUE))
         );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
+        applicationNavLayout.setVerticalGroup(
+            applicationNavLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(applicationNavLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jLabel19)
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
-        adminNavigation.add(jPanel6);
+        adminNavigation.add(applicationNav);
 
-        jPanel21.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel21.addMouseListener(new java.awt.event.MouseAdapter() {
+        settingsNav.setBackground(new java.awt.Color(255, 255, 255));
+        settingsNav.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel21MouseClicked(evt);
+                settingsNavMouseClicked(evt);
             }
         });
 
         jLabel21.setText("Settings");
 
-        javax.swing.GroupLayout jPanel21Layout = new javax.swing.GroupLayout(jPanel21);
-        jPanel21.setLayout(jPanel21Layout);
-        jPanel21Layout.setHorizontalGroup(
-            jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel21Layout.createSequentialGroup()
+        javax.swing.GroupLayout settingsNavLayout = new javax.swing.GroupLayout(settingsNav);
+        settingsNav.setLayout(settingsNavLayout);
+        settingsNavLayout.setHorizontalGroup(
+            settingsNavLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(settingsNavLayout.createSequentialGroup()
                 .addGap(48, 48, 48)
                 .addComponent(jLabel21)
                 .addContainerGap(79, Short.MAX_VALUE))
         );
-        jPanel21Layout.setVerticalGroup(
-            jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel21Layout.createSequentialGroup()
+        settingsNavLayout.setVerticalGroup(
+            settingsNavLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(settingsNavLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jLabel21)
                 .addContainerGap(9, Short.MAX_VALUE))
         );
 
-        adminNavigation.add(jPanel21);
+        adminNavigation.add(settingsNav);
 
-        jPanel8.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel8.addMouseListener(new java.awt.event.MouseAdapter() {
+        logoutNav.setBackground(new java.awt.Color(255, 255, 255));
+        logoutNav.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel8MouseClicked(evt);
+                logoutNavMouseClicked(evt);
             }
         });
 
@@ -1813,20 +1828,20 @@ public class dashboard extends javax.swing.JFrame {
 
         jLabel22.setText("Logout");
 
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
+        javax.swing.GroupLayout logoutNavLayout = new javax.swing.GroupLayout(logoutNav);
+        logoutNav.setLayout(logoutNavLayout);
+        logoutNavLayout.setHorizontalGroup(
+            logoutNavLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(logoutNavLayout.createSequentialGroup()
                 .addGap(44, 44, 44)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(logoutNavLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel22)
                     .addComponent(jLabel20))
                 .addContainerGap(83, Short.MAX_VALUE))
         );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
+        logoutNavLayout.setVerticalGroup(
+            logoutNavLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(logoutNavLayout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addComponent(jLabel22)
                 .addGap(73, 73, 73)
@@ -1834,7 +1849,7 @@ public class dashboard extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        adminNavigation.add(jPanel8);
+        adminNavigation.add(logoutNav);
 
         javax.swing.GroupLayout AdminNavLayout = new javax.swing.GroupLayout(AdminNav);
         AdminNav.setLayout(AdminNavLayout);
@@ -2460,15 +2475,19 @@ public class dashboard extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
+    private void dashboardNavMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashboardNavMouseClicked
         CardLayout c2 = (CardLayout)(cardPanel.getLayout());
-        c2.show(cardPanel, "dashboard");         // TODO add your handling code here:
-    }//GEN-LAST:event_jPanel3MouseClicked
+        c2.show(cardPanel, "dashboard");         
+        resetNavColors();
+        dashboardNav.setBackground(activeColor);
+    }//GEN-LAST:event_dashboardNavMouseClicked
 
-    private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
+    private void manageNavMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageNavMouseClicked
         CardLayout cl = (CardLayout)(cardPanel.getLayout());
         cl.show(cardPanel, "card3"); 
-    }//GEN-LAST:event_jPanel7MouseClicked
+        resetNavColors();
+        manageNav.setBackground(activeColor);
+    }//GEN-LAST:event_manageNavMouseClicked
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
@@ -2525,10 +2544,11 @@ public class dashboard extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton9ActionPerformed
 
-    private void jPanel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel8MouseClicked
+    private void logoutNavMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutNavMouseClicked
         CardLayout c14 = (CardLayout)(parentcard.getLayout());
-        c14.show(parentcard, "card4");  
-    }//GEN-LAST:event_jPanel8MouseClicked
+        c14.show(parentcard, "card4"); 
+        resetNavColors();
+    }//GEN-LAST:event_logoutNavMouseClicked
 
     private void titleFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_titleFieldActionPerformed
         // TODO add your handling code here:
@@ -2549,24 +2569,30 @@ public class dashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_durationComboActionPerformed
 
-    private void jPanel21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel21MouseClicked
+    private void settingsNavMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsNavMouseClicked
         CardLayout c4 = (CardLayout)(cardPanel.getLayout());
         c4.show(cardPanel, "card6");  
-    }//GEN-LAST:event_jPanel21MouseClicked
+        resetNavColors();
+        settingsNav.setBackground(activeColor);
+    }//GEN-LAST:event_settingsNavMouseClicked
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton11ActionPerformed
 
-    private void jPanel51MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel51MouseClicked
+    private void archiveNavMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_archiveNavMouseClicked
         CardLayout c7 = (CardLayout)(cardPanel.getLayout());
         c7.show(cardPanel, "card7"); 
-    }//GEN-LAST:event_jPanel51MouseClicked
+        resetNavColors();
+        archiveNav.setBackground(activeColor);
+    }//GEN-LAST:event_archiveNavMouseClicked
 
-    private void jPanel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseClicked
+    private void applicationNavMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_applicationNavMouseClicked
         CardLayout c5 = (CardLayout)(cardPanel.getLayout());
         c5.show(cardPanel, "card4"); 
-    }//GEN-LAST:event_jPanel6MouseClicked
+        resetNavColors();
+        applicationNav.setBackground(activeColor);
+    }//GEN-LAST:event_applicationNavMouseClicked
 
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
         // TODO add your handling code here:
@@ -2826,12 +2852,15 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JButton add_updateButton;
     private javax.swing.JPanel adminNavigation;
     private javax.swing.JPanel adminNavigation3;
+    private javax.swing.JPanel applicationNav;
     private javax.swing.JPanel applicationsView;
     private javax.swing.JPanel applicationsView1;
+    private javax.swing.JPanel archiveNav;
     private javax.swing.JPanel cardPanel;
     private javax.swing.JPanel cardPanel1;
     private javax.swing.JPanel cardPanel2;
     private javax.swing.JTextField companyField;
+    private javax.swing.JPanel dashboardNav;
     private javax.swing.JPanel dashboardPanel;
     private javax.swing.JPanel dashboardPanel1;
     private javax.swing.JComboBox<String> dayCombo;
@@ -2942,7 +2971,6 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel20;
-    private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel22;
     private javax.swing.JPanel jPanel23;
     private javax.swing.JPanel jPanel24;
@@ -2951,7 +2979,6 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel27;
     private javax.swing.JPanel jPanel28;
     private javax.swing.JPanel jPanel29;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel30;
     private javax.swing.JPanel jPanel31;
     private javax.swing.JPanel jPanel32;
@@ -2975,7 +3002,6 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel49;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel50;
-    private javax.swing.JPanel jPanel51;
     private javax.swing.JPanel jPanel52;
     private javax.swing.JPanel jPanel53;
     private javax.swing.JPanel jPanel54;
@@ -2984,7 +3010,6 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel57;
     private javax.swing.JPanel jPanel58;
     private javax.swing.JPanel jPanel59;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel60;
     private javax.swing.JPanel jPanel61;
     private javax.swing.JPanel jPanel64;
@@ -2993,7 +3018,6 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel67;
     private javax.swing.JPanel jPanel68;
     private javax.swing.JPanel jPanel69;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel70;
     private javax.swing.JPanel jPanel71;
     private javax.swing.JPanel jPanel72;
@@ -3004,7 +3028,6 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel77;
     private javax.swing.JPanel jPanel78;
     private javax.swing.JPanel jPanel79;
-    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel80;
     private javax.swing.JPanel jPanel81;
     private javax.swing.JPanel jPanel82;
@@ -3031,12 +3054,15 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
+    private javax.swing.JPanel logoutNav;
     private javax.swing.JPanel manageInternship;
+    private javax.swing.JPanel manageNav;
     private javax.swing.JComboBox<String> monthCombo;
     private javax.swing.JPanel parentcard;
     private javax.swing.JPasswordField passwordField;
     private javax.swing.JTextField salaryField;
     private javax.swing.JPanel settingPanel;
+    private javax.swing.JPanel settingsNav;
     private javax.swing.JPanel sideImagePanel;
     private javax.swing.JTextArea skillArea;
     private javax.swing.JPanel studentNav1;

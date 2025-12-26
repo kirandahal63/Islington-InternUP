@@ -103,10 +103,8 @@ public class InternshipController {
         return false;
     }
     
-    public static void updateInternship(int index, String title, String company,
-        String deadline, int salary, String type, String duration,
-        String description, String requirement) {
-
+    public static void updateInternship(int index, String title, String company,String deadline, int salary, String type, String duration,String description, String requirement) 
+    {
         Internship i = internshipList.get(index);
         i.setTitle(title);
         i.setCompany(company);
@@ -116,6 +114,6 @@ public class InternshipController {
         i.setDuration(duration);
         i.setDescription(description);
         i.setRequirement(requirement);
-}
+    }
     
 }
