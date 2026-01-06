@@ -8,15 +8,25 @@ import java.awt.Image;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import java.awt.Color;
-
 import model.Internship;
 import controller.AdminController;
 import controller.InternshipController;
+import java.awt.BorderLayout;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
 
 /**
- *
+ *  *
  * @author lenovo
  */
 public class dashboard extends javax.swing.JFrame {
@@ -38,6 +48,7 @@ public class dashboard extends javax.swing.JFrame {
         loadInternshipsToTable();
         archivedTableModel = (DefaultTableModel) deletedInternshipTable.getModel();
         loadDeletedInternshipsToTable();
+        loadInternshipCards() ;
     }
     private void loadInternshipsToTable() {
 
@@ -81,8 +92,78 @@ public class dashboard extends javax.swing.JFrame {
         settingsNav.setBackground(defaultColor);
         applicationNav.setBackground(defaultColor);
         logoutNav.setBackground(defaultColor);
+    }
+
+    private void loadInternshipCards() {
+
+    cardContainerPanel.removeAll();
+    int limit = 6;   
+    int count = 0;
+
+    for (Internship i : InternshipController.internshipList) {
+
+        if (count == limit) {
+            break;
+        }
+
+        JPanel card = createInternshipCard(i);
+        cardContainerPanel.add(card);
+        count++;
+    }
+
+    cardContainerPanel.revalidate();
+    cardContainerPanel.repaint();
+    }
+
+    private JPanel createInternshipCard(Internship i) {
+
+    JPanel card = new JPanel();
+    card.setLayout(new BorderLayout());
+    card.setBackground(Color.WHITE);
+    card.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(220,220,220)),
+            BorderFactory.createEmptyBorder(10, 10, 10, 10)
+    ));
+    
+    card.setPreferredSize(new Dimension(320, 80));
+    card.setMaximumSize(new Dimension(320, 130));
+    card.setMinimumSize(new Dimension(320, 130));
+
+    card.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+    JLabel titleLabel = new JLabel(i.getTitle());
+    titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+
+    JLabel companyLabel = new JLabel(i.getCompany());
+    companyLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+
+    JLabel metaLabel = new JLabel(
+            "Type: " + i.getType() + " | Deadline: " + i.getDeadline()
+    );
+    metaLabel.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+    metaLabel.setForeground(Color.GRAY);
+
+    JPanel textPanel = new JPanel(new GridLayout(0, 1));
+    textPanel.setBackground(Color.WHITE);
+
+    textPanel.add(titleLabel);
+    textPanel.add(companyLabel);
+    textPanel.add(metaLabel);
+
+    card.add(textPanel, BorderLayout.CENTER);
+
+    // click handling
+    card.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            //openInternship(i);
+        }
+    });
+
+    return card;
 }
 
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -103,7 +184,9 @@ public class dashboard extends javax.swing.JFrame {
         jPanel59 = new javax.swing.JPanel();
         jLabel35 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jPanel60 = new javax.swing.JPanel();
+        jPanel56 = new javax.swing.JPanel();
+        jPanel51 = new javax.swing.JPanel();
+        jPanel43 = new javax.swing.JPanel();
         cardPanel2 = new javax.swing.JPanel();
         AdminPanel = new javax.swing.JPanel();
         jLabel38 = new javax.swing.JLabel();
@@ -129,8 +212,13 @@ public class dashboard extends javax.swing.JFrame {
         jLabel66 = new javax.swing.JLabel();
         jTextField9 = new javax.swing.JTextField();
         jPasswordField3 = new javax.swing.JPasswordField();
-        jButton15 = new javax.swing.JButton();
+        jPanel21 = new javax.swing.JPanel();
+        jPanel60 = new javax.swing.JPanel();
         jButton16 = new javax.swing.JButton();
+        jButton15 = new javax.swing.JButton();
+        logo_panel = new javax.swing.JPanel();
+        jLabel36 = new javax.swing.JLabel();
+        jLabel68 = new javax.swing.JLabel();
         Admin = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -163,13 +251,16 @@ public class dashboard extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jPanel15 = new javax.swing.JPanel();
         jPanel19 = new javax.swing.JPanel();
-        jPanel43 = new javax.swing.JPanel();
         jPanel44 = new javax.swing.JPanel();
-        jPanel56 = new javax.swing.JPanel();
+        jLabel67 = new javax.swing.JLabel();
         jPanel20 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        internshipPreviewPanel = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
-        jLabel33 = new javax.swing.JLabel();
+        cardContainerPanel = new javax.swing.JPanel();
+        jPanel7 = new javax.swing.JPanel();
+        jPanel8 = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
         manageInternship = new javax.swing.JPanel();
         jPanel23 = new javax.swing.JPanel();
         jPanel25 = new javax.swing.JPanel();
@@ -272,7 +363,7 @@ public class dashboard extends javax.swing.JFrame {
         jPanel65 = new javax.swing.JPanel();
         studentNav1 = new javax.swing.JPanel();
         adminNavigation3 = new javax.swing.JPanel();
-        jPanel72 = new javax.swing.JPanel();
+        studentDashboardNav = new javax.swing.JPanel();
         jLabel50 = new javax.swing.JLabel();
         jPanel73 = new javax.swing.JPanel();
         jLabel51 = new javax.swing.JLabel();
@@ -336,11 +427,10 @@ public class dashboard extends javax.swing.JFrame {
         Login.setLayout(new java.awt.BorderLayout());
 
         sideImagePanel.setBackground(new java.awt.Color(102, 102, 255));
-        sideImagePanel.setPreferredSize(new java.awt.Dimension(250, 444));
 
         ImageIcon icon5 = new ImageIcon("images/login.jpg");
         Image img5 = icon5.getImage();
-        Image scaled5 = img5.getScaledInstance(250, 509, Image.SCALE_SMOOTH);
+        Image scaled5 = img5.getScaledInstance(500, 809, Image.SCALE_SMOOTH);
 
         jLabel34.setIcon(new ImageIcon(scaled5));
         jLabel34.setPreferredSize(new java.awt.Dimension(250, 509));
@@ -349,9 +439,7 @@ public class dashboard extends javax.swing.JFrame {
         sideImagePanel.setLayout(sideImagePanelLayout);
         sideImagePanelLayout.setHorizontalGroup(
             sideImagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(sideImagePanelLayout.createSequentialGroup()
-                .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jLabel34, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
         sideImagePanelLayout.setVerticalGroup(
             sideImagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -379,7 +467,7 @@ public class dashboard extends javax.swing.JFrame {
             .addGroup(jPanel59Layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(712, Short.MAX_VALUE))
+                .addContainerGap(562, Short.MAX_VALUE))
         );
         jPanel59Layout.setVerticalGroup(
             jPanel59Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -393,8 +481,52 @@ public class dashboard extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(468, 360));
+        jPanel1.setLayout(new java.awt.BorderLayout());
 
-        jPanel60.setLayout(new java.awt.GridLayout(1, 2));
+        jPanel56.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel56Layout = new javax.swing.GroupLayout(jPanel56);
+        jPanel56.setLayout(jPanel56Layout);
+        jPanel56Layout.setHorizontalGroup(
+            jPanel56Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel56Layout.setVerticalGroup(
+            jPanel56Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 301, Short.MAX_VALUE)
+        );
+
+        jPanel1.add(jPanel56, java.awt.BorderLayout.LINE_END);
+
+        jPanel51.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel51Layout = new javax.swing.GroupLayout(jPanel51);
+        jPanel51.setLayout(jPanel51Layout);
+        jPanel51Layout.setHorizontalGroup(
+            jPanel51Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel51Layout.setVerticalGroup(
+            jPanel51Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 301, Short.MAX_VALUE)
+        );
+
+        jPanel1.add(jPanel51, java.awt.BorderLayout.LINE_START);
+
+        jPanel43.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel43Layout = new javax.swing.GroupLayout(jPanel43);
+        jPanel43.setLayout(jPanel43Layout);
+        jPanel43Layout.setHorizontalGroup(
+            jPanel43Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 714, Short.MAX_VALUE)
+        );
+        jPanel43Layout.setVerticalGroup(
+            jPanel43Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        jPanel1.add(jPanel43, java.awt.BorderLayout.PAGE_END);
 
         cardPanel2.setBackground(new java.awt.Color(255, 255, 255));
         cardPanel2.setLayout(new java.awt.CardLayout());
@@ -424,16 +556,16 @@ public class dashboard extends javax.swing.JFrame {
         AdminPanel.setLayout(AdminPanelLayout);
         AdminPanelLayout.setHorizontalGroup(
             AdminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(AdminPanelLayout.createSequentialGroup()
-                .addGap(96, 96, 96)
-                .addGroup(AdminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(AdminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AdminPanelLayout.createSequentialGroup()
+                .addGap(0, 189, Short.MAX_VALUE)
+                .addGroup(AdminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel38)
+                    .addComponent(jLabel39)
+                    .addGroup(AdminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel38)
-                        .addComponent(jLabel39)))
-                .addContainerGap(122, Short.MAX_VALUE))
+                        .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(134, 134, 134))
         );
         AdminPanelLayout.setVerticalGroup(
             AdminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -448,7 +580,7 @@ public class dashboard extends javax.swing.JFrame {
                 .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(152, Short.MAX_VALUE))
+                .addContainerGap(110, Short.MAX_VALUE))
         );
 
         cardPanel2.add(AdminPanel, "AdminPanel");
@@ -457,7 +589,7 @@ public class dashboard extends javax.swing.JFrame {
 
         AdminPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel40.setText("Username");
+        jLabel40.setText("College ID");
 
         jLabel62.setText("Password");
 
@@ -537,13 +669,13 @@ public class dashboard extends javax.swing.JFrame {
             StudentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(StudentPanelLayout.createSequentialGroup()
                 .addComponent(AdminPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 12, Short.MAX_VALUE))
+                .addGap(0, 117, Short.MAX_VALUE))
         );
         StudentPanelLayout.setVerticalGroup(
             StudentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(StudentPanelLayout.createSequentialGroup()
                 .addComponent(AdminPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 63, Short.MAX_VALUE))
+                .addGap(0, 21, Short.MAX_VALUE))
         );
 
         cardPanel2.add(StudentPanel, "StudentPanel");
@@ -644,7 +776,7 @@ public class dashboard extends javax.swing.JFrame {
         SignupPanel.setLayout(SignupPanelLayout);
         SignupPanelLayout.setHorizontalGroup(
             SignupPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 409, Short.MAX_VALUE)
+            .addGap(0, 514, Short.MAX_VALUE)
             .addGroup(SignupPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(SignupPanelLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -653,22 +785,22 @@ public class dashboard extends javax.swing.JFrame {
         );
         SignupPanelLayout.setVerticalGroup(
             SignupPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 343, Short.MAX_VALUE)
+            .addGap(0, 337, Short.MAX_VALUE)
             .addGroup(SignupPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(SignupPanelLayout.createSequentialGroup()
-                    .addGap(0, 3, Short.MAX_VALUE)
+                    .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(StudentPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 3, Short.MAX_VALUE)))
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         cardPanel2.add(SignupPanel, "SignupPanel");
 
-        jButton15.setText("Student");
-        jButton15.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton15ActionPerformed(evt);
-            }
-        });
+        jPanel1.add(cardPanel2, java.awt.BorderLayout.CENTER);
+
+        jPanel21.setPreferredSize(new java.awt.Dimension(614, 230));
+        jPanel21.setLayout(new java.awt.BorderLayout());
+
+        jPanel60.setBackground(new java.awt.Color(255, 255, 255));
 
         jButton16.setText("Admin");
         jButton16.addActionListener(new java.awt.event.ActionListener() {
@@ -677,37 +809,73 @@ public class dashboard extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(188, 188, 188)
-                        .addComponent(cardPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(146, 146, 146)
-                        .addComponent(jPanel60, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(156, 156, 156)
-                        .addComponent(jButton16)
-                        .addGap(0, 0, 0)
-                        .addComponent(jButton15)))
-                .addContainerGap(267, Short.MAX_VALUE))
+        jButton15.setText("Student");
+        jButton15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton15ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel60Layout = new javax.swing.GroupLayout(jPanel60);
+        jPanel60.setLayout(jPanel60Layout);
+        jPanel60Layout.setHorizontalGroup(
+            jPanel60Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel60Layout.createSequentialGroup()
+                .addContainerGap(296, Short.MAX_VALUE)
+                .addComponent(jButton16)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton15)
+                .addGap(262, 262, 262))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jPanel60Layout.setVerticalGroup(
+            jPanel60Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel60Layout.createSequentialGroup()
+                .addContainerGap(84, Short.MAX_VALUE)
+                .addGroup(jPanel60Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton16)
                     .addComponent(jButton15))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel60, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
-                .addComponent(cardPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(219, Short.MAX_VALUE))
+                .addGap(23, 23, 23))
         );
+
+        jPanel21.add(jPanel60, java.awt.BorderLayout.CENTER);
+
+        logo_panel.setBackground(new java.awt.Color(255, 255, 255));
+
+        ImageIcon icon13 = new ImageIcon("images/internupLogo.png");
+        Image imgg3 = icon13.getImage();
+        Image scaledup10 = imgg3.getScaledInstance(160, 190, Image.SCALE_SMOOTH);
+        jLabel36.setIcon(new ImageIcon(scaledup10));
+
+        ImageIcon icon68 = new ImageIcon("images/collegeLogo.png");
+        Image imgg91 = icon68.getImage();
+        Image scaled91 = imgg91.getScaledInstance(170, 120, Image.SCALE_SMOOTH);
+        jLabel68.setIcon(new ImageIcon(scaled91));
+
+        javax.swing.GroupLayout logo_panelLayout = new javax.swing.GroupLayout(logo_panel);
+        logo_panel.setLayout(logo_panelLayout);
+        logo_panelLayout.setHorizontalGroup(
+            logo_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, logo_panelLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 365, Short.MAX_VALUE)
+                .addComponent(jLabel68, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19))
+        );
+        logo_panelLayout.setVerticalGroup(
+            logo_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(logo_panelLayout.createSequentialGroup()
+                .addGroup(logo_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel68, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 42, Short.MAX_VALUE))
+        );
+
+        jLabel36.getAccessibleContext().setAccessibleName("");
+
+        jPanel21.add(logo_panel, java.awt.BorderLayout.PAGE_START);
+
+        jPanel1.add(jPanel21, java.awt.BorderLayout.PAGE_START);
 
         jPanel58.add(jPanel1, java.awt.BorderLayout.CENTER);
 
@@ -928,56 +1096,33 @@ public class dashboard extends javax.swing.JFrame {
         jPanel15.setLayout(new java.awt.BorderLayout());
 
         jPanel19.setBackground(new java.awt.Color(153, 153, 255));
-        jPanel19.setPreferredSize(new java.awt.Dimension(210, 392));
+        jPanel19.setPreferredSize(new java.awt.Dimension(300, 392));
         jPanel19.setLayout(new java.awt.BorderLayout());
 
-        jPanel43.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel43.setPreferredSize(new java.awt.Dimension(20, 464));
+        jPanel44.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel44.setPreferredSize(new java.awt.Dimension(300, 494));
+        jPanel44.setVerifyInputWhenFocusTarget(false);
 
-        javax.swing.GroupLayout jPanel43Layout = new javax.swing.GroupLayout(jPanel43);
-        jPanel43.setLayout(jPanel43Layout);
-        jPanel43Layout.setHorizontalGroup(
-            jPanel43Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 20, Short.MAX_VALUE)
-        );
-        jPanel43Layout.setVerticalGroup(
-            jPanel43Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 541, Short.MAX_VALUE)
-        );
-
-        jPanel19.add(jPanel43, java.awt.BorderLayout.LINE_END);
-
-        jPanel44.setPreferredSize(new java.awt.Dimension(210, 464));
-
-        jPanel56.setBackground(new java.awt.Color(204, 204, 255));
-        jPanel56.setPreferredSize(new java.awt.Dimension(194, 337));
-
-        javax.swing.GroupLayout jPanel56Layout = new javax.swing.GroupLayout(jPanel56);
-        jPanel56.setLayout(jPanel56Layout);
-        jPanel56Layout.setHorizontalGroup(
-            jPanel56Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 178, Short.MAX_VALUE)
-        );
-        jPanel56Layout.setVerticalGroup(
-            jPanel56Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 337, Short.MAX_VALUE)
-        );
+        ImageIcon icon91 = new ImageIcon("images/companies.png");
+        Image imgg1 = icon91.getImage();
+        Image scaledCom = imgg1.getScaledInstance(380, 232, Image.SCALE_SMOOTH);
+        jLabel67.setIcon(new ImageIcon(scaledCom));
 
         javax.swing.GroupLayout jPanel44Layout = new javax.swing.GroupLayout(jPanel44);
         jPanel44.setLayout(jPanel44Layout);
         jPanel44Layout.setHorizontalGroup(
             jPanel44Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel44Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel56, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel44Layout.createSequentialGroup()
+                .addContainerGap(50, Short.MAX_VALUE)
+                .addComponent(jLabel67, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19))
         );
         jPanel44Layout.setVerticalGroup(
             jPanel44Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel44Layout.createSequentialGroup()
-                .addGap(69, 69, 69)
-                .addComponent(jPanel56, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(64, 64, 64)
+                .addComponent(jLabel67, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(97, Short.MAX_VALUE))
         );
 
         jPanel19.add(jPanel44, java.awt.BorderLayout.CENTER);
@@ -985,44 +1130,90 @@ public class dashboard extends javax.swing.JFrame {
         jPanel15.add(jPanel19, java.awt.BorderLayout.LINE_END);
 
         jPanel20.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel20.setPreferredSize(new java.awt.Dimension(724, 464));
+        jPanel20.setPreferredSize(new java.awt.Dimension(704, 464));
+        jPanel20.setLayout(new java.awt.BorderLayout());
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane6.setViewportView(jTable3);
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel33.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel33.setText("Recent Posts");
-
-        javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
-        jPanel20.setLayout(jPanel20Layout);
-        jPanel20Layout.setHorizontalGroup(
-            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel20Layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel33)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 670, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 644, Short.MAX_VALUE)
         );
-        jPanel20Layout.setVerticalGroup(
-            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel20Layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addComponent(jLabel33)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(135, Short.MAX_VALUE))
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
         );
+
+        jPanel20.add(jPanel3, java.awt.BorderLayout.PAGE_START);
+
+        internshipPreviewPanel.setBackground(new java.awt.Color(255, 255, 255));
+        internshipPreviewPanel.setPreferredSize(new java.awt.Dimension(714, 341));
+        internshipPreviewPanel.setLayout(new java.awt.BorderLayout());
+
+        cardContainerPanel.setBackground(new java.awt.Color(255, 255, 255));
+        cardContainerPanel.setLayout(new java.awt.GridLayout(0, 2, 15, 15));
+        jScrollPane6.setViewportView(cardContainerPanel);
+
+        internshipPreviewPanel.add(jScrollPane6, java.awt.BorderLayout.EAST);
+
+        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel7.setPreferredSize(new java.awt.Dimension(40, 341));
+
+        jPanel8.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel8.setPreferredSize(new java.awt.Dimension(40, 341));
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 341, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel7Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 341, Short.MAX_VALUE)
+            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel7Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+
+        internshipPreviewPanel.add(jPanel7, java.awt.BorderLayout.LINE_START);
+
+        jPanel20.add(internshipPreviewPanel, java.awt.BorderLayout.CENTER);
+
+        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 644, Short.MAX_VALUE)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        jPanel20.add(jPanel6, java.awt.BorderLayout.PAGE_END);
 
         jPanel15.add(jPanel20, java.awt.BorderLayout.CENTER);
 
@@ -1959,31 +2150,31 @@ public class dashboard extends javax.swing.JFrame {
         adminNavigation3.setPreferredSize(new java.awt.Dimension(13, 185));
         adminNavigation3.setLayout(new java.awt.GridLayout(5, 1, 0, 1));
 
-        jPanel72.setBackground(new java.awt.Color(153, 153, 255));
-        jPanel72.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel72.addMouseListener(new java.awt.event.MouseAdapter() {
+        studentDashboardNav.setBackground(new java.awt.Color(153, 153, 255));
+        studentDashboardNav.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        studentDashboardNav.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel72MouseClicked(evt);
+                studentDashboardNavMouseClicked(evt);
             }
         });
 
         jLabel50.setText("Dashboard");
 
-        javax.swing.GroupLayout jPanel72Layout = new javax.swing.GroupLayout(jPanel72);
-        jPanel72.setLayout(jPanel72Layout);
-        jPanel72Layout.setHorizontalGroup(
-            jPanel72Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel72Layout.createSequentialGroup()
+        javax.swing.GroupLayout studentDashboardNavLayout = new javax.swing.GroupLayout(studentDashboardNav);
+        studentDashboardNav.setLayout(studentDashboardNavLayout);
+        studentDashboardNavLayout.setHorizontalGroup(
+            studentDashboardNavLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(studentDashboardNavLayout.createSequentialGroup()
                 .addGap(49, 49, 49)
                 .addComponent(jLabel50, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(50, Short.MAX_VALUE))
         );
-        jPanel72Layout.setVerticalGroup(
-            jPanel72Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        studentDashboardNavLayout.setVerticalGroup(
+            studentDashboardNavLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel50, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
         );
 
-        adminNavigation3.add(jPanel72);
+        adminNavigation3.add(studentDashboardNav);
 
         jPanel73.setBackground(new java.awt.Color(255, 255, 255));
         jPanel73.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -2465,7 +2656,7 @@ public class dashboard extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(parentcard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(parentcard, javax.swing.GroupLayout.DEFAULT_SIZE, 1114, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2598,16 +2789,25 @@ public class dashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField4ActionPerformed
 
-    private void jPanel72MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel72MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPanel72MouseClicked
+    private void studentDashboardNavMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_studentDashboardNavMouseClicked
+        CardLayout c2 = (CardLayout)(cardPanel.getLayout());
+        c2.show(cardPanel, "dashboard");         
+        resetNavColors();
+        dashboardNav.setBackground(activeColor);
+    }//GEN-LAST:event_studentDashboardNavMouseClicked
 
     private void jPanel73MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel73MouseClicked
-        // TODO add your handling code here:
+        CardLayout cl = (CardLayout)(cardPanel.getLayout());
+        cl.show(cardPanel, "card3"); 
+        resetNavColors();
+        manageNav.setBackground(activeColor);
     }//GEN-LAST:event_jPanel73MouseClicked
 
     private void jPanel74MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel74MouseClicked
-        // TODO add your handling code here:
+       CardLayout c2 = (CardLayout)(cardPanel.getLayout());
+        c2.show(cardPanel, "card4");         
+        resetNavColors();
+        dashboardNav.setBackground(activeColor);
     }//GEN-LAST:event_jPanel74MouseClicked
 
     private void jPanel75MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel75MouseClicked
@@ -2640,37 +2840,6 @@ public class dashboard extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton12ActionPerformed
 
-    private void jPasswordField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPasswordField2ActionPerformed
-
-    private void jLabel63MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel63MouseMoved
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel63MouseMoved
-
-    private void jLabel63FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jLabel63FocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel63FocusLost
-
-    private void jLabel63MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel63MouseClicked
-        CardLayout c3 = (CardLayout)(cardPanel2.getLayout());
-        c3.show(cardPanel2, "SignupPanel");
-    }//GEN-LAST:event_jLabel63MouseClicked
-
-    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField8ActionPerformed
-
-    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
-        // TODO add your handling code here:
-        CardLayout c4 = (CardLayout)(cardPanel.getLayout());
-        c4.show(cardPanel, "StudentPanel");
-    }//GEN-LAST:event_jButton14ActionPerformed
-
-    private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField9ActionPerformed
-
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
         // TODO add your handling code here:
         CardLayout c2 = (CardLayout)(cardPanel2.getLayout());
@@ -2683,11 +2852,6 @@ public class dashboard extends javax.swing.JFrame {
         c2.show(cardPanel2, "AdminPanel");
 
     }//GEN-LAST:event_jButton16ActionPerformed
-
-    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        CardLayout c12 = (CardLayout)(parentcard.getLayout());
-        c12.show(parentcard, "card3"); 
-    }//GEN-LAST:event_jButton13ActionPerformed
     private void clearInternshipForm() {
         titleField.setText("");
         companyField.setText("");
@@ -2802,6 +2966,42 @@ public class dashboard extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton10ActionPerformed
 
+    private void jLabel63MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel63MouseClicked
+        CardLayout c3 = (CardLayout)(cardPanel2.getLayout());
+        c3.show(cardPanel2, "SignupPanel");
+    }//GEN-LAST:event_jLabel63MouseClicked
+
+    private void jLabel63FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jLabel63FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel63FocusLost
+
+    private void jLabel63MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel63MouseMoved
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel63MouseMoved
+
+    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+        CardLayout c12 = (CardLayout)(parentcard.getLayout());
+        c12.show(parentcard, "card3");
+    }//GEN-LAST:event_jButton13ActionPerformed
+
+    private void jPasswordField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPasswordField2ActionPerformed
+
+    private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField9ActionPerformed
+
+    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
+        // TODO add your handling code here:
+        CardLayout c4 = (CardLayout)(cardPanel.getLayout());
+        c4.show(cardPanel, "StudentPanel");
+    }//GEN-LAST:event_jButton14ActionPerformed
+
+    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField8ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -2856,6 +3056,7 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel applicationsView;
     private javax.swing.JPanel applicationsView1;
     private javax.swing.JPanel archiveNav;
+    private javax.swing.JPanel cardContainerPanel;
     private javax.swing.JPanel cardPanel;
     private javax.swing.JPanel cardPanel1;
     private javax.swing.JPanel cardPanel2;
@@ -2870,6 +3071,7 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> durationCombo;
     private javax.swing.JPanel gridPanel;
     private javax.swing.JPanel gridPanel1;
+    private javax.swing.JPanel internshipPreviewPanel;
     private javax.swing.JTable internshipTable;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
@@ -2912,9 +3114,9 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
@@ -2948,6 +3150,8 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel64;
     private javax.swing.JLabel jLabel65;
     private javax.swing.JLabel jLabel66;
+    private javax.swing.JLabel jLabel67;
+    private javax.swing.JLabel jLabel68;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel70;
     private javax.swing.JLabel jLabel8;
@@ -2971,6 +3175,7 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel20;
+    private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel22;
     private javax.swing.JPanel jPanel23;
     private javax.swing.JPanel jPanel24;
@@ -2979,6 +3184,7 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel27;
     private javax.swing.JPanel jPanel28;
     private javax.swing.JPanel jPanel29;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel30;
     private javax.swing.JPanel jPanel31;
     private javax.swing.JPanel jPanel32;
@@ -3002,6 +3208,7 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel49;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel50;
+    private javax.swing.JPanel jPanel51;
     private javax.swing.JPanel jPanel52;
     private javax.swing.JPanel jPanel53;
     private javax.swing.JPanel jPanel54;
@@ -3010,6 +3217,7 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel57;
     private javax.swing.JPanel jPanel58;
     private javax.swing.JPanel jPanel59;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel60;
     private javax.swing.JPanel jPanel61;
     private javax.swing.JPanel jPanel64;
@@ -3018,9 +3226,9 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel67;
     private javax.swing.JPanel jPanel68;
     private javax.swing.JPanel jPanel69;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel70;
     private javax.swing.JPanel jPanel71;
-    private javax.swing.JPanel jPanel72;
     private javax.swing.JPanel jPanel73;
     private javax.swing.JPanel jPanel74;
     private javax.swing.JPanel jPanel75;
@@ -3028,6 +3236,7 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel77;
     private javax.swing.JPanel jPanel78;
     private javax.swing.JPanel jPanel79;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel80;
     private javax.swing.JPanel jPanel81;
     private javax.swing.JPanel jPanel82;
@@ -3045,7 +3254,6 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
     private javax.swing.JTextArea jTextArea4;
     private javax.swing.JTextArea jTextArea6;
@@ -3054,6 +3262,7 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
+    private javax.swing.JPanel logo_panel;
     private javax.swing.JPanel logoutNav;
     private javax.swing.JPanel manageInternship;
     private javax.swing.JPanel manageNav;
@@ -3065,6 +3274,7 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel settingsNav;
     private javax.swing.JPanel sideImagePanel;
     private javax.swing.JTextArea skillArea;
+    private javax.swing.JPanel studentDashboardNav;
     private javax.swing.JPanel studentNav1;
     private javax.swing.JPanel studentsettingPanel1;
     private javax.swing.JTextField titleField;
