@@ -33,7 +33,7 @@ public class InternshipController {
         internshipList.add(new Internship(
                 "Web Intern",
                 "Webify",
-                "2026-Jan-10",
+                "2026-Jan-25",
                 12000,
                 "Remote",
                 "6 Months",
@@ -55,7 +55,7 @@ public class InternshipController {
         internshipList.add(new Internship(
                 "Data Analyst Intern",
                 "DataSite",
-                "2025-Dec-31",
+                "2026-Feb-31",
                 35000,
                 "International",
                 "6 Months",
@@ -66,12 +66,43 @@ public class InternshipController {
         internshipList.add(new Internship(
                 "AI Intern",
                 "Skill Academy",
-                "2026-Jan-9",
+                "2026-Jan-20",
                 25000,
                 "Remote",
                 "1 Months",
                 "Machine learning models",
                 "Python, pyCharm, ML basics"
+        ));
+        internshipList.add(new Internship(
+                "Generative AI Instructor",
+                "Danson Solutions",
+                "2026-Jan-29",
+                20000,
+                "Onsite",
+                "3 Months",
+                "Teach core GenAI concepts in a simple, practical way",
+                "Good understanding of Generative AI concepts"
+        ));
+        
+        internshipList.add(new Internship(
+                "AI Intern",
+                "Skill Academy",
+                "2026-Jan-20",
+                25000,
+                "Remote",
+                "1 Months",
+                "Machine learning models",
+                "Python, pyCharm, ML basics"
+        ));
+        internshipList.add(new Internship(
+                "Generative AI Instructor",
+                "Danson Solutions",
+                "2026-Jan-29",
+                20000,
+                "Onsite",
+                "3 Months",
+                "Teach core GenAI concepts in a simple, practical way",
+                "Good understanding of Generative AI concepts"
         ));
     }
     
