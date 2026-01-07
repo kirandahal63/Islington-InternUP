@@ -111,21 +111,34 @@ public class InternshipController {
         Internship internship = new Internship(title, company, deadline,salary, type, duration, description, requirement);
         internshipList.add(internship);
     }
-    
-    public static boolean isDuplicateInternship(String title, String company, String deadline,int salary, String type, String duration, String description, String requirement) {
-
-        for (Internship i : internshipList) {
-            if (i.getTitle().equalsIgnoreCase(title) && i.getCompany().equalsIgnoreCase(company) && i.getDeadline().equals(deadline) &&
-                i.getSalary() == salary && i.getType().equalsIgnoreCase(type) && i.getDuration().equalsIgnoreCase(duration) &&
-                i.getDescription().equalsIgnoreCase(description) &&  i.getRequirement().equalsIgnoreCase(requirement)) {
-
-                return true; 
-            }
-        }
-        return false; 
+        
+    public static boolean isSameAsOriginal(int index,String title,String company,String deadline,int salary,String type,String duration,String description,String requirement) 
+    {
+        Internship i = internshipList.get(index);
+        return i.getTitle().equalsIgnoreCase(title)&& i.getCompany().equalsIgnoreCase(company) && i.getDeadline().equals(deadline) && i.getSalary() == salary && i.getType().equalsIgnoreCase(type)        && i.getDuration().equalsIgnoreCase(duration)
+            && i.getDescription().equalsIgnoreCase(description) && i.getRequirement().equalsIgnoreCase(requirement);
     }
     
-    public static boolean deleteInternship(int index) {
+    public static boolean isDuplicateForUpdate(int editingIndex,String title,String company,String deadline,int salary,String type,String duration,String description,String requirement) 
+    {
+        for (int i = 0; i < internshipList.size(); i++) {
+
+            if (i == editingIndex) continue;
+
+            Internship in = internshipList.get(i);
+
+            if (in.getTitle().equalsIgnoreCase(title) && in.getCompany().equalsIgnoreCase(company) && in.getDeadline().equals(deadline) && in.getSalary() == salary
+                && in.getType().equalsIgnoreCase(type) && in.getDuration().equalsIgnoreCase(duration) && in.getDescription().equalsIgnoreCase(description) 
+                && in.getRequirement().equalsIgnoreCase(requirement)) {
+
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public static boolean deleteInternship(int index) 
+    {
         if (index >= 0 && index < internshipList.size()) {
             Internship removedinternship = internshipList.remove(index); 
             deletedInternshipList.add(removedinternship);  

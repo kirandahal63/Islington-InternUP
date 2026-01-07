@@ -14,14 +14,18 @@ import controller.InternshipController;
 import java.awt.BorderLayout;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -35,7 +39,10 @@ public class dashboard extends javax.swing.JFrame {
     private Color normalColor = new Color(220, 220, 220);
     private Color activeColor  = new Color(153,153,255);
     private boolean isUpdateMode = false;
+    private boolean isViewMode = false;
     private int editingIndex = -1;
+
+    
 
     /**
      * Creates new form dashboard
@@ -49,8 +56,19 @@ public class dashboard extends javax.swing.JFrame {
         loadInternshipsToTable();
         archivedTableModel = (DefaultTableModel) deletedInternshipTable.getModel();
         loadDeletedInternshipsToTable();
+        
+        studentCardContainerPanel.setLayout(new GridBagLayout());
+        studentCardContainerPanel.setBackground(new Color(245, 245, 245));
+        
+        internshipScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        internshipScrollPane.getVerticalScrollBar().setUnitIncrement(16);
+
         loadInternshipCards() ;
         cardContainerPanel.setLayout(new GridLayout(0, 2, 15, 15));
+        studentCardContainerPanel.setLayout(new GridLayout(0, 3, 15, 15));
+        
+
+        
 
     }
     private void loadInternshipsToTable() {
@@ -95,6 +113,12 @@ public class dashboard extends javax.swing.JFrame {
         settingsNav.setBackground(defaultColor);
         applicationNav.setBackground(defaultColor);
         logoutNav.setBackground(defaultColor);
+    }
+    private void resetSortButtonColors() {
+        companyButton.setBackground(defaultColor);
+        deadlineButton.setBackground(defaultColor);
+        typeButton.setBackground(defaultColor);
+        salaryButton.setBackground(defaultColor);
     }
 
     private void loadInternshipCards() {
@@ -188,7 +212,134 @@ public class dashboard extends javax.swing.JFrame {
 
     return card;
 }
+   
     
+    
+private void loadStudentInternshipCards() {
+    studentCardContainerPanel.removeAll();
+
+    // Set GridBagLayout for dynamic placement
+    studentCardContainerPanel.setLayout(new GridBagLayout());
+    GridBagConstraints gbc = new GridBagConstraints();
+    gbc.insets = new Insets(10, 10, 10, 10); // space between cards
+    gbc.anchor = GridBagConstraints.NORTHWEST;
+
+    int col = 0;
+    int row = 0;
+
+    for (Internship internship : InternshipController.internshipList) {
+        JPanel card = createStudentInternshipCard(internship);
+
+        gbc.gridx = col;
+        gbc.gridy = row;
+        gbc.weightx = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL; // stretch horizontally
+        studentCardContainerPanel.add(card, gbc);
+
+        col++;
+        if (col == 3) { // 3 columns
+            col = 0;
+            row++;
+        }
+    }
+
+    gbc.gridx = 0;
+    gbc.gridy = row + 1;
+    gbc.weighty = 1;
+    studentCardContainerPanel.add(Box.createVerticalGlue(), gbc);
+
+    studentCardContainerPanel.revalidate();
+    studentCardContainerPanel.repaint();
+}
+
+private JPanel createStudentInternshipCard(Internship i) {
+    JPanel card = new JPanel(new BorderLayout());
+    card.setBackground(Color.WHITE);
+
+    // Fixed height
+    card.setPreferredSize(new Dimension(250, 100)); 
+    card.setMaximumSize(new Dimension(Integer.MAX_VALUE, 100));
+
+    card.setBorder(BorderFactory.createCompoundBorder(
+        BorderFactory.createLineBorder(new Color(220,220,220)),
+        BorderFactory.createEmptyBorder(10, 10, 10, 10)
+    ));
+
+    JLabel title = new JLabel(i.getTitle());
+    title.setFont(new Font("Segoe UI", Font.BOLD, 14));
+
+    JLabel company = new JLabel(i.getCompany());
+    company.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+
+    JLabel meta = new JLabel("Type: " + i.getType() + " | Deadline: " + i.getDeadline());
+    meta.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+    meta.setForeground(Color.GRAY);
+
+    JPanel textPanel = new JPanel(new GridLayout(0, 1));
+    textPanel.setBackground(Color.WHITE);
+    textPanel.add(title);
+    textPanel.add(company);
+    textPanel.add(meta);
+
+    card.add(textPanel, BorderLayout.CENTER);
+
+    card.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    card.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            card.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(activeColor, 3),
+                BorderFactory.createEmptyBorder(10,10,10,10)
+            ));
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            card.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(normalColor, 1),
+                BorderFactory.createEmptyBorder(10,10,10,10)
+            ));
+        }
+    });
+    card.addMouseListener(new MouseAdapter() {
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        openStudentInternshipDetails(i);
+    }
+    });
+
+    return card;
+}
+
+public void openStudentInternshipDetails(Internship i) {
+    
+    titleFieldS.setText(i.getTitle());
+    companyFieldS.setText(i.getCompany());
+    salaryFieldS.setText(String.valueOf(i.getSalary()));
+    descriptionAreaS.setText(i.getDescription());
+    skillAreaS.setText(i.getRequirement());
+    typeComboS.setSelectedItem(i.getType());
+    durationComboS.setSelectedItem(i.getDuration());
+    String[] date = i.getDeadline().split("-");
+    yearComboS.setSelectedItem(date[0]);
+    monthComboS.setSelectedItem(date[1]);
+    dayCombo1.setSelectedItem(date[2]);
+    
+    titleFieldS.setEnabled(true);titleFieldS.setEditable(false);titleFieldS.setFocusable(false);titleFieldS.setBackground(Color.WHITE);titleFieldS.setForeground(Color.BLACK);
+    companyFieldS.setEnabled(true);companyFieldS.setEditable(false);companyFieldS.setFocusable(false);companyFieldS.setBackground(Color.WHITE);companyFieldS.setForeground(Color.BLACK);
+    skillAreaS.setEnabled(true);skillAreaS.setEditable(false);skillAreaS.setFocusable(false);skillAreaS.setBackground(Color.WHITE);skillAreaS.setForeground(Color.BLACK);
+    salaryFieldS.setEnabled(true);salaryFieldS.setEditable(false);salaryFieldS.setFocusable(false);salaryFieldS.setBackground(Color.WHITE);salaryFieldS.setForeground(Color.BLACK);
+    descriptionAreaS.setEnabled(true);descriptionAreaS.setEditable(false);descriptionAreaS.setFocusable(false);descriptionAreaS.setBackground(Color.WHITE);descriptionAreaS.setForeground(Color.BLACK);
+    typeComboS.setEnabled(false);typeComboS.setEditable(false);typeComboS.setFocusable(false);typeComboS.setBackground(Color.WHITE);typeComboS.setForeground(Color.BLACK);
+    durationComboS.setEnabled(false);
+    yearComboS.setEnabled(false);
+    monthComboS.setEnabled(false);
+    dayCombo1.setEnabled(false);
+        
+    CardLayout cl = (CardLayout) cardPanel1.getLayout();
+    cl.show(cardPanel1, "card5");
+}
+
 
     
 
@@ -290,10 +441,10 @@ public class dashboard extends javax.swing.JFrame {
         manageInternship = new javax.swing.JPanel();
         jPanel23 = new javax.swing.JPanel();
         jPanel25 = new javax.swing.JPanel();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        companyButton = new javax.swing.JButton();
+        deadlineButton = new javax.swing.JButton();
+        typeButton = new javax.swing.JButton();
+        salaryButton = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
         jPanel27 = new javax.swing.JPanel();
@@ -304,7 +455,7 @@ public class dashboard extends javax.swing.JFrame {
         jPanel24 = new javax.swing.JPanel();
         jPanel30 = new javax.swing.JPanel();
         jPanel33 = new javax.swing.JPanel();
-        jButton8 = new javax.swing.JButton();
+        viewDetails = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
         jPanel32 = new javax.swing.JPanel();
@@ -334,7 +485,7 @@ public class dashboard extends javax.swing.JFrame {
         durationCombo = new javax.swing.JComboBox<>();
         jPanel39 = new javax.swing.JPanel();
         jPanel41 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
+        cancelButton = new javax.swing.JButton();
         add_updateButton = new javax.swing.JButton();
         jPanel40 = new javax.swing.JPanel();
         jLabel29 = new javax.swing.JLabel();
@@ -433,16 +584,61 @@ public class dashboard extends javax.swing.JFrame {
         jTable4 = new javax.swing.JTable();
         jLabel61 = new javax.swing.JLabel();
         applicationsView1 = new javax.swing.JPanel();
+        jPanel7 = new javax.swing.JPanel();
+        jPanel62 = new javax.swing.JPanel();
+        jPanel63 = new javax.swing.JPanel();
+        jLabel69 = new javax.swing.JLabel();
+        jButton18 = new javax.swing.JButton();
+        jButton19 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton20 = new javax.swing.JButton();
+        jPanel72 = new javax.swing.JPanel();
+        jPanel85 = new javax.swing.JPanel();
+        internshipScrollPane = new javax.swing.JScrollPane();
+        studentCardContainerPanel = new javax.swing.JPanel();
         studentsettingPanel1 = new javax.swing.JPanel();
         jPanel112 = new javax.swing.JPanel();
+        jLabel70 = new javax.swing.JLabel();
         jPanel113 = new javax.swing.JPanel();
         jPanel114 = new javax.swing.JPanel();
         jPanel115 = new javax.swing.JPanel();
         jPanel116 = new javax.swing.JPanel();
         jPanel117 = new javax.swing.JPanel();
-        jLabel70 = new javax.swing.JLabel();
-        jScrollPane12 = new javax.swing.JScrollPane();
-        jTextArea6 = new javax.swing.JTextArea();
+        addNewInternship1 = new javax.swing.JPanel();
+        jPanel86 = new javax.swing.JPanel();
+        jPanel87 = new javax.swing.JPanel();
+        jPanel88 = new javax.swing.JPanel();
+        jPanel89 = new javax.swing.JPanel();
+        jPanel90 = new javax.swing.JPanel();
+        jPanel91 = new javax.swing.JPanel();
+        jPanel92 = new javax.swing.JPanel();
+        jLabel71 = new javax.swing.JLabel();
+        jLabel72 = new javax.swing.JLabel();
+        titleFieldS = new javax.swing.JTextField();
+        companyFieldS = new javax.swing.JTextField();
+        jLabel73 = new javax.swing.JLabel();
+        jLabel74 = new javax.swing.JLabel();
+        jPanel93 = new javax.swing.JPanel();
+        dayCombo1 = new javax.swing.JComboBox<>();
+        monthComboS = new javax.swing.JComboBox<>();
+        yearComboS = new javax.swing.JComboBox<>();
+        salaryFieldS = new javax.swing.JTextField();
+        jLabel75 = new javax.swing.JLabel();
+        jLabel76 = new javax.swing.JLabel();
+        typeComboS = new javax.swing.JComboBox<>();
+        durationComboS = new javax.swing.JComboBox<>();
+        jPanel94 = new javax.swing.JPanel();
+        jPanel95 = new javax.swing.JPanel();
+        jButton17 = new javax.swing.JButton();
+        add_updateButton1 = new javax.swing.JButton();
+        jPanel96 = new javax.swing.JPanel();
+        jLabel77 = new javax.swing.JLabel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        skillAreaS = new javax.swing.JTextArea();
+        jPanel97 = new javax.swing.JPanel();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        descriptionAreaS = new javax.swing.JTextArea();
+        jLabel78 = new javax.swing.JLabel();
 
         jLabel3.setText("jLabel3");
 
@@ -1066,7 +1262,7 @@ public class dashboard extends javax.swing.JFrame {
         jLabel9.setText("200+");
         jPanel11.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, -1, 30));
 
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/backgroud3.png"))); // NOI18N
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/background.png"))); // NOI18N
         jLabel6.setText("jLabel4");
         jPanel11.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 150));
 
@@ -1086,7 +1282,7 @@ public class dashboard extends javax.swing.JFrame {
         jLabel13.setText("75");
         jPanel14.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 50, 40));
 
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/backgroud3.png"))); // NOI18N
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/background.png"))); // NOI18N
         jPanel14.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, 150));
 
         gridPanel.add(jPanel14);
@@ -1105,7 +1301,7 @@ public class dashboard extends javax.swing.JFrame {
         jLabel15.setText("113");
         jPanel9.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, -1, -1));
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/background4.png"))); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/background.png"))); // NOI18N
         jLabel5.setText("jLabel4");
         jPanel9.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 151));
 
@@ -1200,6 +1396,7 @@ public class dashboard extends javax.swing.JFrame {
 
         internshipPreviewPanel.add(jPanel8, java.awt.BorderLayout.LINE_START);
 
+        cardContainerPanel.setBackground(new java.awt.Color(255, 255, 255));
         cardContainerPanel.setLayout(new java.awt.GridLayout(1, 2, 15, 15));
         internshipPreviewPanel.add(cardContainerPanel, java.awt.BorderLayout.CENTER);
 
@@ -1234,22 +1431,27 @@ public class dashboard extends javax.swing.JFrame {
         jPanel25.setBackground(new java.awt.Color(255, 255, 255));
         jPanel25.setLayout(new java.awt.GridLayout(1, 4, 1, 1));
 
-        jButton3.setText("Sort By Title");
-        jButton3.setPreferredSize(new java.awt.Dimension(150, 30));
-
-        jButton4.setText("Sort By Company");
-        jButton4.setPreferredSize(new java.awt.Dimension(150, 30));
-
-        jButton6.setText("Sort by Type");
-        jButton6.setPreferredSize(new java.awt.Dimension(150, 30));
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+        companyButton.setText("Sort By Company");
+        companyButton.setPreferredSize(new java.awt.Dimension(150, 30));
+        companyButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                companyButtonMouseClicked(evt);
             }
         });
 
-        jButton5.setText("Sort by Salary");
-        jButton5.setPreferredSize(new java.awt.Dimension(150, 30));
+        deadlineButton.setText("Sort By Deadline");
+        deadlineButton.setPreferredSize(new java.awt.Dimension(150, 30));
+
+        typeButton.setText("Sort by Type");
+        typeButton.setPreferredSize(new java.awt.Dimension(150, 30));
+        typeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                typeButtonActionPerformed(evt);
+            }
+        });
+
+        salaryButton.setText("Sort by Salary");
+        salaryButton.setPreferredSize(new java.awt.Dimension(150, 30));
 
         jButton7.setBackground(new java.awt.Color(153, 153, 255));
         jButton7.setText("+ Add New Internship");
@@ -1267,13 +1469,13 @@ public class dashboard extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel23Layout.createSequentialGroup()
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(companyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(deadlineButton, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(typeButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(salaryButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 168, Short.MAX_VALUE)
                         .addComponent(jButton7)
                         .addGap(25, 25, 25))
@@ -1288,10 +1490,10 @@ public class dashboard extends javax.swing.JFrame {
                 .addGroup(jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel25, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(deadlineButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(companyButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(typeButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(salaryButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
@@ -1372,14 +1574,14 @@ public class dashboard extends javax.swing.JFrame {
         jPanel33.setBackground(new java.awt.Color(255, 255, 255));
         jPanel33.setLayout(new java.awt.GridLayout(1, 0, 30, 0));
 
-        jButton8.setText("View Details");
-        jButton8.setPreferredSize(new java.awt.Dimension(150, 23));
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        viewDetails.setText("View Details");
+        viewDetails.setPreferredSize(new java.awt.Dimension(150, 23));
+        viewDetails.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                viewDetailsActionPerformed(evt);
             }
         });
-        jPanel33.add(jButton8);
+        jPanel33.add(viewDetails);
 
         jButton9.setText("Edit Details");
         jButton9.addActionListener(new java.awt.event.ActionListener() {
@@ -1590,14 +1792,14 @@ public class dashboard extends javax.swing.JFrame {
         jPanel41.setBackground(new java.awt.Color(255, 255, 255));
         jPanel41.setLayout(new java.awt.GridLayout(1, 0, 20, 0));
 
-        jButton2.setText("Cancel");
-        jButton2.setPreferredSize(new java.awt.Dimension(120, 30));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        cancelButton.setText("Cancel");
+        cancelButton.setPreferredSize(new java.awt.Dimension(120, 30));
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                cancelButtonActionPerformed(evt);
             }
         });
-        jPanel41.add(jButton2);
+        jPanel41.add(cancelButton);
 
         add_updateButton.setBackground(new java.awt.Color(153, 153, 255));
         add_updateButton.addActionListener(new java.awt.event.ActionListener() {
@@ -2150,6 +2352,7 @@ public class dashboard extends javax.swing.JFrame {
         jPanel65.setPreferredSize(new java.awt.Dimension(170, 544));
         jPanel65.setLayout(new java.awt.CardLayout());
 
+        studentNav1.setBackground(new java.awt.Color(255, 255, 255));
         studentNav1.setAutoscrolls(true);
 
         adminNavigation3.setPreferredSize(new java.awt.Dimension(13, 185));
@@ -2398,7 +2601,7 @@ public class dashboard extends javax.swing.JFrame {
         jLabel47.setText("200+");
         jPanel71.add(jLabel47, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, -1, 30));
 
-        jLabel48.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/backgroud3.png"))); // NOI18N
+        jLabel48.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/background.png"))); // NOI18N
         jLabel48.setText("jLabel4");
         jPanel71.add(jLabel48, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 150));
 
@@ -2418,7 +2621,7 @@ public class dashboard extends javax.swing.JFrame {
         jLabel56.setText("75");
         jPanel77.add(jLabel56, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 50, 40));
 
-        jLabel57.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/backgroud3.png"))); // NOI18N
+        jLabel57.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/background.png"))); // NOI18N
         jPanel77.add(jLabel57, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, 150));
 
         gridPanel1.add(jPanel77);
@@ -2437,7 +2640,7 @@ public class dashboard extends javax.swing.JFrame {
         jLabel59.setText("113");
         jPanel78.add(jLabel59, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, -1, -1));
 
-        jLabel60.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/background4.png"))); // NOI18N
+        jLabel60.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/background.png"))); // NOI18N
         jLabel60.setText("jLabel4");
         jPanel78.add(jLabel60, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 151));
 
@@ -2554,16 +2757,118 @@ public class dashboard extends javax.swing.JFrame {
 
         cardPanel1.add(dashboardPanel1, "dashboard");
 
-        javax.swing.GroupLayout applicationsView1Layout = new javax.swing.GroupLayout(applicationsView1);
-        applicationsView1.setLayout(applicationsView1Layout);
-        applicationsView1Layout.setHorizontalGroup(
-            applicationsView1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        applicationsView1.setLayout(new java.awt.BorderLayout());
+
+        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel7.setPreferredSize(new java.awt.Dimension(60, 514));
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 60, Short.MAX_VALUE)
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 518, Short.MAX_VALUE)
+        );
+
+        applicationsView1.add(jPanel7, java.awt.BorderLayout.LINE_START);
+
+        jPanel62.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel62.setPreferredSize(new java.awt.Dimension(60, 514));
+
+        javax.swing.GroupLayout jPanel62Layout = new javax.swing.GroupLayout(jPanel62);
+        jPanel62.setLayout(jPanel62Layout);
+        jPanel62Layout.setHorizontalGroup(
+            jPanel62Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 60, Short.MAX_VALUE)
+        );
+        jPanel62Layout.setVerticalGroup(
+            jPanel62Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 518, Short.MAX_VALUE)
+        );
+
+        applicationsView1.add(jPanel62, java.awt.BorderLayout.LINE_END);
+
+        jPanel63.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel69.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel69.setText("All Internships");
+
+        jButton18.setText("Sort By Company");
+        jButton18.setPreferredSize(new java.awt.Dimension(150, 30));
+
+        jButton19.setText("Sort By Deadline");
+        jButton19.setPreferredSize(new java.awt.Dimension(150, 30));
+
+        jButton1.setText("Sort by Type");
+
+        jButton20.setText("Sort By Title");
+        jButton20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton20ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel63Layout = new javax.swing.GroupLayout(jPanel63);
+        jPanel63.setLayout(jPanel63Layout);
+        jPanel63Layout.setHorizontalGroup(
+            jPanel63Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel63Layout.createSequentialGroup()
+                .addGap(64, 64, 64)
+                .addGroup(jPanel63Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel63Layout.createSequentialGroup()
+                        .addComponent(jButton20, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton19, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel69))
+                .addContainerGap(236, Short.MAX_VALUE))
+        );
+        jPanel63Layout.setVerticalGroup(
+            jPanel63Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel63Layout.createSequentialGroup()
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addComponent(jLabel69)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel63Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton20, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19))
+        );
+
+        applicationsView1.add(jPanel63, java.awt.BorderLayout.PAGE_START);
+
+        jPanel72.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel72.setPreferredSize(new java.awt.Dimension(946, 80));
+
+        javax.swing.GroupLayout jPanel72Layout = new javax.swing.GroupLayout(jPanel72);
+        jPanel72.setLayout(jPanel72Layout);
+        jPanel72Layout.setHorizontalGroup(
+            jPanel72Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 946, Short.MAX_VALUE)
         );
-        applicationsView1Layout.setVerticalGroup(
-            applicationsView1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 714, Short.MAX_VALUE)
+        jPanel72Layout.setVerticalGroup(
+            jPanel72Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 80, Short.MAX_VALUE)
         );
+
+        applicationsView1.add(jPanel72, java.awt.BorderLayout.PAGE_END);
+
+        jPanel85.setLayout(new java.awt.BorderLayout());
+
+        studentCardContainerPanel.setLayout(new java.awt.GridBagLayout());
+        internshipScrollPane.setViewportView(studentCardContainerPanel);
+
+        jPanel85.add(internshipScrollPane, java.awt.BorderLayout.CENTER);
+
+        applicationsView1.add(jPanel85, java.awt.BorderLayout.CENTER);
 
         cardPanel1.add(applicationsView1, "card4");
 
@@ -2571,15 +2876,24 @@ public class dashboard extends javax.swing.JFrame {
 
         jPanel112.setBackground(new java.awt.Color(255, 255, 255));
 
+        jLabel70.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel70.setText("System Information");
+        jLabel70.setPreferredSize(new java.awt.Dimension(55, 50));
+
         javax.swing.GroupLayout jPanel112Layout = new javax.swing.GroupLayout(jPanel112);
         jPanel112.setLayout(jPanel112Layout);
         jPanel112Layout.setHorizontalGroup(
             jPanel112Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 946, Short.MAX_VALUE)
+            .addGroup(jPanel112Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel70, javax.swing.GroupLayout.PREFERRED_SIZE, 746, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(194, Short.MAX_VALUE))
         );
         jPanel112Layout.setVerticalGroup(
             jPanel112Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel112Layout.createSequentialGroup()
+                .addGap(0, 50, Short.MAX_VALUE)
+                .addComponent(jLabel70, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         studentsettingPanel1.add(jPanel112, java.awt.BorderLayout.PAGE_START);
@@ -2633,25 +2947,228 @@ public class dashboard extends javax.swing.JFrame {
 
         jPanel117.setBackground(new java.awt.Color(255, 255, 255));
         jPanel117.setLayout(new java.awt.BorderLayout());
-
-        jLabel70.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel70.setText("System Information");
-        jLabel70.setPreferredSize(new java.awt.Dimension(55, 50));
-        jPanel117.add(jLabel70, java.awt.BorderLayout.PAGE_START);
-
-        jTextArea6.setColumns(20);
-        jTextArea6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextArea6.setRows(5);
-        jTextArea6.setText("Admin Name : External Partnership Department\n\nRole: Admin \n\nEmail: externalpartnership@islingtoncollege.edu.np\n\nPassword:  admin123\n\n\nApplication Name: InternUp \n\nVersion: v1.0 (Academic Release)\n\nDescription:\n\nInternUp is an academic internship management system developed for educational purposes. \nThe system allows administrators to manage internship listings, monitor applications, and maintain \nstructured internship records within a controlled academic environment.");
-        jScrollPane12.setViewportView(jTextArea6);
-
-        jPanel117.add(jScrollPane12, java.awt.BorderLayout.CENTER);
-
         jPanel114.add(jPanel117, java.awt.BorderLayout.CENTER);
 
         studentsettingPanel1.add(jPanel114, java.awt.BorderLayout.CENTER);
 
         cardPanel1.add(studentsettingPanel1, "card6");
+
+        addNewInternship1.setBackground(new java.awt.Color(255, 255, 255));
+        addNewInternship1.setLayout(new java.awt.BorderLayout());
+
+        jPanel86.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel86.setPreferredSize(new java.awt.Dimension(817, 40));
+
+        javax.swing.GroupLayout jPanel86Layout = new javax.swing.GroupLayout(jPanel86);
+        jPanel86.setLayout(jPanel86Layout);
+        jPanel86Layout.setHorizontalGroup(
+            jPanel86Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 946, Short.MAX_VALUE)
+        );
+        jPanel86Layout.setVerticalGroup(
+            jPanel86Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+
+        addNewInternship1.add(jPanel86, java.awt.BorderLayout.PAGE_START);
+
+        jPanel87.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel87.setLayout(new java.awt.BorderLayout());
+
+        jPanel88.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel88Layout = new javax.swing.GroupLayout(jPanel88);
+        jPanel88.setLayout(jPanel88Layout);
+        jPanel88Layout.setHorizontalGroup(
+            jPanel88Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel88Layout.setVerticalGroup(
+            jPanel88Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 674, Short.MAX_VALUE)
+        );
+
+        jPanel87.add(jPanel88, java.awt.BorderLayout.WEST);
+
+        jPanel89.setLayout(new java.awt.BorderLayout());
+
+        jPanel90.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel90Layout = new javax.swing.GroupLayout(jPanel90);
+        jPanel90.setLayout(jPanel90Layout);
+        jPanel90Layout.setHorizontalGroup(
+            jPanel90Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel90Layout.setVerticalGroup(
+            jPanel90Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 674, Short.MAX_VALUE)
+        );
+
+        jPanel89.add(jPanel90, java.awt.BorderLayout.LINE_END);
+
+        jPanel91.setLayout(new java.awt.BorderLayout());
+
+        jPanel92.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel92.setPreferredSize(new java.awt.Dimension(617, 210));
+        jPanel92.setLayout(new java.awt.GridLayout(6, 2, 50, 5));
+
+        jLabel71.setText("Title");
+        jLabel71.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jLabel71.setInheritsPopupMenu(false);
+        jPanel92.add(jLabel71);
+
+        jLabel72.setText("Company");
+        jLabel72.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jPanel92.add(jLabel72);
+
+        titleFieldS.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        titleFieldS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                titleFieldSActionPerformed(evt);
+            }
+        });
+        jPanel92.add(titleFieldS);
+
+        companyFieldS.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jPanel92.add(companyFieldS);
+
+        jLabel73.setText("Deadline");
+        jLabel73.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jPanel92.add(jLabel73);
+
+        jLabel74.setText("Salary");
+        jLabel74.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jPanel92.add(jLabel74);
+
+        jPanel93.setLayout(new java.awt.GridLayout(1, 3));
+
+        dayCombo1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Day", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
+        dayCombo1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        dayCombo1.setPreferredSize(new java.awt.Dimension(82, 22));
+        jPanel93.add(dayCombo1);
+
+        monthComboS.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Month", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" }));
+        jPanel93.add(monthComboS);
+
+        yearComboS.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Year", "2025", "2026", "2027" }));
+        yearComboS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                yearComboSActionPerformed(evt);
+            }
+        });
+        jPanel93.add(yearComboS);
+
+        jPanel92.add(jPanel93);
+
+        salaryFieldS.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jPanel92.add(salaryFieldS);
+
+        jLabel75.setText("Internship Type");
+        jLabel75.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jPanel92.add(jLabel75);
+
+        jLabel76.setText("Duration");
+        jLabel76.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jPanel92.add(jLabel76);
+
+        typeComboS.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Remote", "On Site", "International" }));
+        jPanel92.add(typeComboS);
+
+        durationComboS.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 Month", "3 Months", "6 Months", "12 Months ", "36 Months" }));
+        durationComboS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                durationComboSActionPerformed(evt);
+            }
+        });
+        jPanel92.add(durationComboS);
+
+        jPanel91.add(jPanel92, java.awt.BorderLayout.PAGE_START);
+
+        jPanel94.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel94.setPreferredSize(new java.awt.Dimension(617, 50));
+
+        jPanel95.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel95.setLayout(new java.awt.GridLayout(1, 0, 20, 0));
+
+        jButton17.setText("Exit");
+        jButton17.setPreferredSize(new java.awt.Dimension(120, 30));
+        jButton17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton17ActionPerformed(evt);
+            }
+        });
+        jPanel95.add(jButton17);
+
+        add_updateButton1.setBackground(new java.awt.Color(153, 153, 255));
+        add_updateButton1.setText("Apply");
+        add_updateButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                add_updateButton1ActionPerformed(evt);
+            }
+        });
+        jPanel95.add(add_updateButton1);
+
+        javax.swing.GroupLayout jPanel94Layout = new javax.swing.GroupLayout(jPanel94);
+        jPanel94.setLayout(jPanel94Layout);
+        jPanel94Layout.setHorizontalGroup(
+            jPanel94Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel94Layout.createSequentialGroup()
+                .addContainerGap(466, Short.MAX_VALUE)
+                .addComponent(jPanel95, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
+        );
+        jPanel94Layout.setVerticalGroup(
+            jPanel94Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel94Layout.createSequentialGroup()
+                .addContainerGap(14, Short.MAX_VALUE)
+                .addComponent(jPanel95, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jPanel91.add(jPanel94, java.awt.BorderLayout.PAGE_END);
+
+        jPanel96.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel96.setLayout(new java.awt.BorderLayout());
+
+        jLabel77.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel77.setText("Description");
+        jLabel77.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jLabel77.setPreferredSize(new java.awt.Dimension(43, 50));
+        jPanel96.add(jLabel77, java.awt.BorderLayout.PAGE_START);
+
+        skillAreaS.setColumns(20);
+        skillAreaS.setRows(5);
+        jScrollPane6.setViewportView(skillAreaS);
+
+        jPanel96.add(jScrollPane6, java.awt.BorderLayout.PAGE_END);
+
+        jPanel97.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel97.setLayout(new java.awt.BorderLayout());
+
+        descriptionAreaS.setColumns(20);
+        descriptionAreaS.setRows(5);
+        jScrollPane8.setViewportView(descriptionAreaS);
+
+        jPanel97.add(jScrollPane8, java.awt.BorderLayout.CENTER);
+
+        jLabel78.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel78.setText("Skills Required");
+        jLabel78.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jLabel78.setPreferredSize(new java.awt.Dimension(43, 26));
+        jPanel97.add(jLabel78, java.awt.BorderLayout.PAGE_END);
+
+        jPanel96.add(jPanel97, java.awt.BorderLayout.CENTER);
+
+        jPanel91.add(jPanel96, java.awt.BorderLayout.CENTER);
+
+        jPanel89.add(jPanel91, java.awt.BorderLayout.CENTER);
+
+        jPanel87.add(jPanel89, java.awt.BorderLayout.CENTER);
+
+        addNewInternship1.add(jPanel87, java.awt.BorderLayout.CENTER);
+
+        cardPanel1.add(addNewInternship1, "card5");
 
         Student.add(cardPanel1, java.awt.BorderLayout.CENTER);
 
@@ -2665,7 +3182,7 @@ public class dashboard extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(parentcard, javax.swing.GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE)
+            .addComponent(parentcard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -2683,6 +3200,7 @@ public class dashboard extends javax.swing.JFrame {
         cl.show(cardPanel, "card3"); 
         resetNavColors();
         manageNav.setBackground(activeColor);
+        
     }//GEN-LAST:event_manageNavMouseClicked
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -2697,13 +3215,69 @@ public class dashboard extends javax.swing.JFrame {
         add_updateButton.setText("Post Internship");
     }//GEN-LAST:event_jButton7ActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void typeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_typeButtonActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton8ActionPerformed
+    private void viewMode(){
+        titleField.setEnabled(true);titleField.setEditable(false);titleField.setFocusable(false);titleField.setBackground(Color.WHITE);titleField.setForeground(Color.BLACK);
+        companyField.setEnabled(true);companyField.setEditable(false);companyField.setFocusable(false);companyField.setBackground(Color.WHITE);companyField.setForeground(Color.BLACK);
+        skillArea.setEnabled(true);skillArea.setEditable(false);skillArea.setFocusable(false);skillArea.setBackground(Color.WHITE);skillArea.setForeground(Color.BLACK);
+        salaryField.setEnabled(true);salaryField.setEditable(false);salaryField.setFocusable(false);salaryField.setBackground(Color.WHITE);salaryField.setForeground(Color.BLACK);
+        descriptionArea.setEnabled(true);descriptionArea.setEditable(false);descriptionArea.setFocusable(false);descriptionArea.setBackground(Color.WHITE);descriptionArea.setForeground(Color.BLACK);
+        typeCombo.setEnabled(false);typeCombo.setEditable(false);typeCombo.setFocusable(false);typeCombo.setBackground(Color.WHITE);typeCombo.setForeground(Color.BLACK);
+        durationCombo.setEnabled(false);durationCombo.setEditable(false);durationCombo.setFocusable(false);durationCombo.setBackground(Color.WHITE);durationCombo.setForeground(Color.BLACK);
+        yearCombo.setEnabled(false);yearCombo.setEditable(false);yearCombo.setFocusable(false);yearCombo.setBackground(Color.WHITE);yearCombo.setForeground(Color.BLACK);
+        monthCombo.setEnabled(false);monthCombo.setEditable(false);monthCombo.setFocusable(false);monthCombo.setBackground(Color.WHITE);monthCombo.setForeground(Color.BLACK);
+        dayCombo.setEnabled(false); dayCombo.setEditable(false);dayCombo.setFocusable(false);dayCombo.setBackground(Color.WHITE);dayCombo.setForeground(Color.BLACK);
+    }
+    private void editMode(){
+        titleField.setEditable(true);titleField.setFocusable(true);
+        companyField.setEditable(true);companyField.setFocusable(true);
+        salaryField.setEditable(true);salaryField.setFocusable(true);
+        descriptionArea.setEditable(true);descriptionArea.setFocusable(true);
+        skillArea.setEditable(true);skillArea.setFocusable(true);
+        typeCombo.setEnabled(true);typeCombo.setFocusable(true);typeCombo.setBackground(Color.WHITE);typeCombo.setForeground(Color.BLACK);
+        durationCombo.setEnabled(true);durationCombo.setFocusable(true);durationCombo.setBackground(Color.WHITE);durationCombo.setForeground(Color.BLACK);
+        yearCombo.setEnabled(true);yearCombo.setFocusable(true);yearCombo.setBackground(Color.WHITE);yearCombo.setForeground(Color.BLACK);
+        monthCombo.setEnabled(true);monthCombo.setFocusable(true);monthCombo.setBackground(Color.WHITE);monthCombo.setForeground(Color.BLACK);
+        dayCombo.setEnabled(true); dayCombo.setFocusable(true);dayCombo.setBackground(Color.WHITE);dayCombo.setForeground(Color.BLACK);
+
+    }
+    private void viewDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewDetailsActionPerformed
+        int selectedRow = internshipTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this,
+                    "Please select an internship to view.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }else{
+            isViewMode = true;
+            isUpdateMode = false;
+
+            CardLayout c13 = (CardLayout)(cardPanel.getLayout());
+            c13.show(cardPanel, "card5");
+            add_updateButton.setText("Exit");
+            cancelButton.setVisible(false);
+            editingIndex = selectedRow;
+
+            Internship i = InternshipController.internshipList.get(selectedRow);
+
+            titleField.setText(i.getTitle());
+            companyField.setText(i.getCompany());
+            salaryField.setText(String.valueOf(i.getSalary()));            
+            descriptionArea.setText(i.getDescription());
+            skillArea.setText(i.getRequirement());
+            typeCombo.setSelectedItem(i.getType());
+            durationCombo.setSelectedItem(i.getDuration());
+            String[] date = i.getDeadline().split("-");
+            yearCombo.setSelectedItem(date[0]);
+            monthCombo.setSelectedItem(date[1]);
+            dayCombo1.setSelectedItem(date[2]);
+            
+            viewMode();              
+        }
+    }//GEN-LAST:event_viewDetailsActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         
@@ -2733,7 +3307,7 @@ public class dashboard extends javax.swing.JFrame {
         yearCombo.setSelectedItem(date[0]);
         monthCombo.setSelectedItem(date[1]);
         dayCombo.setSelectedItem(date[2]);
-
+        editMode();
         CardLayout c13 = (CardLayout)(cardPanel.getLayout());
         c13.show(cardPanel, "card5");
         add_updateButton.setText("Update");
@@ -2750,7 +3324,7 @@ public class dashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_titleFieldActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         int userChoice = JOptionPane.showConfirmDialog(this,"Are you sure you want to cancel?", 
         "Confirm Cancel",JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         
@@ -2759,7 +3333,7 @@ public class dashboard extends javax.swing.JFrame {
             CardLayout cl9 = (CardLayout)(cardPanel.getLayout());
             cl9.show(cardPanel, "card3");
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void durationComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_durationComboActionPerformed
         // TODO add your handling code here:
@@ -2802,10 +3376,11 @@ public class dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_studentDashboardNavMouseClicked
 
     private void jPanel73MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel73MouseClicked
-        CardLayout cl = (CardLayout)(cardPanel.getLayout());
-        cl.show(cardPanel, "card3"); 
+        CardLayout cl = (CardLayout)(cardPanel1.getLayout());
+        cl.show(cardPanel1, "card4"); 
         resetNavColors();
         manageNav.setBackground(activeColor);
+        loadStudentInternshipCards();
     }//GEN-LAST:event_jPanel73MouseClicked
 
     private void jPanel74MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel74MouseClicked
@@ -2820,7 +3395,9 @@ public class dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel75MouseClicked
 
     private void jPanel76MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel76MouseClicked
-        // TODO add your handling code here:
+        CardLayout c14 = (CardLayout)(parentcard.getLayout());
+        c14.show(parentcard, "card4"); 
+        resetNavColors();
     }//GEN-LAST:event_jPanel76MouseClicked
 
     private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
@@ -2856,7 +3433,7 @@ public class dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton15ActionPerformed
 
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
-        // TODO add your handling code here:
+
         CardLayout c2 = (CardLayout)(cardPanel2.getLayout());
         c2.show(cardPanel2, "AdminPanel");
 
@@ -2874,6 +3451,16 @@ public class dashboard extends javax.swing.JFrame {
         dayCombo.setSelectedIndex(0);
     }
     private void add_updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_updateButtonActionPerformed
+        if (isViewMode) {
+                isViewMode = false;
+                clearInternshipForm();
+                add_updateButton.setText("Post Internship");
+
+                CardLayout cl = (CardLayout)(cardPanel.getLayout());
+                cl.show(cardPanel, "card3"); 
+                return;
+            }
+        
         String title = titleField.getText().trim();
         String company = companyField.getText().trim();
         String year = yearCombo.getSelectedItem().toString();
@@ -2906,25 +3493,21 @@ public class dashboard extends javax.swing.JFrame {
             
             deadline = year + "-" + month + "-" + day;
             
-            if (InternshipController.isDuplicateInternship(title, company, deadline, salary, type, duration, description, requirement)) {
-                JOptionPane.showMessageDialog(this,"This internship already exists. Cannot add duplicate.","Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            if (isUpdateMode == false) 
+            if (isUpdateMode) 
             {
-                int userChoice1 = JOptionPane.showConfirmDialog(this,"Are you sure you want to add post new Internship.", 
-                                                                    "Confirm",JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-                if (userChoice1 == JOptionPane.YES_OPTION) {
-
-                    InternshipController.addInternship(title,company,deadline, salary,type, duration, description,requirement);
-                    loadInternshipsToTable();
-                    clearInternshipForm();
-                    JOptionPane.showMessageDialog(this, "Internship added successfully.","Success", JOptionPane.INFORMATION_MESSAGE);
+                if (InternshipController.isSameAsOriginal( editingIndex, title, company, deadline,salary, type, duration, description, requirement)) 
+                {
+                    JOptionPane.showMessageDialog(this,"You must change at least one field to update.","Error",JOptionPane.WARNING_MESSAGE);
+                    return;
                 }
 
-            }
-                if(isUpdateMode == true)
+                //Full duplicate exists elsewhere
+                if (InternshipController.isDuplicateForUpdate(editingIndex, title, company, deadline,salary, type, duration, description, requirement)) 
                 {
+                    JOptionPane.showMessageDialog(this,"An internship with the same details already exists.","Error",JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
                 int userChoice2 = JOptionPane.showConfirmDialog(this,"Are you sure you want to update Internship.", 
                                                                     "Confirm",JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
                     if (userChoice2 == JOptionPane.YES_OPTION) {
@@ -2936,12 +3519,26 @@ public class dashboard extends javax.swing.JFrame {
                     isUpdateMode = false;
                     editingIndex = -1;
                     add_updateButton.setText("Post Internship");
+                    CardLayout cl = (CardLayout)(cardPanel.getLayout());
+                    cl.show(cardPanel, "card3"); 
                      
                     }
-                
+            }
+            else{
+                int userChoice1 = JOptionPane.showConfirmDialog(this,"Are you sure you want to add post new Internship.", 
+                                                                    "Confirm",JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                if (userChoice1 == JOptionPane.YES_OPTION) 
+                {
+                    InternshipController.addInternship(title,company,deadline, salary,type, duration, description,requirement);
+                    loadInternshipsToTable();
+                    clearInternshipForm();
+                    JOptionPane.showMessageDialog(this, "Internship added successfully.","Success", JOptionPane.INFORMATION_MESSAGE);
+                    CardLayout cl = (CardLayout)(cardPanel.getLayout());
+                    cl.show(cardPanel, "card3"); 
                 }
-            } 
-              
+            }
+            
+        }                          
     }//GEN-LAST:event_add_updateButtonActionPerformed
 
     private void yearComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearComboActionPerformed
@@ -2981,11 +3578,11 @@ public class dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel63MouseClicked
 
     private void jLabel63FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jLabel63FocusLost
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jLabel63FocusLost
 
     private void jLabel63MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel63MouseMoved
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jLabel63MouseMoved
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
@@ -3010,6 +3607,36 @@ public class dashboard extends javax.swing.JFrame {
     private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField8ActionPerformed
+
+    private void titleFieldSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_titleFieldSActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_titleFieldSActionPerformed
+
+    private void yearComboSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearComboSActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_yearComboSActionPerformed
+
+    private void durationComboSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_durationComboSActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_durationComboSActionPerformed
+
+    private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
+        CardLayout cl = (CardLayout)(cardPanel1.getLayout());
+        cl.show(cardPanel1, "card4"); 
+    }//GEN-LAST:event_jButton17ActionPerformed
+
+    private void add_updateButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_updateButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_add_updateButton1ActionPerformed
+
+    private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
+        
+    }//GEN-LAST:event_jButton20ActionPerformed
+
+    private void companyButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_companyButtonMouseClicked
+        resetSortButtonColors();
+        companyButton.setBackground(activeColor);
+    }//GEN-LAST:event_companyButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -3058,30 +3685,41 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel StudentPanel;
     private javax.swing.JPanel StudentPanel1;
     private javax.swing.JPanel addNewInternship;
+    private javax.swing.JPanel addNewInternship1;
     private javax.swing.JButton add_updateButton;
+    private javax.swing.JButton add_updateButton1;
     private javax.swing.JPanel adminNavigation;
     private javax.swing.JPanel adminNavigation3;
     private javax.swing.JPanel applicationNav;
     private javax.swing.JPanel applicationsView;
     private javax.swing.JPanel applicationsView1;
     private javax.swing.JPanel archiveNav;
+    private javax.swing.JButton cancelButton;
     private javax.swing.JPanel cardContainerPanel;
     private javax.swing.JPanel cardPanel;
     private javax.swing.JPanel cardPanel1;
     private javax.swing.JPanel cardPanel2;
+    private javax.swing.JButton companyButton;
     private javax.swing.JTextField companyField;
+    private javax.swing.JTextField companyFieldS;
     private javax.swing.JPanel dashboardNav;
     private javax.swing.JPanel dashboardPanel;
     private javax.swing.JPanel dashboardPanel1;
     private javax.swing.JComboBox<String> dayCombo;
+    private javax.swing.JComboBox<String> dayCombo1;
+    private javax.swing.JButton deadlineButton;
     private javax.swing.JTable deletedInternshipTable;
     private javax.swing.JPanel deletedPanel;
     private javax.swing.JTextArea descriptionArea;
+    private javax.swing.JTextArea descriptionAreaS;
     private javax.swing.JComboBox<String> durationCombo;
+    private javax.swing.JComboBox<String> durationComboS;
     private javax.swing.JPanel gridPanel;
     private javax.swing.JPanel gridPanel1;
     private javax.swing.JPanel internshipPreviewPanel;
+    private javax.swing.JScrollPane internshipScrollPane;
     private javax.swing.JTable internshipTable;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
@@ -3089,13 +3727,11 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton16;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton17;
+    private javax.swing.JButton jButton18;
+    private javax.swing.JButton jButton19;
+    private javax.swing.JButton jButton20;
     private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -3162,8 +3798,17 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel66;
     private javax.swing.JLabel jLabel67;
     private javax.swing.JLabel jLabel68;
+    private javax.swing.JLabel jLabel69;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel70;
+    private javax.swing.JLabel jLabel71;
+    private javax.swing.JLabel jLabel72;
+    private javax.swing.JLabel jLabel73;
+    private javax.swing.JLabel jLabel74;
+    private javax.swing.JLabel jLabel75;
+    private javax.swing.JLabel jLabel76;
+    private javax.swing.JLabel jLabel77;
+    private javax.swing.JLabel jLabel78;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -3230,14 +3875,18 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel60;
     private javax.swing.JPanel jPanel61;
+    private javax.swing.JPanel jPanel62;
+    private javax.swing.JPanel jPanel63;
     private javax.swing.JPanel jPanel64;
     private javax.swing.JPanel jPanel65;
     private javax.swing.JPanel jPanel66;
     private javax.swing.JPanel jPanel67;
     private javax.swing.JPanel jPanel68;
     private javax.swing.JPanel jPanel69;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel70;
     private javax.swing.JPanel jPanel71;
+    private javax.swing.JPanel jPanel72;
     private javax.swing.JPanel jPanel73;
     private javax.swing.JPanel jPanel74;
     private javax.swing.JPanel jPanel75;
@@ -3251,20 +3900,33 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel82;
     private javax.swing.JPanel jPanel83;
     private javax.swing.JPanel jPanel84;
+    private javax.swing.JPanel jPanel85;
+    private javax.swing.JPanel jPanel86;
+    private javax.swing.JPanel jPanel87;
+    private javax.swing.JPanel jPanel88;
+    private javax.swing.JPanel jPanel89;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JPanel jPanel90;
+    private javax.swing.JPanel jPanel91;
+    private javax.swing.JPanel jPanel92;
+    private javax.swing.JPanel jPanel93;
+    private javax.swing.JPanel jPanel94;
+    private javax.swing.JPanel jPanel95;
+    private javax.swing.JPanel jPanel96;
+    private javax.swing.JPanel jPanel97;
     private javax.swing.JPasswordField jPasswordField2;
     private javax.swing.JPasswordField jPasswordField3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable4;
     private javax.swing.JTextArea jTextArea4;
-    private javax.swing.JTextArea jTextArea6;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField7;
@@ -3275,19 +3937,29 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel manageInternship;
     private javax.swing.JPanel manageNav;
     private javax.swing.JComboBox<String> monthCombo;
+    private javax.swing.JComboBox<String> monthComboS;
     private javax.swing.JPanel parentcard;
     private javax.swing.JPasswordField passwordField;
+    private javax.swing.JButton salaryButton;
     private javax.swing.JTextField salaryField;
+    private javax.swing.JTextField salaryFieldS;
     private javax.swing.JPanel settingPanel;
     private javax.swing.JPanel settingsNav;
     private javax.swing.JPanel sideImagePanel;
     private javax.swing.JTextArea skillArea;
+    private javax.swing.JTextArea skillAreaS;
+    private javax.swing.JPanel studentCardContainerPanel;
     private javax.swing.JPanel studentDashboardNav;
     private javax.swing.JPanel studentNav1;
     private javax.swing.JPanel studentsettingPanel1;
     private javax.swing.JTextField titleField;
+    private javax.swing.JTextField titleFieldS;
+    private javax.swing.JButton typeButton;
     private javax.swing.JComboBox<String> typeCombo;
+    private javax.swing.JComboBox<String> typeComboS;
     private javax.swing.JTextField usernameField;
+    private javax.swing.JButton viewDetails;
     private javax.swing.JComboBox<String> yearCombo;
+    private javax.swing.JComboBox<String> yearComboS;
     // End of variables declaration//GEN-END:variables
 }
