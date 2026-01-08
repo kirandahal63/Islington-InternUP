@@ -90,20 +90,19 @@ public class dashboard extends javax.swing.JFrame {
     }
     private void loadDeletedInternshipsToTable() {
 
-    archivedTableModel.setRowCount(0);
-    for (Internship i : InternshipController.deletedInternshipList) {
-
-        Object[] row = {
-            i.getId(),
-            i.getTitle(),
-            i.getCompany(),
-            i.getType(),
-            i.getDuration(),
-            i.getDeadline()
-        };
-
-        archivedTableModel.addRow(row);
-    }
+        archivedTableModel.setRowCount(0);
+        for (int i = InternshipController.top; i >= 0; i--) {
+            Internship in = InternshipController.deletedInternshipStack[i];
+            Object[] row = {
+                in.getId(),
+                in.getTitle(),
+                in.getCompany(),
+                in.getType(),
+                in.getDuration(),
+                in.getDeadline()
+            };
+            archivedTableModel.addRow(row);
+        }
     }
     
     private void resetNavColors() {
@@ -499,7 +498,7 @@ public void openStudentInternshipDetails(Internship i) {
         jPanel52 = new javax.swing.JPanel();
         jPanel53 = new javax.swing.JPanel();
         jPanel54 = new javax.swing.JPanel();
-        jButton11 = new javax.swing.JButton();
+        restoreButton = new javax.swing.JButton();
         jPanel55 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         deletedInternshipTable = new javax.swing.JTable();
@@ -1906,12 +1905,12 @@ public void openStudentInternshipDetails(Internship i) {
 
         jPanel54.setBackground(new java.awt.Color(255, 255, 255));
 
-        jButton11.setBackground(new java.awt.Color(153, 153, 255));
-        jButton11.setText("Restore Internship");
-        jButton11.setPreferredSize(new java.awt.Dimension(109, 23));
-        jButton11.addActionListener(new java.awt.event.ActionListener() {
+        restoreButton.setBackground(new java.awt.Color(153, 153, 255));
+        restoreButton.setText("Restore Internship");
+        restoreButton.setPreferredSize(new java.awt.Dimension(109, 23));
+        restoreButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton11ActionPerformed(evt);
+                restoreButtonActionPerformed(evt);
             }
         });
 
@@ -1921,14 +1920,14 @@ public void openStudentInternshipDetails(Internship i) {
             jPanel54Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel54Layout.createSequentialGroup()
                 .addContainerGap(804, Short.MAX_VALUE)
-                .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(restoreButton, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(63, 63, 63))
         );
         jPanel54Layout.setVerticalGroup(
             jPanel54Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel54Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(restoreButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(48, Short.MAX_VALUE))
         );
 
@@ -3346,9 +3345,33 @@ public void openStudentInternshipDetails(Internship i) {
         settingsNav.setBackground(activeColor);
     }//GEN-LAST:event_settingsNavMouseClicked
 
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton11ActionPerformed
+    private void restoreButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restoreButtonActionPerformed
+        if (InternshipController.top == -1) { // stack empty
+        JOptionPane.showMessageDialog(this, 
+            "No deleted internships to restore.",
+            "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+        }
+
+        int choice = JOptionPane.showConfirmDialog(this,
+            "Are you sure you want to restore the last deleted internship?",
+            "Confirm Restore", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+        if (choice == JOptionPane.YES_OPTION) {
+            boolean success = InternshipController.restoreInternship(); // POP from stack
+            if (success) {
+                JOptionPane.showMessageDialog(this, 
+                    "Internship restored successfully.",
+                    "Success", JOptionPane.INFORMATION_MESSAGE);
+                loadInternshipsToTable();
+                loadDeletedInternshipsToTable(); // if you have a table showing stack contents
+            } else {
+                JOptionPane.showMessageDialog(this, 
+                    "Failed to restore internship.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_restoreButtonActionPerformed
 
     private void archiveNavMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_archiveNavMouseClicked
         CardLayout c7 = (CardLayout)(cardPanel.getLayout());
@@ -3569,7 +3592,6 @@ public void openStudentInternshipDetails(Internship i) {
                                               "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
-
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jLabel63MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel63MouseClicked
@@ -3721,7 +3743,6 @@ public void openStudentInternshipDetails(Internship i) {
     private javax.swing.JTable internshipTable;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
@@ -3940,6 +3961,7 @@ public void openStudentInternshipDetails(Internship i) {
     private javax.swing.JComboBox<String> monthComboS;
     private javax.swing.JPanel parentcard;
     private javax.swing.JPasswordField passwordField;
+    private javax.swing.JButton restoreButton;
     private javax.swing.JButton salaryButton;
     private javax.swing.JTextField salaryField;
     private javax.swing.JTextField salaryFieldS;

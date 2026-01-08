@@ -12,7 +12,10 @@ import model.Internship;
  */
 public class InternshipController {
     public static LinkedList<Internship> internshipList = new LinkedList<>();
-    public static LinkedList<Internship> deletedInternshipList = new LinkedList<>();
+    static final int STACK_MAX = 50;
+    public static Internship[] deletedInternshipStack = new Internship[STACK_MAX];
+    public static int top = -1;
+
     
     public static void addDefaultInternship ()
     {
@@ -137,15 +140,39 @@ public class InternshipController {
         return false;
     }
     
-    public static boolean deleteInternship(int index) 
-    {
+    public static boolean deleteInternship(int index) {
         if (index >= 0 && index < internshipList.size()) {
-            Internship removedinternship = internshipList.remove(index); 
-            deletedInternshipList.add(removedinternship);  
+
+            Internship removed = internshipList.remove(index);
+
+            // STACK PUSH
+            if (top == STACK_MAX - 1) {
+                return false; // stack overflow
+            }
+
+            top++;
+            deletedInternshipStack[top] = removed;
+
             return true;
         }
         return false;
     }
+    
+    public static boolean restoreInternship() {
+
+        if (top == -1) {
+            return false; // stack underflow
+        }
+
+        Internship restored = deletedInternshipStack[top];
+        deletedInternshipStack[top] = null;
+        top--;
+
+        internshipList.add(restored);
+        return true;
+    }
+
+
     
     public static void updateInternship(int index, String title, String company,String deadline, int salary, String type, String duration,String description, String requirement) 
     {
