@@ -361,16 +361,16 @@ public void openStudentInternshipDetails(Internship i) {
         jPanel59 = new javax.swing.JPanel();
         jLabel35 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jPanel56 = new javax.swing.JPanel();
-        jPanel51 = new javax.swing.JPanel();
-        jPanel43 = new javax.swing.JPanel();
+        right = new javax.swing.JPanel();
+        left = new javax.swing.JPanel();
+        south = new javax.swing.JPanel();
         cardPanel2 = new javax.swing.JPanel();
         AdminPanel = new javax.swing.JPanel();
         jLabel38 = new javax.swing.JLabel();
-        usernameField = new javax.swing.JTextField();
         jLabel39 = new javax.swing.JLabel();
         passwordField = new javax.swing.JPasswordField();
         jButton12 = new javax.swing.JButton();
+        jTextField2 = new javax.swing.JTextField();
         StudentPanel = new javax.swing.JPanel();
         AdminPanel1 = new javax.swing.JPanel();
         jLabel40 = new javax.swing.JLabel();
@@ -704,50 +704,50 @@ public void openStudentInternshipDetails(Internship i) {
         jPanel1.setPreferredSize(new java.awt.Dimension(468, 360));
         jPanel1.setLayout(new java.awt.BorderLayout());
 
-        jPanel56.setBackground(new java.awt.Color(255, 255, 255));
+        right.setBackground(new java.awt.Color(255, 255, 255));
 
-        javax.swing.GroupLayout jPanel56Layout = new javax.swing.GroupLayout(jPanel56);
-        jPanel56.setLayout(jPanel56Layout);
-        jPanel56Layout.setHorizontalGroup(
-            jPanel56Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout rightLayout = new javax.swing.GroupLayout(right);
+        right.setLayout(rightLayout);
+        rightLayout.setHorizontalGroup(
+            rightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 100, Short.MAX_VALUE)
         );
-        jPanel56Layout.setVerticalGroup(
-            jPanel56Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        rightLayout.setVerticalGroup(
+            rightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 324, Short.MAX_VALUE)
         );
 
-        jPanel1.add(jPanel56, java.awt.BorderLayout.LINE_END);
+        jPanel1.add(right, java.awt.BorderLayout.LINE_END);
 
-        jPanel51.setBackground(new java.awt.Color(255, 255, 255));
+        left.setBackground(new java.awt.Color(255, 255, 255));
 
-        javax.swing.GroupLayout jPanel51Layout = new javax.swing.GroupLayout(jPanel51);
-        jPanel51.setLayout(jPanel51Layout);
-        jPanel51Layout.setHorizontalGroup(
-            jPanel51Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout leftLayout = new javax.swing.GroupLayout(left);
+        left.setLayout(leftLayout);
+        leftLayout.setHorizontalGroup(
+            leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 100, Short.MAX_VALUE)
         );
-        jPanel51Layout.setVerticalGroup(
-            jPanel51Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        leftLayout.setVerticalGroup(
+            leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 324, Short.MAX_VALUE)
         );
 
-        jPanel1.add(jPanel51, java.awt.BorderLayout.LINE_START);
+        jPanel1.add(left, java.awt.BorderLayout.LINE_START);
 
-        jPanel43.setBackground(new java.awt.Color(255, 255, 255));
+        south.setBackground(new java.awt.Color(255, 255, 255));
 
-        javax.swing.GroupLayout jPanel43Layout = new javax.swing.GroupLayout(jPanel43);
-        jPanel43.setLayout(jPanel43Layout);
-        jPanel43Layout.setHorizontalGroup(
-            jPanel43Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 716, Short.MAX_VALUE)
+        javax.swing.GroupLayout southLayout = new javax.swing.GroupLayout(south);
+        south.setLayout(southLayout);
+        southLayout.setHorizontalGroup(
+            southLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 468, Short.MAX_VALUE)
         );
-        jPanel43Layout.setVerticalGroup(
-            jPanel43Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        southLayout.setVerticalGroup(
+            southLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        jPanel1.add(jPanel43, java.awt.BorderLayout.PAGE_END);
+        jPanel1.add(south, java.awt.BorderLayout.PAGE_END);
 
         cardPanel2.setBackground(new java.awt.Color(255, 255, 255));
         cardPanel2.setLayout(new java.awt.CardLayout());
@@ -773,19 +773,20 @@ public void openStudentInternshipDetails(Internship i) {
             }
         });
 
+        jTextField2.setText("jTextField2");
+
         javax.swing.GroupLayout AdminPanelLayout = new javax.swing.GroupLayout(AdminPanel);
         AdminPanel.setLayout(AdminPanelLayout);
         AdminPanelLayout.setHorizontalGroup(
             AdminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AdminPanelLayout.createSequentialGroup()
-                .addGap(0, 191, Short.MAX_VALUE)
-                .addGroup(AdminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel38)
-                    .addComponent(jLabel39)
-                    .addGroup(AdminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(AdminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jTextField2)
+                    .addComponent(jLabel38, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel39, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton12, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
+                    .addComponent(passwordField, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE))
                 .addGap(134, 134, 134))
         );
         AdminPanelLayout.setVerticalGroup(
@@ -794,14 +795,14 @@ public void openStudentInternshipDetails(Internship i) {
                 .addGap(14, 14, 14)
                 .addComponent(jLabel38)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel39)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(133, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         cardPanel2.add(AdminPanel, "AdminPanel");
@@ -852,26 +853,28 @@ public void openStudentInternshipDetails(Internship i) {
         AdminPanel1Layout.setHorizontalGroup(
             AdminPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(AdminPanel1Layout.createSequentialGroup()
+                .addContainerGap(176, Short.MAX_VALUE)
                 .addGroup(AdminPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(AdminPanel1Layout.createSequentialGroup()
-                        .addGap(106, 106, 106)
-                        .addComponent(jLabel63))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AdminPanel1Layout.createSequentialGroup()
-                        .addGap(96, 96, 96)
+                        .addComponent(jLabel63)
+                        .addGap(52, 52, 52))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AdminPanel1Layout.createSequentialGroup()
                         .addGroup(AdminPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel40)
-                            .addComponent(jLabel62)
-                            .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(110, Short.MAX_VALUE))
+                            .addGroup(AdminPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(AdminPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel62))))
+                        .addGap(14, 14, 14))))
         );
         AdminPanel1Layout.setVerticalGroup(
             AdminPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(AdminPanel1Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addContainerGap()
                 .addComponent(jLabel40)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(12, 12, 12)
                 .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel62)
@@ -879,9 +882,9 @@ public void openStudentInternshipDetails(Internship i) {
                 .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addGap(21, 21, 21)
                 .addComponent(jLabel63)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout StudentPanelLayout = new javax.swing.GroupLayout(StudentPanel);
@@ -890,13 +893,13 @@ public void openStudentInternshipDetails(Internship i) {
             StudentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(StudentPanelLayout.createSequentialGroup()
                 .addComponent(AdminPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 119, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         StudentPanelLayout.setVerticalGroup(
             StudentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(StudentPanelLayout.createSequentialGroup()
                 .addComponent(AdminPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 44, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         cardPanel2.add(StudentPanel, "StudentPanel");
@@ -1041,21 +1044,21 @@ public void openStudentInternshipDetails(Internship i) {
         jPanel60.setLayout(jPanel60Layout);
         jPanel60Layout.setHorizontalGroup(
             jPanel60Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel60Layout.createSequentialGroup()
-                .addContainerGap(298, Short.MAX_VALUE)
+            .addGroup(jPanel60Layout.createSequentialGroup()
+                .addGap(272, 272, 272)
                 .addComponent(jButton16)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton15)
-                .addGap(262, 262, 262))
+                .addContainerGap(294, Short.MAX_VALUE))
         );
         jPanel60Layout.setVerticalGroup(
             jPanel60Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel60Layout.createSequentialGroup()
-                .addContainerGap(84, Short.MAX_VALUE)
+                .addContainerGap(63, Short.MAX_VALUE)
                 .addGroup(jPanel60Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton16)
                     .addComponent(jButton15))
-                .addGap(23, 23, 23))
+                .addGap(44, 44, 44))
         );
 
         jPanel21.add(jPanel60, java.awt.BorderLayout.CENTER);
@@ -1079,7 +1082,7 @@ public void openStudentInternshipDetails(Internship i) {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, logo_panelLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 367, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 119, Short.MAX_VALUE)
                 .addComponent(jLabel68, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
         );
@@ -3353,8 +3356,7 @@ public void openStudentInternshipDetails(Internship i) {
         return;
         }
 
-        int choice = JOptionPane.showConfirmDialog(this,
-            "Are you sure you want to restore the last deleted internship?",
+        int choice = JOptionPane.showConfirmDialog(this,"Are you sure you want to restore the last deleted internship?",
             "Confirm Restore", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
         if (choice == JOptionPane.YES_OPTION) {
@@ -3422,32 +3424,6 @@ public void openStudentInternshipDetails(Internship i) {
         c14.show(parentcard, "card4"); 
         resetNavColors();
     }//GEN-LAST:event_jPanel76MouseClicked
-
-    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordFieldActionPerformed
-
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-       CardLayout c13 = (CardLayout)(parentcard.getLayout());
-       c13.show(parentcard, "card5");
-        
-        /*
-       String username = usernameField.getText().trim();
-       String password = new String(passwordField.getPassword()); // for JPasswordField
-
-       
-        AdminController adminController = new AdminController();
-        String result = adminController.login(username, password);
-
-        if (result == null) {
-            JOptionPane.showMessageDialog(this, "Admin Login successful!", "Success", 
-                                          JOptionPane.INFORMATION_MESSAGE);
-            CardLayout c13 = (CardLayout)(parentcard.getLayout());
-            c13.show(parentcard, "card5");  
-        } else {
-            JOptionPane.showMessageDialog(this, result, "Login Error", JOptionPane.ERROR_MESSAGE);
-        }*/
-    }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
         // TODO add your handling code here:
@@ -3594,42 +3570,6 @@ public void openStudentInternshipDetails(Internship i) {
         }
     }//GEN-LAST:event_jButton10ActionPerformed
 
-    private void jLabel63MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel63MouseClicked
-        CardLayout c3 = (CardLayout)(cardPanel2.getLayout());
-        c3.show(cardPanel2, "SignupPanel");
-    }//GEN-LAST:event_jLabel63MouseClicked
-
-    private void jLabel63FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jLabel63FocusLost
-        
-    }//GEN-LAST:event_jLabel63FocusLost
-
-    private void jLabel63MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel63MouseMoved
-        
-    }//GEN-LAST:event_jLabel63MouseMoved
-
-    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        CardLayout c12 = (CardLayout)(parentcard.getLayout());
-        c12.show(parentcard, "card3");
-    }//GEN-LAST:event_jButton13ActionPerformed
-
-    private void jPasswordField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPasswordField2ActionPerformed
-
-    private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField9ActionPerformed
-
-    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
-        // TODO add your handling code here:
-        CardLayout c4 = (CardLayout)(cardPanel.getLayout());
-        c4.show(cardPanel, "StudentPanel");
-    }//GEN-LAST:event_jButton14ActionPerformed
-
-    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField8ActionPerformed
-
     private void titleFieldSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_titleFieldSActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_titleFieldSActionPerformed
@@ -3659,6 +3599,67 @@ public void openStudentInternshipDetails(Internship i) {
         resetSortButtonColors();
         companyButton.setBackground(activeColor);
     }//GEN-LAST:event_companyButtonMouseClicked
+
+    private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField9ActionPerformed
+
+    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
+        // TODO add your handling code here:
+        CardLayout c4 = (CardLayout)(cardPanel.getLayout());
+        c4.show(cardPanel, "StudentPanel");
+    }//GEN-LAST:event_jButton14ActionPerformed
+
+    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField8ActionPerformed
+
+    private void jLabel63MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel63MouseClicked
+        CardLayout c3 = (CardLayout)(cardPanel2.getLayout());
+        c3.show(cardPanel2, "SignupPanel");
+    }//GEN-LAST:event_jLabel63MouseClicked
+
+    private void jLabel63FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jLabel63FocusLost
+
+    }//GEN-LAST:event_jLabel63FocusLost
+
+    private void jLabel63MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel63MouseMoved
+
+    }//GEN-LAST:event_jLabel63MouseMoved
+
+    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+        CardLayout c12 = (CardLayout)(parentcard.getLayout());
+        c12.show(parentcard, "card3");
+    }//GEN-LAST:event_jButton13ActionPerformed
+
+    private void jPasswordField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPasswordField2ActionPerformed
+
+    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+        CardLayout c13 = (CardLayout)(parentcard.getLayout());
+        c13.show(parentcard, "card5");
+
+        /*
+        String username = usernameField.getText().trim();
+        String password = new String(passwordField.getPassword()); // for JPasswordField
+
+        AdminController adminController = new AdminController();
+        String result = adminController.login(username, password);
+
+        if (result == null) {
+            JOptionPane.showMessageDialog(this, "Admin Login successful!", "Success",
+                JOptionPane.INFORMATION_MESSAGE);
+            CardLayout c13 = (CardLayout)(parentcard.getLayout());
+            c13.show(parentcard, "card5");
+        } else {
+            JOptionPane.showMessageDialog(this, result, "Login Error", JOptionPane.ERROR_MESSAGE);
+        }*/
+    }//GEN-LAST:event_jButton12ActionPerformed
+
+    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passwordFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -3875,7 +3876,6 @@ public void openStudentInternshipDetails(Internship i) {
     private javax.swing.JPanel jPanel40;
     private javax.swing.JPanel jPanel41;
     private javax.swing.JPanel jPanel42;
-    private javax.swing.JPanel jPanel43;
     private javax.swing.JPanel jPanel44;
     private javax.swing.JPanel jPanel45;
     private javax.swing.JPanel jPanel46;
@@ -3884,12 +3884,10 @@ public void openStudentInternshipDetails(Internship i) {
     private javax.swing.JPanel jPanel49;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel50;
-    private javax.swing.JPanel jPanel51;
     private javax.swing.JPanel jPanel52;
     private javax.swing.JPanel jPanel53;
     private javax.swing.JPanel jPanel54;
     private javax.swing.JPanel jPanel55;
-    private javax.swing.JPanel jPanel56;
     private javax.swing.JPanel jPanel57;
     private javax.swing.JPanel jPanel58;
     private javax.swing.JPanel jPanel59;
@@ -3949,10 +3947,12 @@ public void openStudentInternshipDetails(Internship i) {
     private javax.swing.JTable jTable4;
     private javax.swing.JTextArea jTextArea4;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
+    private javax.swing.JPanel left;
     private javax.swing.JPanel logo_panel;
     private javax.swing.JPanel logoutNav;
     private javax.swing.JPanel manageInternship;
@@ -3962,6 +3962,7 @@ public void openStudentInternshipDetails(Internship i) {
     private javax.swing.JPanel parentcard;
     private javax.swing.JPasswordField passwordField;
     private javax.swing.JButton restoreButton;
+    private javax.swing.JPanel right;
     private javax.swing.JButton salaryButton;
     private javax.swing.JTextField salaryField;
     private javax.swing.JTextField salaryFieldS;
@@ -3970,6 +3971,7 @@ public void openStudentInternshipDetails(Internship i) {
     private javax.swing.JPanel sideImagePanel;
     private javax.swing.JTextArea skillArea;
     private javax.swing.JTextArea skillAreaS;
+    private javax.swing.JPanel south;
     private javax.swing.JPanel studentCardContainerPanel;
     private javax.swing.JPanel studentDashboardNav;
     private javax.swing.JPanel studentNav1;
@@ -3979,7 +3981,6 @@ public void openStudentInternshipDetails(Internship i) {
     private javax.swing.JButton typeButton;
     private javax.swing.JComboBox<String> typeCombo;
     private javax.swing.JComboBox<String> typeComboS;
-    private javax.swing.JTextField usernameField;
     private javax.swing.JButton viewDetails;
     private javax.swing.JComboBox<String> yearCombo;
     private javax.swing.JComboBox<String> yearComboS;
