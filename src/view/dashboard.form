@@ -468,180 +468,7 @@
                             </Container>
                           </SubComponents>
                         </Container>
-                        <Container class="javax.swing.JPanel" name="SignupPanel">
-                          <Properties>
-                            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                            </Property>
-                          </Properties>
-                          <Constraints>
-                            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-                              <CardConstraints cardName="SignupPanel"/>
-                            </Constraint>
-                          </Constraints>
-
-                          <Layout>
-                            <DimensionLayout dim="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <EmptySpace min="0" pref="516" max="32767" attributes="0"/>
-                                  <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                          <Component id="StudentPanel1" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                              </Group>
-                            </DimensionLayout>
-                            <DimensionLayout dim="1">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <EmptySpace min="0" pref="337" max="32767" attributes="0"/>
-                                  <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                          <Component id="StudentPanel1" min="-2" pref="337" max="-2" attributes="0"/>
-                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                              </Group>
-                            </DimensionLayout>
-                          </Layout>
-                          <SubComponents>
-                            <Container class="javax.swing.JPanel" name="StudentPanel1">
-                              <Properties>
-                                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                                </Property>
-                              </Properties>
-
-                              <Layout>
-                                <DimensionLayout dim="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <EmptySpace min="0" pref="409" max="32767" attributes="0"/>
-                                      <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <EmptySpace max="32767" attributes="0"/>
-                                              <Component id="AdminPanel2" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="32767" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                  </Group>
-                                </DimensionLayout>
-                                <DimensionLayout dim="1">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                      <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <EmptySpace max="32767" attributes="0"/>
-                                              <Component id="AdminPanel2" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="32767" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                  </Group>
-                                </DimensionLayout>
-                              </Layout>
-                              <SubComponents>
-                                <Container class="javax.swing.JPanel" name="AdminPanel2">
-                                  <Properties>
-                                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                                    </Property>
-                                  </Properties>
-
-                                  <Layout>
-                                    <DimensionLayout dim="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <EmptySpace min="-2" pref="96" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                  <Component id="jPasswordField3" alignment="0" pref="191" max="32767" attributes="0"/>
-                                                  <Component id="jTextField9" alignment="0" max="32767" attributes="0"/>
-                                                  <Component id="jLabel66" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jTextField8" alignment="0" pref="191" max="32767" attributes="0"/>
-                                                  <Component id="jLabel64" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jLabel65" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jButton14" alignment="0" pref="191" max="32767" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace pref="110" max="32767" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                    </DimensionLayout>
-                                    <DimensionLayout dim="1">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jLabel64" min="-2" pref="16" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                                              <Component id="jTextField8" min="-2" pref="34" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jLabel65" min="-2" pref="10" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jTextField9" min="-2" pref="34" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jLabel66" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jPasswordField3" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="jButton14" min="-2" pref="31" max="-2" attributes="0"/>
-                                              <EmptySpace pref="138" max="32767" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                    </DimensionLayout>
-                                  </Layout>
-                                  <SubComponents>
-                                    <Component class="javax.swing.JLabel" name="jLabel64">
-                                      <Properties>
-                                        <Property name="text" type="java.lang.String" value="College ID"/>
-                                      </Properties>
-                                    </Component>
-                                    <Component class="javax.swing.JTextField" name="jTextField8">
-                                      <Events>
-                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField8ActionPerformed"/>
-                                      </Events>
-                                    </Component>
-                                    <Component class="javax.swing.JLabel" name="jLabel65">
-                                      <Properties>
-                                        <Property name="text" type="java.lang.String" value="Email"/>
-                                      </Properties>
-                                    </Component>
-                                    <Component class="javax.swing.JButton" name="jButton14">
-                                      <Properties>
-                                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                                          <Color blue="fa" green="8b" red="a7" type="rgb"/>
-                                        </Property>
-                                        <Property name="text" type="java.lang.String" value="Sign Up"/>
-                                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                                          <Border info="null"/>
-                                        </Property>
-                                      </Properties>
-                                      <Events>
-                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton14ActionPerformed"/>
-                                      </Events>
-                                    </Component>
-                                    <Component class="javax.swing.JLabel" name="jLabel66">
-                                      <Properties>
-                                        <Property name="text" type="java.lang.String" value="Set Password"/>
-                                      </Properties>
-                                    </Component>
-                                    <Component class="javax.swing.JTextField" name="jTextField9">
-                                      <Events>
-                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField9ActionPerformed"/>
-                                      </Events>
-                                    </Component>
-                                    <Component class="javax.swing.JPasswordField" name="jPasswordField3">
-                                      <Properties>
-                                        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                                          <Dimension value="[90, 34]"/>
-                                        </Property>
-                                      </Properties>
-                                    </Component>
-                                  </SubComponents>
-                                </Container>
-                              </SubComponents>
-                            </Container>
-                          </SubComponents>
-                        </Container>
-                        <Container class="javax.swing.JPanel" name="AdminPanel3">
+                        <Container class="javax.swing.JPanel" name="StudentPanel">
                           <Properties>
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -782,10 +609,10 @@
                                       <Group type="102" attributes="0">
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="passwordField1" alignment="0" min="-2" pref="187" max="-2" attributes="0"/>
+                                              <Component id="passWordField" alignment="0" min="-2" pref="187" max="-2" attributes="0"/>
                                               <Component id="jLabel79" alignment="0" min="-2" pref="296" max="-2" attributes="0"/>
-                                              <Component id="jButton21" alignment="0" min="-2" pref="187" max="-2" attributes="0"/>
-                                              <Component id="jTextField3" alignment="0" min="-2" pref="187" max="-2" attributes="0"/>
+                                              <Component id="studentLogin" alignment="0" min="-2" pref="187" max="-2" attributes="0"/>
+                                              <Component id="collegeIDField" alignment="0" min="-2" pref="187" max="-2" attributes="0"/>
                                               <Component id="jLabel80" alignment="0" min="-2" pref="296" max="-2" attributes="0"/>
                                               <Component id="jLabel81" alignment="0" min="-2" max="-2" attributes="0"/>
                                           </Group>
@@ -799,13 +626,13 @@
                                           <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                                           <Component id="jLabel79" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jTextField3" min="-2" pref="40" max="-2" attributes="0"/>
+                                          <Component id="collegeIDField" min="-2" pref="40" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                                           <Component id="jLabel80" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="passwordField1" min="-2" pref="40" max="-2" attributes="0"/>
+                                          <Component id="passWordField" min="-2" pref="40" max="-2" attributes="0"/>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="jButton21" min="-2" pref="35" max="-2" attributes="0"/>
+                                          <Component id="studentLogin" min="-2" pref="35" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="jLabel81" min="-2" pref="26" max="-2" attributes="0"/>
                                           <EmptySpace max="32767" attributes="0"/>
@@ -819,14 +646,14 @@
                                     <Property name="text" type="java.lang.String" value="College ID"/>
                                   </Properties>
                                 </Component>
-                                <Component class="javax.swing.JTextField" name="jTextField3">
+                                <Component class="javax.swing.JTextField" name="collegeIDField">
                                   <Events>
-                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField3ActionPerformed"/>
+                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="collegeIDFieldActionPerformed"/>
                                   </Events>
                                 </Component>
-                                <Component class="javax.swing.JPasswordField" name="passwordField1">
+                                <Component class="javax.swing.JPasswordField" name="passWordField">
                                   <Events>
-                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="passwordField1ActionPerformed"/>
+                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="passWordFieldActionPerformed"/>
                                   </Events>
                                 </Component>
                                 <Component class="javax.swing.JLabel" name="jLabel80">
@@ -834,7 +661,7 @@
                                     <Property name="text" type="java.lang.String" value="Password"/>
                                   </Properties>
                                 </Component>
-                                <Component class="javax.swing.JButton" name="jButton21">
+                                <Component class="javax.swing.JButton" name="studentLogin">
                                   <Properties>
                                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                       <Color blue="fa" green="8b" red="a7" type="rgb"/>
@@ -845,7 +672,7 @@
                                     </Property>
                                   </Properties>
                                   <Events>
-                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton21ActionPerformed"/>
+                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="studentLoginActionPerformed"/>
                                   </Events>
                                 </Component>
                                 <Component class="javax.swing.JLabel" name="jLabel81">
@@ -1008,12 +835,12 @@
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="jLabel40" alignment="0" min="-2" pref="296" max="-2" attributes="0"/>
                                               <Component id="jLabel62" alignment="0" min="-2" pref="296" max="-2" attributes="0"/>
-                                              <Component id="jTextField5" alignment="0" min="-2" pref="187" max="-2" attributes="0"/>
+                                              <Component id="collegeField" alignment="0" min="-2" pref="187" max="-2" attributes="0"/>
                                               <Component id="jLabel63" alignment="0" min="-2" max="-2" attributes="0"/>
                                               <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                                  <Component id="jPasswordField1" alignment="0" max="32767" attributes="0"/>
-                                                  <Component id="jTextField6" alignment="0" max="32767" attributes="0"/>
-                                                  <Component id="jButton13" alignment="0" pref="187" max="32767" attributes="0"/>
+                                                  <Component id="passField" alignment="0" max="32767" attributes="0"/>
+                                                  <Component id="emailField" alignment="0" max="32767" attributes="0"/>
+                                                  <Component id="signUpButton" alignment="0" pref="187" max="32767" attributes="0"/>
                                               </Group>
                                           </Group>
                                           <EmptySpace max="-2" attributes="0"/>
@@ -1026,17 +853,17 @@
                                           <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                                           <Component id="jLabel40" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jTextField5" min="-2" pref="40" max="-2" attributes="0"/>
+                                          <Component id="collegeField" min="-2" pref="40" max="-2" attributes="0"/>
                                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                           <Component id="jLabel62" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jTextField6" min="-2" pref="40" max="-2" attributes="0"/>
+                                          <Component id="emailField" min="-2" pref="40" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="jLabel63" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jPasswordField1" min="-2" pref="40" max="-2" attributes="0"/>
+                                          <Component id="passField" min="-2" pref="40" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jButton13" min="-2" pref="35" max="-2" attributes="0"/>
+                                          <Component id="signUpButton" min="-2" pref="35" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                 </DimensionLayout>
@@ -1047,9 +874,9 @@
                                     <Property name="text" type="java.lang.String" value="College ID"/>
                                   </Properties>
                                 </Component>
-                                <Component class="javax.swing.JTextField" name="jTextField5">
+                                <Component class="javax.swing.JTextField" name="collegeField">
                                   <Events>
-                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField5ActionPerformed"/>
+                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="collegeFieldActionPerformed"/>
                                   </Events>
                                 </Component>
                                 <Component class="javax.swing.JLabel" name="jLabel62">
@@ -1057,7 +884,7 @@
                                     <Property name="text" type="java.lang.String" value="Email"/>
                                   </Properties>
                                 </Component>
-                                <Component class="javax.swing.JButton" name="jButton13">
+                                <Component class="javax.swing.JButton" name="signUpButton">
                                   <Properties>
                                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                       <Color blue="fa" green="8b" red="a7" type="rgb"/>
@@ -1068,12 +895,12 @@
                                     </Property>
                                   </Properties>
                                   <Events>
-                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton13ActionPerformed"/>
+                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="signUpButtonActionPerformed"/>
                                   </Events>
                                 </Component>
-                                <Component class="javax.swing.JTextField" name="jTextField6">
+                                <Component class="javax.swing.JTextField" name="emailField">
                                   <Events>
-                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField6ActionPerformed"/>
+                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="emailFieldActionPerformed"/>
                                   </Events>
                                 </Component>
                                 <Component class="javax.swing.JLabel" name="jLabel63">
@@ -1081,9 +908,9 @@
                                     <Property name="text" type="java.lang.String" value="Password"/>
                                   </Properties>
                                 </Component>
-                                <Component class="javax.swing.JPasswordField" name="jPasswordField1">
+                                <Component class="javax.swing.JPasswordField" name="passField">
                                   <Events>
-                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jPasswordField1ActionPerformed"/>
+                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="passFieldActionPerformed"/>
                                   </Events>
                                 </Component>
                               </SubComponents>
@@ -1987,13 +1814,13 @@
                                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Component id="companyButton" min="-2" pref="148" max="-2" attributes="0"/>
+                                          <Component id="titleButton" min="-2" pref="148" max="-2" attributes="0"/>
                                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                          <Component id="deadlineButton" min="-2" pref="156" max="-2" attributes="0"/>
+                                          <Component id="companyButton" min="-2" pref="156" max="-2" attributes="0"/>
                                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                          <Component id="typeButton" min="-2" max="-2" attributes="0"/>
+                                          <Component id="durationButton" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="salaryButton" min="-2" max="-2" attributes="0"/>
+                                          <Component id="deadlineButton" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace pref="168" max="32767" attributes="0"/>
                                           <Component id="jButton7" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
@@ -2013,10 +1840,10 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jPanel25" alignment="1" min="-2" max="-2" attributes="0"/>
                                       <Group type="103" alignment="1" groupAlignment="3" attributes="0">
-                                          <Component id="deadlineButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="companyButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="typeButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="salaryButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="titleButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="durationButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="deadlineButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="jButton7" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -2039,6 +1866,18 @@
                             <Property name="verticalGap" type="int" value="1"/>
                           </Layout>
                         </Container>
+                        <Component class="javax.swing.JButton" name="titleButton">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="Sort By Title"/>
+                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 30]"/>
+                            </Property>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="titleButtonMouseClicked"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="titleButtonActionPerformed"/>
+                          </Events>
+                        </Component>
                         <Component class="javax.swing.JButton" name="companyButton">
                           <Properties>
                             <Property name="text" type="java.lang.String" value="Sort By Company"/>
@@ -2048,34 +1887,32 @@
                           </Properties>
                           <Events>
                             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="companyButtonMouseClicked"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="companyButtonActionPerformed"/>
                           </Events>
                         </Component>
-                        <Component class="javax.swing.JButton" name="deadlineButton">
+                        <Component class="javax.swing.JButton" name="durationButton">
                           <Properties>
-                            <Property name="text" type="java.lang.String" value="Sort By Deadline"/>
-                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[150, 30]"/>
-                            </Property>
-                          </Properties>
-                        </Component>
-                        <Component class="javax.swing.JButton" name="typeButton">
-                          <Properties>
-                            <Property name="text" type="java.lang.String" value="Sort by Type"/>
+                            <Property name="text" type="java.lang.String" value="Sort by Duration"/>
                             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                               <Dimension value="[150, 30]"/>
                             </Property>
                           </Properties>
                           <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="typeButtonActionPerformed"/>
+                            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="durationButtonMouseClicked"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="durationButtonActionPerformed"/>
                           </Events>
                         </Component>
-                        <Component class="javax.swing.JButton" name="salaryButton">
+                        <Component class="javax.swing.JButton" name="deadlineButton">
                           <Properties>
-                            <Property name="text" type="java.lang.String" value="Sort by Salary"/>
+                            <Property name="text" type="java.lang.String" value="Sort by Deadline"/>
                             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                               <Dimension value="[150, 30]"/>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="deadlineButtonMouseClicked"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deadlineButtonActionPerformed"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JButton" name="jButton7">
                           <Properties>
@@ -2605,15 +2442,15 @@
                                             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                                               <StringArray count="32">
                                                 <StringItem index="0" value="Day"/>
-                                                <StringItem index="1" value="1"/>
-                                                <StringItem index="2" value="2"/>
-                                                <StringItem index="3" value="3"/>
-                                                <StringItem index="4" value="4"/>
-                                                <StringItem index="5" value="5"/>
-                                                <StringItem index="6" value="6"/>
-                                                <StringItem index="7" value="7"/>
-                                                <StringItem index="8" value="8"/>
-                                                <StringItem index="9" value="9"/>
+                                                <StringItem index="1" value="01"/>
+                                                <StringItem index="2" value="02"/>
+                                                <StringItem index="3" value="03"/>
+                                                <StringItem index="4" value="04"/>
+                                                <StringItem index="5" value="05"/>
+                                                <StringItem index="6" value="06"/>
+                                                <StringItem index="7" value="07"/>
+                                                <StringItem index="8" value="08"/>
+                                                <StringItem index="9" value="09"/>
                                                 <StringItem index="10" value="10"/>
                                                 <StringItem index="11" value="11"/>
                                                 <StringItem index="12" value="12"/>
@@ -4710,13 +4547,13 @@
                                   <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" attributes="0">
-                                          <Component id="jButton20" min="-2" pref="148" max="-2" attributes="0"/>
+                                          <Component id="sTitleButton" min="-2" pref="148" max="-2" attributes="0"/>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="jButton18" min="-2" pref="148" max="-2" attributes="0"/>
+                                          <Component id="sCompanyButton" min="-2" pref="148" max="-2" attributes="0"/>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="jButton1" min="-2" pref="148" max="-2" attributes="0"/>
+                                          <Component id="sTypeButton" min="-2" pref="148" max="-2" attributes="0"/>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="jButton19" min="-2" pref="148" max="-2" attributes="0"/>
+                                          <Component id="sDeadlineButton" min="-2" pref="148" max="-2" attributes="0"/>
                                       </Group>
                                       <Component id="jLabel69" min="-2" max="-2" attributes="0"/>
                                   </Group>
@@ -4731,10 +4568,10 @@
                                   <Component id="jLabel69" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="jButton18" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jButton19" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jButton1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                                      <Component id="jButton20" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                      <Component id="sCompanyButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="sDeadlineButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="sTypeButton" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                      <Component id="sTitleButton" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                               </Group>
@@ -4750,33 +4587,46 @@
                             <Property name="text" type="java.lang.String" value="All Internships"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JButton" name="jButton18">
+                        <Component class="javax.swing.JButton" name="sCompanyButton">
                           <Properties>
                             <Property name="text" type="java.lang.String" value="Sort By Company"/>
                             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                               <Dimension value="[150, 30]"/>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="sCompanyButtonMouseClicked"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sCompanyButtonActionPerformed"/>
+                          </Events>
                         </Component>
-                        <Component class="javax.swing.JButton" name="jButton19">
+                        <Component class="javax.swing.JButton" name="sDeadlineButton">
                           <Properties>
                             <Property name="text" type="java.lang.String" value="Sort By Deadline"/>
                             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                               <Dimension value="[150, 30]"/>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="sDeadlineButtonMouseClicked"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sDeadlineButtonActionPerformed"/>
+                          </Events>
                         </Component>
-                        <Component class="javax.swing.JButton" name="jButton1">
+                        <Component class="javax.swing.JButton" name="sTypeButton">
                           <Properties>
                             <Property name="text" type="java.lang.String" value="Sort by Type"/>
                           </Properties>
+                          <Events>
+                            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="sTypeButtonMouseClicked"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sTypeButtonActionPerformed"/>
+                          </Events>
                         </Component>
-                        <Component class="javax.swing.JButton" name="jButton20">
+                        <Component class="javax.swing.JButton" name="sTitleButton">
                           <Properties>
                             <Property name="text" type="java.lang.String" value="Sort By Title"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton20ActionPerformed"/>
+                            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="sTitleButtonMouseClicked"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sTitleButtonActionPerformed"/>
                           </Events>
                         </Component>
                       </SubComponents>
@@ -5403,7 +5253,7 @@
                                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton17ActionPerformed"/>
                                           </Events>
                                         </Component>
-                                        <Component class="javax.swing.JButton" name="add_updateButton1">
+                                        <Component class="javax.swing.JButton" name="applyButton">
                                           <Properties>
                                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                               <Color blue="ff" green="99" red="99" type="rgb"/>
@@ -5411,7 +5261,7 @@
                                             <Property name="text" type="java.lang.String" value="Apply"/>
                                           </Properties>
                                           <Events>
-                                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="add_updateButton1ActionPerformed"/>
+                                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="applyButtonActionPerformed"/>
                                           </Events>
                                         </Component>
                                       </SubComponents>

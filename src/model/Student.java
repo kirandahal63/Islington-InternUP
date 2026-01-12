@@ -31,5 +31,21 @@ public class Student {
     public String getPassword() {
         return password;
     }
+    
+    public static String isStudentUser(String studentID,String email, String password){
+        if (studentID == null ||studentID.isEmpty()){
+            return "Please enter your college ID!!";   
+        }
+        else if (email == null|| email.isEmpty() ){
+            return "Please enter your email!!";     
+        } 
+        else if(password == null || password.isEmpty()){
+            return "Please set a password!!"; 
+        }
+        else if (password.length() < 5) {
+            return "Weak Password! \nPassword must be more than 5 characters long!!";
+        }
+        return null;
+    }
 
 }
