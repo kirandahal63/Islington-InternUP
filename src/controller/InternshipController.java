@@ -13,6 +13,11 @@ import model.Internship;
  */
 public class InternshipController {
     public static LinkedList<Internship> internshipList = new LinkedList<>();
+    public static int sizeQueue = 8;
+    public static Internship[] queueInternshipList = new Internship[sizeQueue];
+    
+    public static int front = -1;
+    public static int rear = -1;
     static final int STACK_MAX = 50;
     public static Internship[] deletedInternshipStack = new Internship[STACK_MAX];
     public static int top = -1;
@@ -23,7 +28,7 @@ public class InternshipController {
         internshipList = new LinkedList<>();
 
         // Pre-added internships
-        internshipList.add(new Internship(
+        Internship i1 = new Internship(
                 "Java Intern",
                 "ING Tech",
                 "2026-Jan-30",
@@ -32,9 +37,11 @@ public class InternshipController {
                 "3 Months",
                 "Work on Java projects with senior developers.",
                 "Java, OOP, Experience on Netbeans"
-        ));
+        );
+        internshipList.add(i1);
+        enqueue(i1);
 
-        internshipList.add(new Internship(
+        Internship i2 = new Internship(
                 "Web Intern",
                 "Webify",
                 "2026-Jan-25",
@@ -43,9 +50,11 @@ public class InternshipController {
                 "6 Months",
                 "Assist in frontend web development tasks.",
                 "HTML, CSS,  JS"
-        ));
+        );
+        internshipList.add(i2);
+        enqueue(i2);
         
-        internshipList.add(new Internship(
+        Internship i3 = new Internship(
                 "UI/UX Intern",
                 "Design Hub Nationals",
                 "2026-Feb-02",
@@ -54,9 +63,11 @@ public class InternshipController {
                 "1 Month",
                 "UI research and design.",
                 "Figma, Canva, Photoshop, creativity"
-        ));
+        );
+        internshipList.add(i3);
+        enqueue(i3);
         
-        internshipList.add(new Internship(
+        Internship i4 = new Internship(
                 "Data Analyst Intern",
                 "DataSite",
                 "2026-Feb-28",
@@ -65,9 +76,11 @@ public class InternshipController {
                 "6 Months",
                 "Data analysis and reports.",
                 "Excel, SQL basics, Power BI"
-        ));
+        );
+        internshipList.add(i4);
+        enqueue(i4);
         
-        internshipList.add(new Internship(
+        Internship i5 = new Internship(
                 "AI Intern",
                 "Skill Academy",
                 "2026-Jan-24",
@@ -76,8 +89,11 @@ public class InternshipController {
                 "1 Months",
                 "Machine learning models",
                 "Python, pyCharm, ML basics"
-        ));
-        internshipList.add(new Internship(
+        );
+        internshipList.add(i5);
+        enqueue(i5);
+        
+        Internship i6 = new Internship(
                 "Generative AI Instructor",
                 "Danson Solutions",
                 "2026-Jan-29",
@@ -86,9 +102,11 @@ public class InternshipController {
                 "3 Months",
                 "Teach core GenAI concepts in a simple, practical way",
                 "Good understanding of Generative AI concepts"
-        ));
+        );
+        internshipList.add(i6);
+        enqueue(i6);
         
-        internshipList.add(new Internship(
+        Internship i7 = new Internship(
                 "AI Intern",
                 "Skill Academy",
                 "2026-Feb-16",
@@ -97,8 +115,11 @@ public class InternshipController {
                 "1 Months",
                 "Machine learning models",
                 "Python, pyCharm, ML basics"
-        ));
-        internshipList.add(new Internship(
+        );
+        internshipList.add(i7);
+        enqueue(i7);
+        
+        Internship i8 = new Internship(
                 "Generative AI Instructor",
                 "Danson Solutions",
                 "2026-Jan-29",
@@ -107,7 +128,9 @@ public class InternshipController {
                 "3 Months",
                 "Teach core GenAI concepts in a simple, practical way",
                 "Good understanding of Generative AI concepts"
-        ));
+        );
+        internshipList.add(i8);
+        enqueue(i8);
     }
     
     public static void addInternship(String title, String company, String deadline,int salary, String type, String duration, String description, String requirement)
@@ -115,7 +138,41 @@ public class InternshipController {
         Internship internship = new Internship(title, company, deadline,salary, type, duration, description, requirement);
         internshipList.add(internship);
     }
-        
+    public static void enqueue(Internship item) {
+        if (rear+1== sizeQueue) {
+            dequeue();
+        }
+
+        if (front == -1) { 
+            front = rear = 0;
+            queueInternshipList[rear] = item;
+        } else if (rear == queueInternshipList.length - 1 && front != 0) {
+            rear = 0;
+            queueInternshipList[rear] = item;
+        } else {
+            rear++;
+            queueInternshipList[rear] = item;
+        }
+    }
+
+    public static Internship dequeue() {
+        if (front == -1) {
+            return null; 
+        }
+
+        Internship data = queueInternshipList[front];
+        queueInternshipList[front] = null; 
+
+        if (front == rear) {
+            front = rear = -1;
+        } else if (front == queueInternshipList.length - 1) {
+            front = 0;
+        } else {
+            front++;
+        }
+
+        return data;
+    }
     public static boolean isSameAsOriginal(int index,String title,String company,String deadline,int salary,String type,String duration,String description,String requirement) 
     {
         Internship i = internshipList.get(index);
@@ -311,4 +368,19 @@ public class InternshipController {
     private static String formatDateForCompare(String date) {
         return date.replace("-Jan-", "-01-").replace("-Feb-", "-02-").replace("-Mar-", "-03-").replace("-Apr-", "-04-").replace("-May-", "-05-").replace("-Jun-", "-06-").replace("-Jul-", "-07-").replace("-Aug-", "-08-").replace("-Sep-", "-09-").replace("-Oct-", "-10-").replace("-Nov-", "-11-").replace("-Dec-", "-12-"); 
     }
+    
+    public static void refreshQueue() {
+    front = -1;
+    rear = -1;
+    queueInternshipList = new Internship[sizeQueue];
+
+    int start = internshipList.size() - sizeQueue;
+    if (start < 0) {
+        start = 0;
+    }
+
+    for (int i = start; i < internshipList.size(); i++) {
+        enqueue(internshipList.get(i));
+    }
+}
 }

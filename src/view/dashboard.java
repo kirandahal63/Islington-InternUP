@@ -130,19 +130,13 @@ public class dashboard extends javax.swing.JFrame {
     private void loadInternshipCards() {
 
     cardContainerPanel.removeAll();
-    int limit = 8;   
-    int count = 0;
-
-    for (int i = InternshipController.internshipList.size() - 1; i >= 0; i--) {
-
-        if (count == limit) {
-            break;
+    for (int i = 0; i < InternshipController.sizeQueue; i++) {
+        Internship internship = InternshipController.queueInternshipList[i];
+        
+        if (internship != null) {
+            JPanel card = createInternshipCard(internship);
+            cardContainerPanel.add(card);
         }
-
-        Internship internship = InternshipController.internshipList.get(i);
-        JPanel card = createInternshipCard(internship);
-        cardContainerPanel.add(card);
-        count++;
     }
 
     cardContainerPanel.revalidate();
@@ -3429,7 +3423,8 @@ public void openStudentInternshipDetails(Internship i) {
 
     private void dashboardNavMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashboardNavMouseClicked
         CardLayout c2 = (CardLayout)(cardPanel.getLayout());
-        c2.show(cardPanel, "dashboard");         
+        c2.show(cardPanel, "dashboard");   
+        loadInternshipCards();
         resetNavColors();
         dashboardNav.setBackground(activeColor);
     }//GEN-LAST:event_dashboardNavMouseClicked
@@ -3607,6 +3602,7 @@ public void openStudentInternshipDetails(Internship i) {
                     "Internship restored successfully.",
                     "Success", JOptionPane.INFORMATION_MESSAGE);
                 loadInternshipsToTable();
+                InternshipController.refreshQueue();
                 loadDeletedInternshipsToTable(); // if you have a table showing stack contents
             } else {
                 JOptionPane.showMessageDialog(this, 
@@ -3764,17 +3760,19 @@ public void openStudentInternshipDetails(Internship i) {
                     add_updateButton.setText("Post Internship");
                     CardLayout cl = (CardLayout)(cardPanel.getLayout());
                     cl.show(cardPanel, "card3"); 
-                     
+                    
                     }
             }
             else{
                 int userChoice1 = JOptionPane.showConfirmDialog(this,"Are you sure you want to add post new Internship.", 
                                                                     "Confirm",JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
                 if (userChoice1 == JOptionPane.YES_OPTION) 
-                {
+                {                    
                     InternshipController.addInternship(title,company,deadline, salary,type, duration, description,requirement);
                     loadInternshipsToTable();
                     clearInternshipForm();
+                    Internship newInternship = new Internship(title, company, deadline, salary, type, duration, description, requirement);
+                    InternshipController.enqueue(newInternship);
                     JOptionPane.showMessageDialog(this, "Internship added successfully.","Success", JOptionPane.INFORMATION_MESSAGE);
                     CardLayout cl = (CardLayout)(cardPanel.getLayout());
                     cl.show(cardPanel, "card3"); 
@@ -3804,6 +3802,7 @@ public void openStudentInternshipDetails(Internship i) {
             if (success) {
                 JOptionPane.showMessageDialog(this, "Internship deleted successfully.","Success", JOptionPane.INFORMATION_MESSAGE);
                 loadInternshipsToTable();
+                InternshipController.refreshQueue();                
                 loadDeletedInternshipsToTable();
             } else {
                 JOptionPane.showMessageDialog(this, "Failed to delete internship.","Error", JOptionPane.ERROR_MESSAGE);
