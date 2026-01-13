@@ -23,6 +23,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.HashSet;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JLabel;
@@ -59,6 +60,9 @@ public class dashboard extends javax.swing.JFrame {
         loadInternshipsToTable();
         archivedTableModel = (DefaultTableModel) deletedInternshipTable.getModel();
         loadDeletedInternshipsToTable();
+        ApplicationController.applyInternship("STU001", "EPD1");
+        ApplicationController.applyInternship("STU002", "EPD1");
+        loadAppliedInternships();
         
         studentCardContainerPanel.setLayout(new GridBagLayout());
         studentCardContainerPanel.setBackground(new Color(245, 245, 245));
@@ -68,31 +72,38 @@ public class dashboard extends javax.swing.JFrame {
 
         loadInternshipCards() ;
         cardContainerPanel.setLayout(new GridLayout(0, 2, 15, 15));
-        studentCardContainerPanel.setLayout(new GridLayout(0, 3, 15, 15));
-        
-
-        
-
+        studentCardContainerPanel.setLayout(new GridLayout(0, 3, 15, 15));    
     }
+    private void setNumber(){
+        int studentCount = StudentController.studentMap.size();
+        int internshipCount = InternshipController.internshipList.size();
+        int applicationCount = ApplicationController.totalApplicationCount();
+        noOfStudent.setText(String.valueOf(studentCount));
+        noOfInternship.setText(String.valueOf(internshipCount));
+        noOfApplications.setText(String.valueOf(applicationCount));
+        Dimension size = new Dimension(60, 48); 
+        noOfStudent.setPreferredSize(size);noOfInternship.setPreferredSize(size);noOfApplications.setPreferredSize(size);
+        noOfStudent.setMinimumSize(size);noOfInternship.setMinimumSize(size);noOfApplications.setMinimumSize(size);
+    }
+    
     private void loadInternshipsToTable() {
-
     activeTableModel.setRowCount(0);
-    for (Internship i : InternshipController.internshipList) {
+        for (Internship i : InternshipController.internshipList) {
 
-        Object[] row = {
-            i.getId(),
-            i.getTitle(),
-            i.getCompany(),
-            i.getType(),
-            i.getDuration(),
-            i.getDeadline()
-        };
+            Object[] row = {
+                i.getId(),
+                i.getTitle(),
+                i.getCompany(),
+                i.getType(),
+                i.getDuration(),
+                i.getDeadline()
+            };
 
-        activeTableModel.addRow(row);
+            activeTableModel.addRow(row);
+        }
     }
-    }
+    
     private void loadDeletedInternshipsToTable() {
-
         archivedTableModel.setRowCount(0);
         for (int i = InternshipController.top; i >= 0; i--) {
             Internship in = InternshipController.deletedInternshipStack[i];
@@ -105,6 +116,28 @@ public class dashboard extends javax.swing.JFrame {
                 in.getDeadline()
             };
             archivedTableModel.addRow(row);
+        }
+    }
+    
+    public void loadAppliedInternships() {
+        DefaultTableModel model = (DefaultTableModel) appliedInternshipsTable.getModel();
+        model.setRowCount(0); 
+
+        for (Internship internship : InternshipController.internshipList) {
+            String ID = internship.getId();
+
+            if (ApplicationController.viewAllApplications().containsKey(ID)) {
+
+            int applicantCount = ApplicationController.viewAllApplications().get(ID).size();
+
+            model.addRow(new Object[]{
+                ID,
+                internship.getTitle(),                        
+                internship.getCompany(),      
+                applicantCount,               
+                internship.getDeadline()          
+            });
+        }
         }
     }
     
@@ -342,7 +375,7 @@ public void openStudentInternshipDetails(Internship i) {
         jTextField2.setText("");  
         passwordField.setText("");  
         collegeField.setText("");  
-        emailField.setText(""); 
+        nameField.setText(""); 
         passField.setText("");         
     }
 
@@ -404,7 +437,7 @@ public void openStudentInternshipDetails(Internship i) {
         collegeField = new javax.swing.JTextField();
         jLabel62 = new javax.swing.JLabel();
         signUpButton = new javax.swing.JButton();
-        emailField = new javax.swing.JTextField();
+        nameField = new javax.swing.JTextField();
         jLabel63 = new javax.swing.JLabel();
         passField = new javax.swing.JPasswordField();
         jPanel21 = new javax.swing.JPanel();
@@ -430,7 +463,7 @@ public void openStudentInternshipDetails(Internship i) {
         gridPanel = new javax.swing.JPanel();
         jPanel13 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        noOfStudent = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
@@ -438,14 +471,15 @@ public void openStudentInternshipDetails(Internship i) {
         jLabel6 = new javax.swing.JLabel();
         jPanel14 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
+        noOfInternship = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
+        noOfApplications = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jPanel15 = new javax.swing.JPanel();
         jPanel19 = new javax.swing.JPanel();
+        jPanel74 = new javax.swing.JPanel();
         jPanel44 = new javax.swing.JPanel();
         jLabel67 = new javax.swing.JLabel();
         jPanel20 = new javax.swing.JPanel();
@@ -521,6 +555,13 @@ public void openStudentInternshipDetails(Internship i) {
         jScrollPane3 = new javax.swing.JScrollPane();
         deletedInternshipTable = new javax.swing.JTable();
         applicationsView = new javax.swing.JPanel();
+        jSplitPane1 = new javax.swing.JSplitPane();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        appliedInternshipsTable = new javax.swing.JTable();
+        jPanel110 = new javax.swing.JPanel();
+        jPanel111 = new javax.swing.JPanel();
+        jScrollPane10 = new javax.swing.JScrollPane();
+        studentApplicationTable = new javax.swing.JTable();
         settingPanel = new javax.swing.JPanel();
         jPanel45 = new javax.swing.JPanel();
         jPanel46 = new javax.swing.JPanel();
@@ -561,8 +602,6 @@ public void openStudentInternshipDetails(Internship i) {
         jLabel50 = new javax.swing.JLabel();
         jPanel73 = new javax.swing.JPanel();
         jLabel51 = new javax.swing.JLabel();
-        jPanel74 = new javax.swing.JPanel();
-        jLabel52 = new javax.swing.JLabel();
         jPanel75 = new javax.swing.JPanel();
         jLabel53 = new javax.swing.JLabel();
         jPanel76 = new javax.swing.JPanel();
@@ -682,7 +721,7 @@ public void openStudentInternshipDetails(Internship i) {
         );
         sideImagePanelLayout.setVerticalGroup(
             sideImagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel34, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE)
+            .addComponent(jLabel34, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 816, Short.MAX_VALUE)
         );
 
         Login.add(sideImagePanel, java.awt.BorderLayout.LINE_START);
@@ -732,7 +771,7 @@ public void openStudentInternshipDetails(Internship i) {
         );
         rightLayout.setVerticalGroup(
             rightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 324, Short.MAX_VALUE)
+            .addGap(0, 346, Short.MAX_VALUE)
         );
 
         jPanel1.add(right, java.awt.BorderLayout.LINE_END);
@@ -747,7 +786,7 @@ public void openStudentInternshipDetails(Internship i) {
         );
         leftLayout.setVerticalGroup(
             leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 324, Short.MAX_VALUE)
+            .addGap(0, 346, Short.MAX_VALUE)
         );
 
         jPanel1.add(left, java.awt.BorderLayout.LINE_START);
@@ -758,7 +797,7 @@ public void openStudentInternshipDetails(Internship i) {
         south.setLayout(southLayout);
         southLayout.setHorizontalGroup(
             southLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 468, Short.MAX_VALUE)
+            .addGap(0, 716, Short.MAX_VALUE)
         );
         southLayout.setVerticalGroup(
             southLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -783,7 +822,7 @@ public void openStudentInternshipDetails(Internship i) {
         );
         jPanel98Layout.setVerticalGroup(
             jPanel98Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 214, Short.MAX_VALUE)
+            .addGap(0, 236, Short.MAX_VALUE)
         );
 
         AdminPanel.add(jPanel98, java.awt.BorderLayout.LINE_END);
@@ -830,7 +869,7 @@ public void openStudentInternshipDetails(Internship i) {
         );
         jPanel99Layout.setVerticalGroup(
             jPanel99Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 214, Short.MAX_VALUE)
+            .addGap(0, 236, Short.MAX_VALUE)
         );
 
         AdminPanel.add(jPanel99, java.awt.BorderLayout.LINE_START);
@@ -910,7 +949,7 @@ public void openStudentInternshipDetails(Internship i) {
         );
         jPanel100Layout.setVerticalGroup(
             jPanel100Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 254, Short.MAX_VALUE)
+            .addGap(0, 276, Short.MAX_VALUE)
         );
 
         StudentPanel.add(jPanel100, java.awt.BorderLayout.LINE_END);
@@ -957,7 +996,7 @@ public void openStudentInternshipDetails(Internship i) {
         );
         jPanel103Layout.setVerticalGroup(
             jPanel103Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 254, Short.MAX_VALUE)
+            .addGap(0, 276, Short.MAX_VALUE)
         );
 
         StudentPanel.add(jPanel103, java.awt.BorderLayout.LINE_START);
@@ -1058,7 +1097,7 @@ public void openStudentInternshipDetails(Internship i) {
         );
         jPanel105Layout.setVerticalGroup(
             jPanel105Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 254, Short.MAX_VALUE)
+            .addGap(0, 276, Short.MAX_VALUE)
         );
 
         SignUP.add(jPanel105, java.awt.BorderLayout.LINE_END);
@@ -1105,7 +1144,7 @@ public void openStudentInternshipDetails(Internship i) {
         );
         jPanel108Layout.setVerticalGroup(
             jPanel108Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 254, Short.MAX_VALUE)
+            .addGap(0, 276, Short.MAX_VALUE)
         );
 
         SignUP.add(jPanel108, java.awt.BorderLayout.LINE_START);
@@ -1121,7 +1160,7 @@ public void openStudentInternshipDetails(Internship i) {
             }
         });
 
-        jLabel62.setText("Email");
+        jLabel62.setText("Full Name");
 
         signUpButton.setBackground(new java.awt.Color(167, 139, 250));
         signUpButton.setText("Sign Up");
@@ -1132,9 +1171,9 @@ public void openStudentInternshipDetails(Internship i) {
             }
         });
 
-        emailField.addActionListener(new java.awt.event.ActionListener() {
+        nameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                emailFieldActionPerformed(evt);
+                nameFieldActionPerformed(evt);
             }
         });
 
@@ -1159,7 +1198,7 @@ public void openStudentInternshipDetails(Internship i) {
                     .addComponent(jLabel63)
                     .addGroup(jPanel109Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(passField, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(emailField, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(nameField, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(signUpButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -1173,7 +1212,7 @@ public void openStudentInternshipDetails(Internship i) {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel62)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel63)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1248,7 +1287,7 @@ public void openStudentInternshipDetails(Internship i) {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, logo_panelLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 119, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 367, Short.MAX_VALUE)
                 .addComponent(jLabel68, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
         );
@@ -1318,7 +1357,7 @@ public void openStudentInternshipDetails(Internship i) {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel17)
                     .addComponent(jLabel16))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 608, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 550, Short.MAX_VALUE)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1403,16 +1442,16 @@ public void openStudentInternshipDetails(Internship i) {
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Total Students");
-        jPanel13.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, -1, -1));
+        jPanel13.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 70, -1, -1));
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("5");
-        jPanel13.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 80, -1, -1));
+        noOfStudent.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        noOfStudent.setForeground(new java.awt.Color(255, 255, 255));
+        noOfStudent.setText("5");
+        jPanel13.add(noOfStudent, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 80, 50, -1));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/background.png"))); // NOI18N
         jLabel7.setText("jLabel4");
-        jPanel13.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 148));
+        jPanel13.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 160));
 
         gridPanel.add(jPanel13);
 
@@ -1432,7 +1471,7 @@ public void openStudentInternshipDetails(Internship i) {
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/background.png"))); // NOI18N
         jLabel6.setText("jLabel4");
-        jPanel11.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 150));
+        jPanel11.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 150));
 
         gridPanel.add(jPanel11);
 
@@ -1445,13 +1484,13 @@ public void openStudentInternshipDetails(Internship i) {
         jLabel10.setText("Active Internship ");
         jPanel14.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, -1, -1));
 
-        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("75");
-        jPanel14.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 50, 40));
+        noOfInternship.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        noOfInternship.setForeground(new java.awt.Color(255, 255, 255));
+        noOfInternship.setText("8");
+        jPanel14.add(noOfInternship, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 80, 50, 40));
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/background.png"))); // NOI18N
-        jPanel14.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, 150));
+        jPanel14.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 150));
 
         gridPanel.add(jPanel14);
 
@@ -1462,16 +1501,16 @@ public void openStudentInternshipDetails(Internship i) {
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("No of Application Received");
-        jPanel9.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, -1));
+        jPanel9.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, -1, -1));
 
-        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setText("113");
-        jPanel9.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, -1, -1));
+        noOfApplications.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        noOfApplications.setForeground(new java.awt.Color(255, 255, 255));
+        noOfApplications.setText("5");
+        jPanel9.add(noOfApplications, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 80, 50, 40));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/background.png"))); // NOI18N
         jLabel5.setText("jLabel4");
-        jPanel9.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 151));
+        jPanel9.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 151));
 
         gridPanel.add(jPanel9);
 
@@ -1487,30 +1526,47 @@ public void openStudentInternshipDetails(Internship i) {
         jPanel19.setPreferredSize(new java.awt.Dimension(300, 392));
         jPanel19.setLayout(new java.awt.BorderLayout());
 
+        jPanel74.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel74.setPreferredSize(new java.awt.Dimension(300, 112));
+
+        javax.swing.GroupLayout jPanel74Layout = new javax.swing.GroupLayout(jPanel74);
+        jPanel74.setLayout(jPanel74Layout);
+        jPanel74Layout.setHorizontalGroup(
+            jPanel74Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+        jPanel74Layout.setVerticalGroup(
+            jPanel74Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 112, Short.MAX_VALUE)
+        );
+
+        jPanel19.add(jPanel74, java.awt.BorderLayout.PAGE_END);
+
         jPanel44.setBackground(new java.awt.Color(255, 255, 255));
         jPanel44.setPreferredSize(new java.awt.Dimension(300, 494));
         jPanel44.setVerifyInputWhenFocusTarget(false);
 
         ImageIcon icon91 = new ImageIcon("images/companies.png");
         Image imgg1 = icon91.getImage();
-        Image scaledCom = imgg1.getScaledInstance(380, 232, Image.SCALE_SMOOTH);
+        Image scaledCom = imgg1.getScaledInstance(266, 479, Image.SCALE_SMOOTH);
         jLabel67.setIcon(new ImageIcon(scaledCom));
+        jLabel67.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
         javax.swing.GroupLayout jPanel44Layout = new javax.swing.GroupLayout(jPanel44);
         jPanel44.setLayout(jPanel44Layout);
         jPanel44Layout.setHorizontalGroup(
             jPanel44Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel44Layout.createSequentialGroup()
-                .addContainerGap(50, Short.MAX_VALUE)
-                .addComponent(jLabel67, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19))
+                .addGap(19, 19, 19)
+                .addComponent(jLabel67, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel44Layout.setVerticalGroup(
             jPanel44Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel44Layout.createSequentialGroup()
-                .addGap(64, 64, 64)
-                .addComponent(jLabel67, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(120, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel44Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel67, javax.swing.GroupLayout.PREFERRED_SIZE, 489, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
 
         jPanel19.add(jPanel44, java.awt.BorderLayout.CENTER);
@@ -1523,6 +1579,7 @@ public void openStudentInternshipDetails(Internship i) {
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
+        jLabel33.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel33.setText("Recent Intenships");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -1530,16 +1587,16 @@ public void openStudentInternshipDetails(Internship i) {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(40, 40, 40)
+                .addGap(39, 39, 39)
                 .addComponent(jLabel33)
-                .addContainerGap(571, Short.MAX_VALUE))
+                .addContainerGap(469, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(62, Short.MAX_VALUE)
+                .addContainerGap(70, Short.MAX_VALUE)
                 .addComponent(jLabel33)
-                .addGap(22, 22, 22))
+                .addGap(14, 14, 14))
         );
 
         jPanel20.add(jPanel3, java.awt.BorderLayout.PAGE_START);
@@ -1559,7 +1616,7 @@ public void openStudentInternshipDetails(Internship i) {
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 364, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         internshipPreviewPanel.add(jPanel8, java.awt.BorderLayout.LINE_START);
@@ -1576,11 +1633,11 @@ public void openStudentInternshipDetails(Internship i) {
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 704, Short.MAX_VALUE)
+            .addGap(0, 646, Short.MAX_VALUE)
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGap(0, 112, Short.MAX_VALUE)
         );
 
         jPanel20.add(jPanel6, java.awt.BorderLayout.PAGE_END);
@@ -1674,7 +1731,7 @@ public void openStudentInternshipDetails(Internship i) {
                         .addComponent(durationButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(deadlineButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 168, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
                         .addComponent(jButton7)
                         .addGap(25, 25, 25))
                     .addGroup(jPanel23Layout.createSequentialGroup()
@@ -1710,7 +1767,7 @@ public void openStudentInternshipDetails(Internship i) {
         );
         jPanel27Layout.setVerticalGroup(
             jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 490, Short.MAX_VALUE)
+            .addGap(0, 512, Short.MAX_VALUE)
         );
 
         jPanel10.add(jPanel27, java.awt.BorderLayout.LINE_START);
@@ -1741,7 +1798,7 @@ public void openStudentInternshipDetails(Internship i) {
         );
         jPanel29Layout.setVerticalGroup(
             jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 490, Short.MAX_VALUE)
+            .addGap(0, 512, Short.MAX_VALUE)
         );
 
         jPanel10.add(jPanel29, java.awt.BorderLayout.LINE_END);
@@ -1753,7 +1810,7 @@ public void openStudentInternshipDetails(Internship i) {
         jPanel28.setLayout(jPanel28Layout);
         jPanel28Layout.setHorizontalGroup(
             jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1004, Short.MAX_VALUE)
+            .addGap(0, 946, Short.MAX_VALUE)
         );
         jPanel28Layout.setVerticalGroup(
             jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1802,7 +1859,7 @@ public void openStudentInternshipDetails(Internship i) {
         jPanel30Layout.setHorizontalGroup(
             jPanel30Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel30Layout.createSequentialGroup()
-                .addContainerGap(321, Short.MAX_VALUE)
+                .addContainerGap(263, Short.MAX_VALUE)
                 .addComponent(jPanel33, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(173, 173, 173))
         );
@@ -1823,7 +1880,7 @@ public void openStudentInternshipDetails(Internship i) {
         jPanel32.setLayout(jPanel32Layout);
         jPanel32Layout.setHorizontalGroup(
             jPanel32Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1004, Short.MAX_VALUE)
+            .addGap(0, 946, Short.MAX_VALUE)
         );
         jPanel32Layout.setVerticalGroup(
             jPanel32Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1839,7 +1896,7 @@ public void openStudentInternshipDetails(Internship i) {
         jPanel31.setLayout(jPanel31Layout);
         jPanel31Layout.setHorizontalGroup(
             jPanel31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1004, Short.MAX_VALUE)
+            .addGap(0, 946, Short.MAX_VALUE)
         );
         jPanel31Layout.setVerticalGroup(
             jPanel31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1862,7 +1919,7 @@ public void openStudentInternshipDetails(Internship i) {
         jPanel34.setLayout(jPanel34Layout);
         jPanel34Layout.setHorizontalGroup(
             jPanel34Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1004, Short.MAX_VALUE)
+            .addGap(0, 946, Short.MAX_VALUE)
         );
         jPanel34Layout.setVerticalGroup(
             jPanel34Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1884,7 +1941,7 @@ public void openStudentInternshipDetails(Internship i) {
         );
         jPanel22Layout.setVerticalGroup(
             jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 674, Short.MAX_VALUE)
+            .addGap(0, 696, Short.MAX_VALUE)
         );
 
         jPanel35.add(jPanel22, java.awt.BorderLayout.WEST);
@@ -1901,7 +1958,7 @@ public void openStudentInternshipDetails(Internship i) {
         );
         jPanel26Layout.setVerticalGroup(
             jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 674, Short.MAX_VALUE)
+            .addGap(0, 696, Short.MAX_VALUE)
         );
 
         jPanel36.add(jPanel26, java.awt.BorderLayout.LINE_END);
@@ -2012,7 +2069,7 @@ public void openStudentInternshipDetails(Internship i) {
         jPanel39Layout.setHorizontalGroup(
             jPanel39Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel39Layout.createSequentialGroup()
-                .addContainerGap(524, Short.MAX_VALUE)
+                .addContainerGap(466, Short.MAX_VALUE)
                 .addComponent(jPanel41, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
@@ -2077,7 +2134,7 @@ public void openStudentInternshipDetails(Internship i) {
         jPanel52.setLayout(jPanel52Layout);
         jPanel52Layout.setHorizontalGroup(
             jPanel52Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1004, Short.MAX_VALUE)
+            .addGap(0, 946, Short.MAX_VALUE)
         );
         jPanel52Layout.setVerticalGroup(
             jPanel52Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2097,7 +2154,7 @@ public void openStudentInternshipDetails(Internship i) {
         );
         jPanel53Layout.setVerticalGroup(
             jPanel53Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 554, Short.MAX_VALUE)
+            .addGap(0, 576, Short.MAX_VALUE)
         );
 
         deletedPanel.add(jPanel53, java.awt.BorderLayout.LINE_START);
@@ -2118,7 +2175,7 @@ public void openStudentInternshipDetails(Internship i) {
         jPanel54Layout.setHorizontalGroup(
             jPanel54Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel54Layout.createSequentialGroup()
-                .addContainerGap(804, Short.MAX_VALUE)
+                .addContainerGap(746, Short.MAX_VALUE)
                 .addComponent(restoreButton, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(63, 63, 63))
         );
@@ -2143,7 +2200,7 @@ public void openStudentInternshipDetails(Internship i) {
         );
         jPanel55Layout.setVerticalGroup(
             jPanel55Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 554, Short.MAX_VALUE)
+            .addGap(0, 576, Short.MAX_VALUE)
         );
 
         deletedPanel.add(jPanel55, java.awt.BorderLayout.LINE_END);
@@ -2165,15 +2222,105 @@ public void openStudentInternshipDetails(Internship i) {
 
         cardPanel.add(deletedPanel, "card7");
 
+        jSplitPane1.setDividerLocation(500);
+        jSplitPane1.setResizeWeight(0.5);
+        jSplitPane1.setRequestFocusEnabled(false);
+
+        appliedInternshipsTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Internship ID", "Title", "Company", "Total Applications", "Deadline"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        appliedInternshipsTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                appliedInternshipsTableMouseClicked(evt);
+            }
+        });
+        jScrollPane9.setViewportView(appliedInternshipsTable);
+        if (appliedInternshipsTable.getColumnModel().getColumnCount() > 0) {
+            appliedInternshipsTable.getColumnModel().getColumn(0).setResizable(false);
+            appliedInternshipsTable.getColumnModel().getColumn(1).setResizable(false);
+            appliedInternshipsTable.getColumnModel().getColumn(2).setResizable(false);
+            appliedInternshipsTable.getColumnModel().getColumn(3).setResizable(false);
+            appliedInternshipsTable.getColumnModel().getColumn(4).setResizable(false);
+        }
+
+        jSplitPane1.setLeftComponent(jScrollPane9);
+
+        jPanel110.setLayout(new java.awt.BorderLayout());
+
+        javax.swing.GroupLayout jPanel111Layout = new javax.swing.GroupLayout(jPanel111);
+        jPanel111.setLayout(jPanel111Layout);
+        jPanel111Layout.setHorizontalGroup(
+            jPanel111Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 429, Short.MAX_VALUE)
+        );
+        jPanel111Layout.setVerticalGroup(
+            jPanel111Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        jPanel110.add(jPanel111, java.awt.BorderLayout.PAGE_START);
+
+        studentApplicationTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Student ID", "Student Name", "Email"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane10.setViewportView(studentApplicationTable);
+        if (studentApplicationTable.getColumnModel().getColumnCount() > 0) {
+            studentApplicationTable.getColumnModel().getColumn(0).setResizable(false);
+            studentApplicationTable.getColumnModel().getColumn(1).setResizable(false);
+            studentApplicationTable.getColumnModel().getColumn(2).setResizable(false);
+        }
+
+        jPanel110.add(jScrollPane10, java.awt.BorderLayout.CENTER);
+
+        jSplitPane1.setRightComponent(jPanel110);
+
         javax.swing.GroupLayout applicationsViewLayout = new javax.swing.GroupLayout(applicationsView);
         applicationsView.setLayout(applicationsViewLayout);
         applicationsViewLayout.setHorizontalGroup(
             applicationsViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1004, Short.MAX_VALUE)
+            .addGroup(applicationsViewLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jSplitPane1)
+                .addContainerGap())
         );
         applicationsViewLayout.setVerticalGroup(
             applicationsViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 714, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, applicationsViewLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 724, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         cardPanel.add(applicationsView, "card4");
@@ -2186,7 +2333,7 @@ public void openStudentInternshipDetails(Internship i) {
         jPanel45.setLayout(jPanel45Layout);
         jPanel45Layout.setHorizontalGroup(
             jPanel45Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1004, Short.MAX_VALUE)
+            .addGap(0, 946, Short.MAX_VALUE)
         );
         jPanel45Layout.setVerticalGroup(
             jPanel45Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2201,7 +2348,7 @@ public void openStudentInternshipDetails(Internship i) {
         jPanel46.setLayout(jPanel46Layout);
         jPanel46Layout.setHorizontalGroup(
             jPanel46Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1004, Short.MAX_VALUE)
+            .addGap(0, 946, Short.MAX_VALUE)
         );
         jPanel46Layout.setVerticalGroup(
             jPanel46Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2222,7 +2369,7 @@ public void openStudentInternshipDetails(Internship i) {
         );
         jPanel48Layout.setVerticalGroup(
             jPanel48Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 514, Short.MAX_VALUE)
+            .addGap(0, 536, Short.MAX_VALUE)
         );
 
         jPanel47.add(jPanel48, java.awt.BorderLayout.LINE_START);
@@ -2237,7 +2384,7 @@ public void openStudentInternshipDetails(Internship i) {
         );
         jPanel49Layout.setVerticalGroup(
             jPanel49Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 514, Short.MAX_VALUE)
+            .addGap(0, 536, Short.MAX_VALUE)
         );
 
         jPanel47.add(jPanel49, java.awt.BorderLayout.LINE_END);
@@ -2457,11 +2604,11 @@ public void openStudentInternshipDetails(Internship i) {
         );
         AdminNavLayout.setVerticalGroup(
             AdminNavLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 714, Short.MAX_VALUE)
+            .addGap(0, 736, Short.MAX_VALUE)
             .addGroup(AdminNavLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(AdminNavLayout.createSequentialGroup()
                     .addComponent(adminNavigation, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 451, Short.MAX_VALUE)))
+                    .addGap(0, 473, Short.MAX_VALUE)))
         );
 
         jPanel2.add(AdminNav, "card4");
@@ -2610,34 +2757,6 @@ public void openStudentInternshipDetails(Internship i) {
 
         adminNavigation3.add(jPanel73);
 
-        jPanel74.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel74.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel74MouseClicked(evt);
-            }
-        });
-
-        jLabel52.setText("Applied Internships");
-
-        javax.swing.GroupLayout jPanel74Layout = new javax.swing.GroupLayout(jPanel74);
-        jPanel74.setLayout(jPanel74Layout);
-        jPanel74Layout.setHorizontalGroup(
-            jPanel74Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel74Layout.createSequentialGroup()
-                .addContainerGap(52, Short.MAX_VALUE)
-                .addComponent(jLabel52)
-                .addGap(15, 15, 15))
-        );
-        jPanel74Layout.setVerticalGroup(
-            jPanel74Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel74Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel52, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        adminNavigation3.add(jPanel74);
-
         jPanel75.setBackground(new java.awt.Color(255, 255, 255));
         jPanel75.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -2710,7 +2829,7 @@ public void openStudentInternshipDetails(Internship i) {
             studentNav1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(studentNav1Layout.createSequentialGroup()
                 .addComponent(adminNavigation3, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 484, Short.MAX_VALUE))
+                .addGap(0, 506, Short.MAX_VALUE))
         );
 
         jPanel65.add(studentNav1, "card3");
@@ -2867,7 +2986,7 @@ public void openStudentInternshipDetails(Internship i) {
         );
         jPanel81Layout.setVerticalGroup(
             jPanel81Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 564, Short.MAX_VALUE)
+            .addGap(0, 586, Short.MAX_VALUE)
         );
 
         jPanel80.add(jPanel81, java.awt.BorderLayout.LINE_END);
@@ -2968,7 +3087,7 @@ public void openStudentInternshipDetails(Internship i) {
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 518, Short.MAX_VALUE)
+            .addGap(0, 540, Short.MAX_VALUE)
         );
 
         applicationsView1.add(jPanel7, java.awt.BorderLayout.LINE_START);
@@ -2984,7 +3103,7 @@ public void openStudentInternshipDetails(Internship i) {
         );
         jPanel62Layout.setVerticalGroup(
             jPanel62Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 518, Short.MAX_VALUE)
+            .addGap(0, 540, Short.MAX_VALUE)
         );
 
         applicationsView1.add(jPanel62, java.awt.BorderLayout.LINE_END);
@@ -3158,7 +3277,7 @@ public void openStudentInternshipDetails(Internship i) {
         );
         jPanel115Layout.setVerticalGroup(
             jPanel115Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 514, Short.MAX_VALUE)
+            .addGap(0, 536, Short.MAX_VALUE)
         );
 
         jPanel114.add(jPanel115, java.awt.BorderLayout.LINE_START);
@@ -3173,7 +3292,7 @@ public void openStudentInternshipDetails(Internship i) {
         );
         jPanel116Layout.setVerticalGroup(
             jPanel116Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 514, Short.MAX_VALUE)
+            .addGap(0, 536, Short.MAX_VALUE)
         );
 
         jPanel114.add(jPanel116, java.awt.BorderLayout.LINE_END);
@@ -3218,7 +3337,7 @@ public void openStudentInternshipDetails(Internship i) {
         );
         jPanel88Layout.setVerticalGroup(
             jPanel88Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 674, Short.MAX_VALUE)
+            .addGap(0, 696, Short.MAX_VALUE)
         );
 
         jPanel87.add(jPanel88, java.awt.BorderLayout.WEST);
@@ -3235,7 +3354,7 @@ public void openStudentInternshipDetails(Internship i) {
         );
         jPanel90Layout.setVerticalGroup(
             jPanel90Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 674, Short.MAX_VALUE)
+            .addGap(0, 696, Short.MAX_VALUE)
         );
 
         jPanel89.add(jPanel90, java.awt.BorderLayout.LINE_END);
@@ -3648,13 +3767,6 @@ public void openStudentInternshipDetails(Internship i) {
         
     }//GEN-LAST:event_jPanel73MouseClicked
 
-    private void jPanel74MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel74MouseClicked
-       CardLayout c2 = (CardLayout)(cardPanel.getLayout());
-        c2.show(cardPanel, "card4");         
-        resetNavColors();
-        dashboardNav.setBackground(activeColor);
-    }//GEN-LAST:event_jPanel74MouseClicked
-
     private void jPanel75MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel75MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jPanel75MouseClicked
@@ -3844,6 +3956,7 @@ public void openStudentInternshipDetails(Internship i) {
         if (applied) 
         {
             JOptionPane.showMessageDialog(this,"Application submitted successfully.","Success",JOptionPane.INFORMATION_MESSAGE);
+            loadAppliedInternships();
         } else 
         {
             JOptionPane.showMessageDialog(this,"You have already applied for this internship.","Error",JOptionPane.WARNING_MESSAGE);
@@ -3864,6 +3977,9 @@ public void openStudentInternshipDetails(Internship i) {
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
         CardLayout c13 = (CardLayout)(parentcard.getLayout());
         c13.show(parentcard, "card5");
+        dashboardNav.setBackground(activeColor);
+        setNumber();
+        
 
         /*
         String username = usernameField.getText().trim();
@@ -3946,10 +4062,10 @@ public void openStudentInternshipDetails(Internship i) {
     private void signUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpButtonActionPerformed
         
         String id = collegeField.getText().trim();
-        String email = emailField.getText().trim();
+        String name = nameField.getText().trim();
         char[] passwordChars = passField.getPassword();
         String password = new String(passwordChars);
-        String message = StudentController.registerNewStudent(id, email, password);
+        String message = StudentController.registerNewStudent(id, name, password);
 
         if (message == null) {
             JOptionPane.showMessageDialog(this, "User registration  successful!", "Success",JOptionPane.INFORMATION_MESSAGE);
@@ -3963,9 +4079,9 @@ public void openStudentInternshipDetails(Internship i) {
         
     }//GEN-LAST:event_signUpButtonActionPerformed
 
-    private void emailFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailFieldActionPerformed
+    private void nameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_emailFieldActionPerformed
+    }//GEN-LAST:event_nameFieldActionPerformed
 
     private void passFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passFieldActionPerformed
         // TODO add your handling code here:
@@ -4038,6 +4154,29 @@ public void openStudentInternshipDetails(Internship i) {
         sDeadlineButton.setBackground(activeColor);
     }//GEN-LAST:event_sDeadlineButtonMouseClicked
 
+    private void appliedInternshipsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_appliedInternshipsTableMouseClicked
+                                                  
+        int selectedRow = appliedInternshipsTable.getSelectedRow();
+        if (selectedRow == -1) {
+            return;
+        }
+        String internshipId = appliedInternshipsTable.getValueAt(selectedRow, 0).toString();
+
+        DefaultTableModel model = (DefaultTableModel) studentApplicationTable.getModel();
+        model.setRowCount(0);
+
+        HashSet<String> applicants = ApplicationController.viewApplicants(internshipId);
+
+        for (String studentId : applicants) {
+            model.Student s = StudentController.studentMap.get(studentId);
+            if (s != null) {
+                model.addRow(new Object[] {
+                    s.getStudentId(),s.getStudentName(),s.getEmail()
+                });
+            }
+        }
+    }//GEN-LAST:event_appliedInternshipsTableMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -4090,6 +4229,7 @@ public void openStudentInternshipDetails(Internship i) {
     private javax.swing.JPanel applicationNav;
     private javax.swing.JPanel applicationsView;
     private javax.swing.JPanel applicationsView1;
+    private javax.swing.JTable appliedInternshipsTable;
     private javax.swing.JButton applyButton;
     private javax.swing.JPanel archiveNav;
     private javax.swing.JButton cancelButton;
@@ -4115,7 +4255,6 @@ public void openStudentInternshipDetails(Internship i) {
     private javax.swing.JButton durationButton;
     private javax.swing.JComboBox<String> durationCombo;
     private javax.swing.JComboBox<String> durationComboS;
-    private javax.swing.JTextField emailField;
     private javax.swing.JPanel gridPanel;
     private javax.swing.JPanel gridPanel1;
     private javax.swing.JPanel internshipPreviewPanel;
@@ -4130,9 +4269,7 @@ public void openStudentInternshipDetails(Internship i) {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
@@ -4159,7 +4296,6 @@ public void openStudentInternshipDetails(Internship i) {
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
@@ -4173,7 +4309,6 @@ public void openStudentInternshipDetails(Internship i) {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel51;
-    private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel53;
     private javax.swing.JLabel jLabel54;
     private javax.swing.JLabel jLabel55;
@@ -4217,6 +4352,8 @@ public void openStudentInternshipDetails(Internship i) {
     private javax.swing.JPanel jPanel108;
     private javax.swing.JPanel jPanel109;
     private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel110;
+    private javax.swing.JPanel jPanel111;
     private javax.swing.JPanel jPanel112;
     private javax.swing.JPanel jPanel113;
     private javax.swing.JPanel jPanel114;
@@ -4320,6 +4457,7 @@ public void openStudentInternshipDetails(Internship i) {
     private javax.swing.JPanel jPanel98;
     private javax.swing.JPanel jPanel99;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -4327,7 +4465,9 @@ public void openStudentInternshipDetails(Internship i) {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JTable jTable4;
     private javax.swing.JTextArea jTextArea4;
     private javax.swing.JTextField jTextField1;
@@ -4340,6 +4480,10 @@ public void openStudentInternshipDetails(Internship i) {
     private javax.swing.JPanel manageNav;
     private javax.swing.JComboBox<String> monthCombo;
     private javax.swing.JComboBox<String> monthComboS;
+    private javax.swing.JTextField nameField;
+    private javax.swing.JLabel noOfApplications;
+    private javax.swing.JLabel noOfInternship;
+    private javax.swing.JLabel noOfStudent;
     private javax.swing.JPanel parentcard;
     private javax.swing.JPasswordField passField;
     private javax.swing.JPasswordField passWordField;
@@ -4359,6 +4503,7 @@ public void openStudentInternshipDetails(Internship i) {
     private javax.swing.JTextArea skillArea;
     private javax.swing.JTextArea skillAreaS;
     private javax.swing.JPanel south;
+    private javax.swing.JTable studentApplicationTable;
     private javax.swing.JButton studentButton;
     private javax.swing.JPanel studentCardContainerPanel;
     private javax.swing.JPanel studentDashboardNav;

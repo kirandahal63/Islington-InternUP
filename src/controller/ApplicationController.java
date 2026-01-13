@@ -13,7 +13,7 @@ import java.util.LinkedHashSet;
  * @author lenovo
  */
 public class ApplicationController {
-    private static LinkedHashMap<String, LinkedHashSet<String>> studentApplications = new LinkedHashMap<>();
+    public static LinkedHashMap<String, LinkedHashSet<String>> studentApplications = new LinkedHashMap<>();
 
     //std apply for internship
     public static boolean applyInternship(String studentId, String internshipId) {
@@ -36,5 +36,13 @@ public class ApplicationController {
     public static LinkedHashMap<String, LinkedHashSet<String>> viewAllApplications() {
         return studentApplications;
     } 
+    
+    public static int totalApplicationCount() {
+        int total = 0;
+        for (LinkedHashSet<String> applicants : studentApplications.values()) {
+            total += applicants.size();
+        }
+        return total;
+    }
     
 }

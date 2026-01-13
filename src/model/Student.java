@@ -10,18 +10,23 @@ package model;
  */
 public class Student {
     private String studentId;
+    private String studentName;
     private String email;
     private String password;
 
-    public Student(String studentId,String email, String password) {
+    public Student(String studentId,String studentName, String password) {
 
         this.studentId = studentId;
-        this.email = email;
+        this.studentName = studentName;
+        this.email = studentId+"@islingtoncollege.edu.np";
         this.password = password;
     }
 
     public String getStudentId() {
         return studentId;
+    }
+    public String getStudentName() {
+        return studentName;
     }
 
     public String getEmail() {
@@ -32,13 +37,16 @@ public class Student {
         return password;
     }
     
-    public static String isStudentUser(String studentID,String email, String password){
+    public static String isStudentUser(String studentID,String name, String password){
         if (studentID == null ||studentID.isEmpty()){
             return "Please enter your college ID!!";   
         }
-        else if (email == null|| email.isEmpty() ){
-            return "Please enter your email!!";     
+        else if (name == null|| name.isEmpty() ){
+            return "Please enter your name!!";     
         } 
+        else if (!name.contains(" ")){
+            return "Please enter your full name!!";            
+        }
         else if(password == null || password.isEmpty()){
             return "Please set a password!!"; 
         }

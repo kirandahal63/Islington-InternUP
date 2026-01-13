@@ -11,12 +11,12 @@ import model.Student;
  */
 public class StudentController 
 {
-    private static HashMap<String, Student> studentMap = new HashMap<>();
+    public static HashMap<String, Student> studentMap = new HashMap<>();
     private static String currentStudentId = null; 
 
-    public static String registerNewStudent(String studentId, String email, String password) {
+    public static String registerNewStudent(String studentId, String name, String password) {
         
-        String validation = Student.isStudentUser(studentId, email, password);
+        String validation = Student.isStudentUser(studentId, name, password);
         if (validation != null) {
             return validation;
         }
@@ -26,15 +26,12 @@ public class StudentController
         }        
         
         for (Student s : studentMap.values()) {
-            if (s.getEmail().equalsIgnoreCase(email)) {
-                return "User with this email already exists!!";
-            }
             if (s.getPassword().equals(password)) {
                 return "Please enter a unique password!!";
             }
         }
         
-        Student newStudent = new Student(studentId, email, password);
+        Student newStudent = new Student(studentId, name, password);
         studentMap.put(studentId, newStudent);
 
         return null; 
