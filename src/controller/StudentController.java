@@ -12,8 +12,15 @@ import model.Student;
 public class StudentController 
 {
     public static HashMap<String, Student> studentMap = new HashMap<>();
-    private static String currentStudentId = null; 
-
+    public static String currentStudentId = null; 
+    
+    static {
+        studentMap.put("NP01", new Student("Kiran Dahal", "aaaaa"));
+        studentMap.put("NP02", new Student("Nitya Yadav", "pass123"));
+        studentMap.put("NP03", new Student("Anwesha Acharya","pass123"));
+        studentMap.put("NP04", new Student("Alwin Maharjan", "pass123"));
+        studentMap.put("NP05", new Student("Aditya", "pass123"));
+    }
     public static String registerNewStudent(String studentId, String name, String password) {
         
         String validation = Student.isStudentUser(studentId, name, password);
@@ -31,7 +38,7 @@ public class StudentController
             }
         }
         
-        Student newStudent = new Student(studentId, name, password);
+        Student newStudent = new Student(name, password);
         studentMap.put(studentId, newStudent);
 
         return null; 

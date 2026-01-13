@@ -14,9 +14,7 @@ public class Student {
     private String email;
     private String password;
 
-    public Student(String studentId,String studentName, String password) {
-
-        this.studentId = studentId;
+    public Student(String studentName, String password) {
         this.studentName = studentName;
         this.email = studentId+"@islingtoncollege.edu.np";
         this.password = password;

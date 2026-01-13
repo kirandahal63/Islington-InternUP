@@ -44,5 +44,14 @@ public class ApplicationController {
         }
         return total;
     }
+    public static int individualStudentApplicationCount(String studentId) {
+    int count = 0;
+    for (LinkedHashSet<String> students : studentApplications.values()) {
+        if (students.contains(studentId)) {
+            count++;
+        }
+    }
+    return count;
+}
     
 }
