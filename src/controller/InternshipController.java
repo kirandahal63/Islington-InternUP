@@ -369,6 +369,75 @@ public class InternshipController {
         return date.replace("-Jan-", "-01-").replace("-Feb-", "-02-").replace("-Mar-", "-03-").replace("-Apr-", "-04-").replace("-May-", "-05-").replace("-Jun-", "-06-").replace("-Jul-", "-07-").replace("-Aug-", "-08-").replace("-Sep-", "-09-").replace("-Oct-", "-10-").replace("-Nov-", "-11-").replace("-Dec-", "-12-"); 
     }
     
+    public static LinkedList<Internship> findSearch(String searchTxt) {
+        LinkedList<Internship> finalResults = new LinkedList<>();
+
+        if (searchTxt.toUpperCase().startsWith("EPD")) {
+            Internship result = binarySearch(internshipList, searchTxt, "ID");
+            if (result != null) {
+                finalResults.add(result);
+                return finalResults; 
+            }
+        } 
+        Internship titleResult = binarySearch(internshipList, searchTxt, "Title");
+        if (titleResult != null) {
+            finalResults.add(titleResult);
+            return finalResults;
+        }
+        return linearSearch(searchTxt);
+    }
+    
+    public static Internship binarySearch(LinkedList<Internship> list, String target, String category) {
+        if (category.equals("ID")) {
+            sortById();
+        } 
+        else {
+            sortByTitle();
+        }
+
+        int low = 0;
+        int high = internshipList.size() - 1;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            Internship midInternship = internshipList.get(mid);
+            String categoryValue;
+            
+            if (category.equals("ID")) 
+            {
+                categoryValue = midInternship.getId();
+            } else {
+                categoryValue = midInternship.getTitle();
+            }
+
+            int matchResult = categoryValue.compareToIgnoreCase(target);
+            if (matchResult == 0) {
+                return midInternship;
+            }else if (matchResult < 0) {
+                low = mid + 1; 
+            } else {
+                high = mid - 1; 
+            }
+        }
+        return null;
+    }
+    
+    public static LinkedList<Internship> linearSearch(String query) {
+        LinkedList<Internship> matchedResults = new LinkedList<>();
+        String checkFor = query.toLowerCase();
+        for (Internship i : internshipList) {
+            if (i.getTitle().toLowerCase().contains(checkFor) || i.getCompany().toLowerCase().contains(checkFor)
+                || i.getType().toLowerCase().contains(checkFor)|| i.getDeadline().toLowerCase().contains(checkFor)  ) {
+                matchedResults.add(i);
+            }
+        }
+        return matchedResults;
+    }
+    
+    
+    
+    
+    
     public static void refreshQueue() {
     front = -1;
     rear = -1;

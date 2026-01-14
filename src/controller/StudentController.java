@@ -15,11 +15,11 @@ public class StudentController
     public static String currentStudentId = null; 
     
     static {
-        studentMap.put("NP01", new Student("Kiran Dahal", "aaaaa"));
-        studentMap.put("NP02", new Student("Nitya Yadav", "pass123"));
-        studentMap.put("NP03", new Student("Anwesha Acharya","pass123"));
-        studentMap.put("NP04", new Student("Alwin Maharjan", "pass123"));
-        studentMap.put("NP05", new Student("Aditya", "pass123"));
+        studentMap.put("np01", new Student("np01","Kiran Dahal", "aaaaa"));
+        studentMap.put("np02", new Student("np02","Nitya Yadav", "pass124"));
+        studentMap.put("np03", new Student("np03","Anwesha Acharya","pass125"));
+        studentMap.put("np04", new Student("np04","Alwin Maharjan", "pass126"));
+        studentMap.put("np05", new Student("np05","Aditya", "pass123"));
     }
     public static String registerNewStudent(String studentId, String name, String password) {
         
@@ -38,7 +38,7 @@ public class StudentController
             }
         }
         
-        Student newStudent = new Student(name, password);
+        Student newStudent = new Student(studentId,name, password);
         studentMap.put(studentId, newStudent);
 
         return null; 

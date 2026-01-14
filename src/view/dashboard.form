@@ -1057,14 +1057,18 @@
                           <Component id="jLabel4" min="-2" pref="170" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel17" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel16" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace pref="528" max="32767" attributes="0"/>
+                                  <Component id="searchField" min="-2" pref="216" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace pref="550" max="32767" attributes="0"/>
-                          <Component id="jTextField1" min="-2" pref="216" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="btnSearch" min="-2" pref="42" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jLabel83" pref="47" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1074,18 +1078,25 @@
                           <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
-                                  <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="jTextField1" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel4" alignment="1" min="-2" pref="55" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="jLabel4" min="-2" pref="55" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
-                                  <Component id="jLabel16" min="-2" pref="17" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jLabel17" min="-2" pref="27" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="jLabel16" min="-2" pref="17" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="3" attributes="0">
+                                              <Component id="jLabel17" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
+                                              <Component id="searchField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="btnSearch" alignment="1" max="32767" attributes="0"/>
+                                          <Component id="jLabel83" alignment="1" pref="42" max="32767" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -1109,36 +1120,47 @@
                     <Property name="text" type="java.lang.String" value="Admin"/>
                   </Properties>
                 </Component>
-                <Container class="javax.swing.JPanel" name="jPanel5">
-
-                  <Layout>
-                    <DimensionLayout dim="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <EmptySpace min="0" pref="51" max="32767" attributes="0"/>
-                      </Group>
-                    </DimensionLayout>
-                    <DimensionLayout dim="1">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <EmptySpace min="0" pref="46" max="32767" attributes="0"/>
-                      </Group>
-                    </DimensionLayout>
-                  </Layout>
-                </Container>
-                <Component class="javax.swing.JTextField" name="jTextField1">
+                <Component class="javax.swing.JTextField" name="searchField">
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="4"/>
-                    <Property name="text" type="java.lang.String" value="Search"/>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[64, 25]"/>
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField1ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="searchFieldActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel4">
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="ImageIcon icon55 = new ImageIcon(&quot;src/images/internupLogo.png&quot;);&#xa;Image imgg55 = icon55.getImage();&#xa;Image scaledup55 = imgg55.getScaledInstance(160, 190, Image.SCALE_SMOOTH);&#xa;jLabel4.setIcon(new ImageIcon(scaledup55));"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel83">
+                  <Properties>
+                    <Property name="verticalAlignment" type="int" value="3"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="ImageIcon icon83 = new ImageIcon(&quot;src/images/user.png&quot;);&#xa;Image img83 = icon83.getImage();&#xa;Image scaled83 = img83.getScaledInstance(41, 34, Image.SCALE_SMOOTH);&#xa;jLabel83.setIcon(new ImageIcon(scaled83));"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JButton" name="btnSearch">
+                  <Properties>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="null"/>
+                    </Property>
+                    <Property name="borderPainted" type="boolean" value="false"/>
+                    <Property name="contentAreaFilled" type="boolean" value="false"/>
+                    <Property name="focusPainted" type="boolean" value="false"/>
+                    <Property name="focusable" type="boolean" value="false"/>
+                    <Property name="requestFocusEnabled" type="boolean" value="false"/>
+                    <Property name="verifyInputWhenFocusTarget" type="boolean" value="false"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSearchActionPerformed"/>
+                  </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="ImageIcon iconn = new ImageIcon(&quot;src/images/searchlogo.png&quot;);&#xa;Image imgS = iconn.getImage();&#xa;Image scaledB = imgS.getScaledInstance(42, 36, Image.SCALE_SMOOTH);&#xa;btnSearch.setIcon(new ImageIcon(scaledB));"/>
                   </AuxValues>
                 </Component>
               </SubComponents>
@@ -3462,6 +3484,9 @@
                   <SubComponents>
                     <Container class="javax.swing.JPanel" name="adminNavigation">
                       <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                        </Property>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[13, 185]"/>
                         </Property>
@@ -3480,7 +3505,9 @@
                             </Property>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                                <LineBorder/>
+                                <LineBorder>
+                                  <Color PropertyName="color" blue="cc" green="cc" red="cc" type="rgb"/>
+                                </LineBorder>
                               </Border>
                             </Property>
                           </Properties>
@@ -3517,6 +3544,13 @@
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
+                            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                                <LineBorder>
+                                  <Color PropertyName="color" blue="cc" green="cc" red="cc" type="rgb"/>
+                                </LineBorder>
+                              </Border>
+                            </Property>
                           </Properties>
                           <Events>
                             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="manageNavMouseClicked"/>
@@ -3536,7 +3570,7 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="1" attributes="0">
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jLabel18" pref="31" max="32767" attributes="0"/>
+                                      <Component id="jLabel18" pref="29" max="32767" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -3555,6 +3589,13 @@
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
+                            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                                <LineBorder>
+                                  <Color PropertyName="color" blue="cc" green="cc" red="cc" type="rgb"/>
+                                </LineBorder>
+                              </Border>
+                            </Property>
                           </Properties>
                           <Events>
                             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="archiveNavMouseClicked"/>
@@ -3564,7 +3605,7 @@
                             <DimensionLayout dim="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="1" attributes="0">
-                                      <EmptySpace pref="48" max="32767" attributes="0"/>
+                                      <EmptySpace pref="46" max="32767" attributes="0"/>
                                       <Component id="jLabel32" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                                   </Group>
@@ -3574,7 +3615,7 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="1" attributes="0">
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jLabel32" pref="31" max="32767" attributes="0"/>
+                                      <Component id="jLabel32" pref="29" max="32767" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -3593,6 +3634,13 @@
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
+                            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                                <LineBorder>
+                                  <Color PropertyName="color" blue="cc" green="cc" red="cc" type="rgb"/>
+                                </LineBorder>
+                              </Border>
+                            </Property>
                           </Properties>
                           <Events>
                             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="applicationNavMouseClicked"/>
@@ -3604,7 +3652,7 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
                                       <Component id="jLabel19" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace pref="64" max="32767" attributes="0"/>
+                                      <EmptySpace pref="62" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -3613,7 +3661,7 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                                       <Component id="jLabel19" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace pref="13" max="32767" attributes="0"/>
+                                      <EmptySpace pref="11" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -3631,6 +3679,13 @@
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
+                            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                                <LineBorder>
+                                  <Color PropertyName="color" blue="cc" green="cc" red="cc" type="rgb"/>
+                                </LineBorder>
+                              </Border>
+                            </Property>
                           </Properties>
                           <Events>
                             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="settingsNavMouseClicked"/>
@@ -3642,7 +3697,7 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                                       <Component id="jLabel21" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace pref="79" max="32767" attributes="0"/>
+                                      <EmptySpace pref="77" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -3651,7 +3706,7 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                                       <Component id="jLabel21" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace pref="9" max="32767" attributes="0"/>
+                                      <EmptySpace pref="7" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -3755,11 +3810,13 @@
                               <Component id="jLabel42" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel41" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="537" max="32767" attributes="0"/>
-                          <Component id="jTextField4" min="-2" pref="216" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jPanel64" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                          <EmptySpace pref="489" max="32767" attributes="0"/>
+                          <Component id="sSearchField" min="-2" pref="216" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="btnSearch1" min="-2" pref="42" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jLabel84" pref="55" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -3779,9 +3836,10 @@
                                   <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
-                                  <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="jPanel64" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jTextField4" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                      <Component id="jLabel84" pref="42" max="32767" attributes="0"/>
+                                      <Component id="sSearchField" min="-2" max="-2" attributes="0"/>
+                                      <Component id="btnSearch1" alignment="1" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                               </Group>
@@ -3812,22 +3870,7 @@
                     <Property name="text" type="java.lang.String" value="Student"/>
                   </Properties>
                 </Component>
-                <Container class="javax.swing.JPanel" name="jPanel64">
-
-                  <Layout>
-                    <DimensionLayout dim="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <EmptySpace min="0" pref="51" max="32767" attributes="0"/>
-                      </Group>
-                    </DimensionLayout>
-                    <DimensionLayout dim="1">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <EmptySpace min="0" pref="46" max="32767" attributes="0"/>
-                      </Group>
-                    </DimensionLayout>
-                  </Layout>
-                </Container>
-                <Component class="javax.swing.JTextField" name="jTextField4">
+                <Component class="javax.swing.JTextField" name="sSearchField">
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="4"/>
                     <Property name="text" type="java.lang.String" value="Search"/>
@@ -3836,8 +3879,35 @@
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField4ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sSearchFieldActionPerformed"/>
                   </Events>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel84">
+                  <Properties>
+                    <Property name="verticalAlignment" type="int" value="3"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="ImageIcon icon84 = new ImageIcon(&quot;src/images/user.png&quot;);&#xa;Image img84 = icon84.getImage();&#xa;Image scaled84 = img84.getScaledInstance(41, 34, Image.SCALE_SMOOTH);&#xa;jLabel84.setIcon(new ImageIcon(scaled84));"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JButton" name="btnSearch1">
+                  <Properties>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="null"/>
+                    </Property>
+                    <Property name="borderPainted" type="boolean" value="false"/>
+                    <Property name="contentAreaFilled" type="boolean" value="false"/>
+                    <Property name="focusPainted" type="boolean" value="false"/>
+                    <Property name="focusable" type="boolean" value="false"/>
+                    <Property name="requestFocusEnabled" type="boolean" value="false"/>
+                    <Property name="verifyInputWhenFocusTarget" type="boolean" value="false"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSearch1ActionPerformed"/>
+                  </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="ImageIcon iconn1 = new ImageIcon(&quot;src/images/searchlogo.png&quot;);&#xa;Image imgS1 = iconn1.getImage();&#xa;Image scaledB1 = imgS1.getScaledInstance(42, 36, Image.SCALE_SMOOTH);&#xa;btnSearch1.setIcon(new ImageIcon(scaledB1));"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>
@@ -3910,7 +3980,9 @@
                             </Property>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                                <LineBorder/>
+                                <LineBorder>
+                                  <Color PropertyName="color" blue="cc" green="cc" red="cc" type="rgb"/>
+                                </LineBorder>
                               </Border>
                             </Property>
                           </Properties>
@@ -3947,6 +4019,13 @@
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
+                            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                                <LineBorder>
+                                  <Color PropertyName="color" blue="cc" green="cc" red="cc" type="rgb"/>
+                                </LineBorder>
+                              </Border>
+                            </Property>
                           </Properties>
                           <Events>
                             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="viewInternshipMouseClicked"/>
@@ -3956,7 +4035,7 @@
                             <DimensionLayout dim="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="1" attributes="0">
-                                      <EmptySpace pref="49" max="32767" attributes="0"/>
+                                      <EmptySpace pref="47" max="32767" attributes="0"/>
                                       <Component id="jLabel51" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                                   </Group>
@@ -3966,7 +4045,7 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="1" attributes="0">
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jLabel51" pref="33" max="32767" attributes="0"/>
+                                      <Component id="jLabel51" pref="31" max="32767" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -3985,6 +4064,13 @@
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
+                            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                                <LineBorder>
+                                  <Color PropertyName="color" blue="cc" green="cc" red="cc" type="rgb"/>
+                                </LineBorder>
+                              </Border>
+                            </Property>
                           </Properties>
                           <Events>
                             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="studentSettingsMouseClicked"/>
@@ -3996,7 +4082,7 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                                       <Component id="jLabel53" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace pref="79" max="32767" attributes="0"/>
+                                      <EmptySpace pref="77" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -4005,7 +4091,7 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                                       <Component id="jLabel53" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace pref="11" max="32767" attributes="0"/>
+                                      <EmptySpace pref="9" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -5108,14 +5194,14 @@
                                           <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
                                               <Component id="jTextField8" alignment="0" max="32767" attributes="0"/>
                                               <Component id="jLabel61" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jTextField9" alignment="0" min="-2" pref="234" max="-2" attributes="0"/>
+                                              <Component id="settingsPass" alignment="0" min="-2" pref="234" max="-2" attributes="0"/>
                                               <Component id="jLabel64" alignment="0" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <Component id="jLabel60" min="-2" max="-2" attributes="0"/>
                                           <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="jTextField7" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="settingsEmail" alignment="0" max="32767" attributes="0"/>
                                               <Component id="jLabel58" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jTextField6" max="32767" attributes="0"/>
+                                              <Component id="settingCollegeID" max="32767" attributes="0"/>
                                               <Component id="jLabel57" min="-2" max="-2" attributes="0"/>
                                               <Component id="jLabel59" min="-2" pref="234" max="-2" attributes="0"/>
                                           </Group>
@@ -5123,7 +5209,7 @@
                                       <EmptySpace pref="178" max="32767" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jLabel66" min="-2" pref="242" max="-2" attributes="0"/>
-                                          <Component id="jTextField3" min="-2" pref="234" max="-2" attributes="0"/>
+                                          <Component id="settingsName" min="-2" pref="234" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="-2" pref="85" max="-2" attributes="0"/>
                                   </Group>
@@ -5143,11 +5229,11 @@
                                           <Group type="102" attributes="0">
                                               <Component id="jLabel57" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jTextField6" min="-2" pref="32" max="-2" attributes="0"/>
+                                              <Component id="settingCollegeID" min="-2" pref="32" max="-2" attributes="0"/>
                                               <EmptySpace type="separate" max="-2" attributes="0"/>
                                               <Component id="jLabel58" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jTextField7" min="-2" pref="32" max="-2" attributes="0"/>
+                                              <Component id="settingsEmail" min="-2" pref="32" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="jLabel59" min="-2" max="-2" attributes="0"/>
                                           </Group>
@@ -5159,7 +5245,7 @@
                                               <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
                                               <Component id="jLabel64" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jTextField9" min="-2" pref="32" max="-2" attributes="0"/>
+                                              <Component id="settingsPass" min="-2" pref="32" max="-2" attributes="0"/>
                                               <EmptySpace type="separate" max="-2" attributes="0"/>
                                               <Component id="jLabel61" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
@@ -5173,7 +5259,7 @@
                                               <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                                               <Component id="jLabel56" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jTextField3" min="-2" pref="32" max="-2" attributes="0"/>
+                                              <Component id="settingsName" min="-2" pref="32" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <EmptySpace pref="66" max="32767" attributes="0"/>
@@ -5187,21 +5273,21 @@
                                 <Property name="text" type="java.lang.String" value="Full Name"/>
                               </Properties>
                             </Component>
-                            <Component class="javax.swing.JTextField" name="jTextField3">
+                            <Component class="javax.swing.JTextField" name="settingsName">
                             </Component>
                             <Component class="javax.swing.JLabel" name="jLabel57">
                               <Properties>
                                 <Property name="text" type="java.lang.String" value="College ID"/>
                               </Properties>
                             </Component>
-                            <Component class="javax.swing.JTextField" name="jTextField6">
+                            <Component class="javax.swing.JTextField" name="settingCollegeID">
                             </Component>
                             <Component class="javax.swing.JLabel" name="jLabel58">
                               <Properties>
                                 <Property name="text" type="java.lang.String" value="Email"/>
                               </Properties>
                             </Component>
-                            <Component class="javax.swing.JTextField" name="jTextField7">
+                            <Component class="javax.swing.JTextField" name="settingsEmail">
                             </Component>
                             <Component class="javax.swing.JLabel" name="jLabel59">
                               <Properties>
@@ -5223,7 +5309,7 @@
                                 <Property name="text" type="java.lang.String" value="College"/>
                               </Properties>
                             </Component>
-                            <Component class="javax.swing.JTextField" name="jTextField9">
+                            <Component class="javax.swing.JTextField" name="settingsPass">
                             </Component>
                             <Component class="javax.swing.JLabel" name="jLabel64">
                               <Properties>

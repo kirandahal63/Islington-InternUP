@@ -24,6 +24,7 @@ import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashSet;
+import java.util.LinkedList;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JLabel;
@@ -46,11 +47,6 @@ public class dashboard extends javax.swing.JFrame {
     private int editingIndex = -1;
     private Internship selectedInternship = null;
 
-    
-
-    /**
-     * Creates new form dashboard
-     */
     DefaultTableModel activeTableModel;
     DefaultTableModel archivedTableModel;
     
@@ -58,23 +54,53 @@ public class dashboard extends javax.swing.JFrame {
         initComponents();
         activeTableModel = (DefaultTableModel) internshipTable.getModel();
         loadInternshipsToTable();
+        
         archivedTableModel = (DefaultTableModel) deletedInternshipTable.getModel();
         loadDeletedInternshipsToTable();
-        ApplicationController.applyInternship("STU001", "EPD1");
-        ApplicationController.applyInternship("STU002", "EPD1");
-        setNumber();
+        ApplicationController.applyInternship("NP01", "EPD1");
+        ApplicationController.applyInternship("NP02", "EPD1");
         loadAppliedInternships();
         loadStudentInternshipCards();
         
+        btnSearch.setContentAreaFilled(false); 
+        btnSearch.setOpaque(true);            
+        btnSearch.setBackground(Color.WHITE); 
+        btnSearch.setBorderPainted(false);
+        placeholder( "Search...");
+        
         studentCardContainerPanel.setLayout(new GridBagLayout());
         studentCardContainerPanel.setBackground(new Color(245, 245, 245));
+        studentCardContainerPanel.setLayout(new GridLayout(0, 3, 15, 15)); 
         
         internshipScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         internshipScrollPane.getVerticalScrollBar().setUnitIncrement(16);
 
         loadInternshipCards() ;
-        studentCardContainerPanel.setLayout(new GridLayout(0, 3, 15, 15));    
+           
     }
+    
+    private void placeholder(String placeholderText) {
+
+        searchField.setText(placeholderText);
+        searchField.setForeground(java.awt.Color.GRAY);
+        searchField.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                if (searchField.getText().equals(placeholderText)) {
+                    searchField.setText("");
+                    searchField.setForeground(java.awt.Color.BLACK);
+                }
+            }
+            @Override
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                if (searchField.getText().isEmpty()) {
+                    searchField.setForeground(java.awt.Color.GRAY);
+                    searchField.setText(placeholderText);
+                }
+            }
+        });
+    }
+    
     private void setNumber(){
         int studentCount = StudentController.studentMap.size();
         int internshipCount = InternshipController.internshipList.size();
@@ -92,6 +118,24 @@ public class dashboard extends javax.swing.JFrame {
         Dimension size = new Dimension(60, 48); 
         noOfStudent.setPreferredSize(size);noOfInternship.setPreferredSize(size);noOfInternship1.setPreferredSize(size);noOfApplications.setPreferredSize(size);indiviudalNoOfApplications.setPreferredSize(size);
         noOfStudent.setMinimumSize(size);noOfInternship.setMinimumSize(size);noOfInternship1.setMinimumSize(size);noOfApplications.setMinimumSize(size);indiviudalNoOfApplications.setMinimumSize(size);
+    }
+    private void setStudentDetails(){
+        String currentId = controller.StudentController.getCurrentStudentId();
+    
+    if (currentId != null) {
+        model.Student student = controller.StudentController.studentMap.get(currentId);        
+        if (student != null) {
+            settingsName.setText(student.getStudentName().toUpperCase());
+            settingCollegeID.setText(student.getStudentId().toUpperCase());
+            settingsEmail.setText(student.getEmail());
+            settingsPass.setText(student.getPassword());
+        }
+    } else {
+        settingsName.setText("");
+        settingCollegeID.setText("");
+        settingsEmail.setText("");
+        settingsPass.setText("");
+    }
     }
     
     private void loadInternshipsToTable(){
@@ -171,9 +215,9 @@ public class dashboard extends javax.swing.JFrame {
         sDeadlineButton.setBackground(defaultColor);
     }
 
-    private void loadInternshipCards() {
-        cardContainerPanel.setLayout(new GridLayout(0, 2, 15, 15));
+    private void loadInternshipCards(){
         cardContainerPanel.removeAll();
+        cardContainerPanel.setLayout(new GridLayout(0, 2, 15, 15));
         for (int i = 0; i < InternshipController.sizeQueue; i++) {
             Internship internship = InternshipController.queueInternshipList[i];
 
@@ -182,11 +226,13 @@ public class dashboard extends javax.swing.JFrame {
                 cardContainerPanel.add(card);
             }
         }
-        cardContainerPanel.repaint();cardContainerPanel.repaint();
+        cardContainerPanel.revalidate();
+        cardContainerPanel.repaint();
     }
-    private void loadRecentInternships() {
-        cardContainerPanel1.setLayout(new GridLayout(0, 2, 15, 15));
+    
+    private void loadRecentInternships() {        
         cardContainerPanel1.removeAll();
+        cardContainerPanel1.setLayout(new GridLayout(0, 2, 15, 15));
         for (int i = 0; i < InternshipController.sizeQueue; i++) {
                 Internship internship = InternshipController.queueInternshipList[i];
 
@@ -195,11 +241,10 @@ public class dashboard extends javax.swing.JFrame {
                     cardContainerPanel1.add(card);
                 }
             }
-
         cardContainerPanel1.revalidate();
         cardContainerPanel1.repaint();
     }
-
+    
     private JPanel createInternshipCard(Internship i) {
         
         JPanel card = new JPanel();  
@@ -255,6 +300,7 @@ public class dashboard extends javax.swing.JFrame {
                 } else {
                     CardLayout cl = (CardLayout)(cardPanel1.getLayout());
                     cl.show(cardPanel1, "card4"); 
+                    loadStudentInternshipCards();
                     resetNavColors();
                     viewInternship.setBackground(activeColor);
                 }                
@@ -263,9 +309,7 @@ public class dashboard extends javax.swing.JFrame {
 
         return card;
     }
-
-    
-    
+   
 private void loadStudentInternshipCards() {
     studentCardContainerPanel.removeAll();
     studentCardContainerPanel.setLayout(new GridBagLayout());
@@ -278,7 +322,6 @@ private void loadStudentInternshipCards() {
 
     for (Internship internship : InternshipController.internshipList) {
         JPanel card = createStudentInternshipCard(internship);
-
         gbc.gridx = col;
         gbc.gridy = row;
         gbc.weightx = 1;
@@ -296,7 +339,32 @@ private void loadStudentInternshipCards() {
     gbc.gridy = row + 1;
     gbc.weighty = 1;
     studentCardContainerPanel.add(Box.createVerticalGlue(), gbc);
-
+    studentCardContainerPanel.revalidate();
+    studentCardContainerPanel.repaint();
+}
+private void displayStudentSearchResults(LinkedList<Internship> results) {
+    studentCardContainerPanel.removeAll();
+    studentCardContainerPanel.setLayout(new GridBagLayout());
+    GridBagConstraints gbc = new GridBagConstraints();
+    gbc.insets = new Insets(10, 10, 10, 10); 
+    gbc.anchor = GridBagConstraints.NORTHWEST;
+    int col = 0;
+    int row = 0;
+    for (Internship internship : results) {
+        JPanel card = createStudentInternshipCard(internship);
+        gbc.gridx = col;
+        gbc.gridy = row;
+        gbc.weightx = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL; 
+        studentCardContainerPanel.add(card, gbc);
+        col++;
+        if (col == 3) { 
+            col = 0;
+            row++;
+        }
+    }
+    gbc.gridx = 0;  gbc.gridy = row + 1;  gbc.weighty = 1;
+    studentCardContainerPanel.add(Box.createVerticalGlue(), gbc);
     studentCardContainerPanel.revalidate();
     studentCardContainerPanel.repaint();
 }
@@ -386,7 +454,8 @@ public void openStudentInternshipDetails(Internship i) {
         
     CardLayout cl = (CardLayout) cardPanel1.getLayout();
     cl.show(cardPanel1, "card5");
-}
+    }
+
     private void clearloginFields(){
         collegeIDField.setText("");
         passWordField.setText(""); 
@@ -468,9 +537,10 @@ public void openStudentInternshipDetails(Internship i) {
         jPanel4 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        searchField = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
+        jLabel83 = new javax.swing.JLabel();
+        btnSearch = new javax.swing.JButton();
         cardPanel = new javax.swing.JPanel();
         dashboardPanel = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
@@ -613,8 +683,9 @@ public void openStudentInternshipDetails(Internship i) {
         jLabel37 = new javax.swing.JLabel();
         jLabel41 = new javax.swing.JLabel();
         jLabel42 = new javax.swing.JLabel();
-        jPanel64 = new javax.swing.JPanel();
-        jTextField4 = new javax.swing.JTextField();
+        sSearchField = new javax.swing.JTextField();
+        jLabel84 = new javax.swing.JLabel();
+        btnSearch1 = new javax.swing.JButton();
         jPanel65 = new javax.swing.JPanel();
         studentNav1 = new javax.swing.JPanel();
         adminNavigation3 = new javax.swing.JPanel();
@@ -684,16 +755,16 @@ public void openStudentInternshipDetails(Internship i) {
         jPanel116 = new javax.swing.JPanel();
         jPanel117 = new javax.swing.JPanel();
         jLabel56 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        settingsName = new javax.swing.JTextField();
         jLabel57 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        settingCollegeID = new javax.swing.JTextField();
         jLabel58 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
+        settingsEmail = new javax.swing.JTextField();
         jLabel59 = new javax.swing.JLabel();
         jLabel60 = new javax.swing.JLabel();
         jTextField8 = new javax.swing.JTextField();
         jLabel61 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
+        settingsPass = new javax.swing.JTextField();
         jLabel64 = new javax.swing.JLabel();
         jLabel65 = new javax.swing.JLabel();
         jTextField10 = new javax.swing.JTextField();
@@ -1347,23 +1418,11 @@ public void openStudentInternshipDetails(Internship i) {
         jLabel17.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
         jLabel17.setText("Admin");
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 51, Short.MAX_VALUE)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 46, Short.MAX_VALUE)
-        );
-
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jTextField1.setText("Search");
-        jTextField1.setPreferredSize(new java.awt.Dimension(64, 25));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        searchField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        searchField.setPreferredSize(new java.awt.Dimension(64, 25));
+        searchField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                searchFieldActionPerformed(evt);
             }
         });
 
@@ -1371,6 +1430,29 @@ public void openStudentInternshipDetails(Internship i) {
         Image imgg55 = icon55.getImage();
         Image scaledup55 = imgg55.getScaledInstance(160, 190, Image.SCALE_SMOOTH);
         jLabel4.setIcon(new ImageIcon(scaledup55));
+
+        ImageIcon icon83 = new ImageIcon("src/images/user.png");
+        Image img83 = icon83.getImage();
+        Image scaled83 = img83.getScaledInstance(41, 34, Image.SCALE_SMOOTH);
+        jLabel83.setIcon(new ImageIcon(scaled83));
+        jLabel83.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+
+        ImageIcon iconn = new ImageIcon("src/images/searchlogo.png");
+        Image imgS = iconn.getImage();
+        Image scaledB = imgS.getScaledInstance(42, 36, Image.SCALE_SMOOTH);
+        btnSearch.setIcon(new ImageIcon(scaledB));
+        btnSearch.setBorder(null);
+        btnSearch.setBorderPainted(false);
+        btnSearch.setContentAreaFilled(false);
+        btnSearch.setFocusPainted(false);
+        btnSearch.setFocusable(false);
+        btnSearch.setRequestFocusEnabled(false);
+        btnSearch.setVerifyInputWhenFocusTarget(false);
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -1381,13 +1463,16 @@ public void openStudentInternshipDetails(Internship i) {
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel17)
-                    .addComponent(jLabel16))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 550, Short.MAX_VALUE)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
+                    .addComponent(jLabel16)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel17)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 528, Short.MAX_VALUE)
+                        .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel83, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
+                .addGap(16, 16, 16))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1395,16 +1480,20 @@ public void openStudentInternshipDetails(Internship i) {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(19, 19, 19))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(25, 25, 25))))
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(btnSearch, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel83, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)))
+                        .addGap(23, 23, 23))))
         );
 
         Admin.add(jPanel4, java.awt.BorderLayout.PAGE_START);
@@ -2470,11 +2559,12 @@ public void openStudentInternshipDetails(Internship i) {
 
         AdminNav.setBackground(new java.awt.Color(255, 255, 255));
 
+        adminNavigation.setBackground(new java.awt.Color(255, 255, 255));
         adminNavigation.setPreferredSize(new java.awt.Dimension(13, 185));
         adminNavigation.setLayout(new java.awt.GridLayout(6, 1, 0, 1));
 
         dashboardNav.setBackground(new java.awt.Color(153, 153, 255));
-        dashboardNav.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        dashboardNav.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         dashboardNav.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 dashboardNavMouseClicked(evt);
@@ -2500,6 +2590,7 @@ public void openStudentInternshipDetails(Internship i) {
         adminNavigation.add(dashboardNav);
 
         manageNav.setBackground(new java.awt.Color(255, 255, 255));
+        manageNav.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         manageNav.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 manageNavMouseClicked(evt);
@@ -2521,13 +2612,14 @@ public void openStudentInternshipDetails(Internship i) {
             manageNavLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageNavLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         adminNavigation.add(manageNav);
 
         archiveNav.setBackground(new java.awt.Color(255, 255, 255));
+        archiveNav.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         archiveNav.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 archiveNavMouseClicked(evt);
@@ -2541,7 +2633,7 @@ public void openStudentInternshipDetails(Internship i) {
         archiveNavLayout.setHorizontalGroup(
             archiveNavLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, archiveNavLayout.createSequentialGroup()
-                .addContainerGap(48, Short.MAX_VALUE)
+                .addContainerGap(46, Short.MAX_VALUE)
                 .addComponent(jLabel32)
                 .addGap(15, 15, 15))
         );
@@ -2549,13 +2641,14 @@ public void openStudentInternshipDetails(Internship i) {
             archiveNavLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, archiveNavLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel32, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                .addComponent(jLabel32, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         adminNavigation.add(archiveNav);
 
         applicationNav.setBackground(new java.awt.Color(255, 255, 255));
+        applicationNav.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         applicationNav.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 applicationNavMouseClicked(evt);
@@ -2571,19 +2664,20 @@ public void openStudentInternshipDetails(Internship i) {
             .addGroup(applicationNavLayout.createSequentialGroup()
                 .addGap(46, 46, 46)
                 .addComponent(jLabel19)
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
         applicationNavLayout.setVerticalGroup(
             applicationNavLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(applicationNavLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jLabel19)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
 
         adminNavigation.add(applicationNav);
 
         settingsNav.setBackground(new java.awt.Color(255, 255, 255));
+        settingsNav.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         settingsNav.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 settingsNavMouseClicked(evt);
@@ -2599,14 +2693,14 @@ public void openStudentInternshipDetails(Internship i) {
             .addGroup(settingsNavLayout.createSequentialGroup()
                 .addGap(48, 48, 48)
                 .addComponent(jLabel21)
-                .addContainerGap(79, Short.MAX_VALUE))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
         settingsNavLayout.setVerticalGroup(
             settingsNavLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(settingsNavLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jLabel21)
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addContainerGap(7, Short.MAX_VALUE))
         );
 
         adminNavigation.add(settingsNav);
@@ -2684,23 +2778,35 @@ public void openStudentInternshipDetails(Internship i) {
         jLabel42.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
         jLabel42.setText("Student");
 
-        javax.swing.GroupLayout jPanel64Layout = new javax.swing.GroupLayout(jPanel64);
-        jPanel64.setLayout(jPanel64Layout);
-        jPanel64Layout.setHorizontalGroup(
-            jPanel64Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 51, Short.MAX_VALUE)
-        );
-        jPanel64Layout.setVerticalGroup(
-            jPanel64Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 46, Short.MAX_VALUE)
-        );
-
-        jTextField4.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jTextField4.setText("Search");
-        jTextField4.setPreferredSize(new java.awt.Dimension(64, 25));
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        sSearchField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        sSearchField.setText("Search");
+        sSearchField.setPreferredSize(new java.awt.Dimension(64, 25));
+        sSearchField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                sSearchFieldActionPerformed(evt);
+            }
+        });
+
+        ImageIcon icon84 = new ImageIcon("src/images/user.png");
+        Image img84 = icon84.getImage();
+        Image scaled84 = img84.getScaledInstance(41, 34, Image.SCALE_SMOOTH);
+        jLabel84.setIcon(new ImageIcon(scaled84));
+        jLabel84.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+
+        ImageIcon iconn1 = new ImageIcon("src/images/searchlogo.png");
+        Image imgS1 = iconn1.getImage();
+        Image scaledB1 = imgS1.getScaledInstance(42, 36, Image.SCALE_SMOOTH);
+        btnSearch1.setIcon(new ImageIcon(scaledB1));
+        btnSearch1.setBorder(null);
+        btnSearch1.setBorderPainted(false);
+        btnSearch1.setContentAreaFilled(false);
+        btnSearch1.setFocusPainted(false);
+        btnSearch1.setFocusable(false);
+        btnSearch1.setRequestFocusEnabled(false);
+        btnSearch1.setVerifyInputWhenFocusTarget(false);
+        btnSearch1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearch1ActionPerformed(evt);
             }
         });
 
@@ -2715,11 +2821,13 @@ public void openStudentInternshipDetails(Internship i) {
                 .addGroup(jPanel61Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel42)
                     .addComponent(jLabel41))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 537, Short.MAX_VALUE)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel64, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 489, Short.MAX_VALUE)
+                .addComponent(sSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSearch1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel84, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
+                .addGap(34, 34, 34))
         );
         jPanel61Layout.setVerticalGroup(
             jPanel61Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2735,9 +2843,10 @@ public void openStudentInternshipDetails(Internship i) {
                         .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(24, 24, 24))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel61Layout.createSequentialGroup()
-                        .addGroup(jPanel61Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel64, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel61Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel84, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                            .addComponent(sSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSearch1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(21, 21, 21))))
         );
 
@@ -2755,7 +2864,7 @@ public void openStudentInternshipDetails(Internship i) {
         adminNavigation3.setLayout(new java.awt.GridLayout(5, 1, 0, 1));
 
         studentDashboardNav.setBackground(new java.awt.Color(153, 153, 255));
-        studentDashboardNav.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        studentDashboardNav.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         studentDashboardNav.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 studentDashboardNavMouseClicked(evt);
@@ -2781,6 +2890,7 @@ public void openStudentInternshipDetails(Internship i) {
         adminNavigation3.add(studentDashboardNav);
 
         viewInternship.setBackground(new java.awt.Color(255, 255, 255));
+        viewInternship.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         viewInternship.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 viewInternshipMouseClicked(evt);
@@ -2794,7 +2904,7 @@ public void openStudentInternshipDetails(Internship i) {
         viewInternshipLayout.setHorizontalGroup(
             viewInternshipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, viewInternshipLayout.createSequentialGroup()
-                .addContainerGap(49, Short.MAX_VALUE)
+                .addContainerGap(47, Short.MAX_VALUE)
                 .addComponent(jLabel51)
                 .addGap(35, 35, 35))
         );
@@ -2802,13 +2912,14 @@ public void openStudentInternshipDetails(Internship i) {
             viewInternshipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, viewInternshipLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel51, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                .addComponent(jLabel51, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         adminNavigation3.add(viewInternship);
 
         studentSettings.setBackground(new java.awt.Color(255, 255, 255));
+        studentSettings.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         studentSettings.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 studentSettingsMouseClicked(evt);
@@ -2824,14 +2935,14 @@ public void openStudentInternshipDetails(Internship i) {
             .addGroup(studentSettingsLayout.createSequentialGroup()
                 .addGap(48, 48, 48)
                 .addComponent(jLabel53)
-                .addContainerGap(79, Short.MAX_VALUE))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
         studentSettingsLayout.setVerticalGroup(
             studentSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(studentSettingsLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jLabel53)
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         adminNavigation3.add(studentSettings);
@@ -3411,19 +3522,19 @@ public void openStudentInternshipDetails(Internship i) {
                     .addGroup(jPanel117Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jTextField8)
                         .addComponent(jLabel61)
-                        .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(settingsPass, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel64))
                     .addComponent(jLabel60)
                     .addGroup(jPanel117Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jTextField7)
+                        .addComponent(settingsEmail)
                         .addComponent(jLabel58)
-                        .addComponent(jTextField6)
+                        .addComponent(settingCollegeID)
                         .addComponent(jLabel57)
                         .addComponent(jLabel59, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 178, Short.MAX_VALUE)
                 .addGroup(jPanel117Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel66, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(settingsName, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(85, 85, 85))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel117Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -3439,11 +3550,11 @@ public void openStudentInternshipDetails(Internship i) {
                     .addGroup(jPanel117Layout.createSequentialGroup()
                         .addComponent(jLabel57)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(settingCollegeID, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel58)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(settingsEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel59)))
                 .addGroup(jPanel117Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -3453,7 +3564,7 @@ public void openStudentInternshipDetails(Internship i) {
                         .addGap(58, 58, 58)
                         .addComponent(jLabel64)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(settingsPass, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel61)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -3466,7 +3577,7 @@ public void openStudentInternshipDetails(Internship i) {
                         .addGap(23, 23, 23)
                         .addComponent(jLabel56)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(settingsName, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(66, Short.MAX_VALUE))
         );
 
@@ -3712,9 +3823,10 @@ public void openStudentInternshipDetails(Internship i) {
     }// </editor-fold>//GEN-END:initComponents
 
     private void dashboardNavMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashboardNavMouseClicked
+        loadInternshipCards();
         CardLayout c2 = (CardLayout)(cardPanel.getLayout());
         c2.show(cardPanel, "dashboard");   
-        loadInternshipCards();
+        setNumber();
         resetNavColors();
         dashboardNav.setBackground(activeColor);
     }//GEN-LAST:event_dashboardNavMouseClicked
@@ -3730,9 +3842,9 @@ public void openStudentInternshipDetails(Internship i) {
         
     }//GEN-LAST:event_manageNavMouseClicked
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_searchFieldActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         CardLayout c3 = (CardLayout)(cardPanel.getLayout());
@@ -3916,13 +4028,14 @@ public void openStudentInternshipDetails(Internship i) {
         applicationNav.setBackground(activeColor);
     }//GEN-LAST:event_applicationNavMouseClicked
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void sSearchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sSearchFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_sSearchFieldActionPerformed
 
     private void studentDashboardNavMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_studentDashboardNavMouseClicked
         CardLayout cl = (CardLayout)(cardPanel1.getLayout());
-        cl.show(cardPanel1, "card67");         
+        cl.show(cardPanel1, "card67");  
+        setNumber();
         resetNavColors();
         studentDashboardNav.setBackground(activeColor);
     }//GEN-LAST:event_studentDashboardNavMouseClicked
@@ -3939,6 +4052,7 @@ public void openStudentInternshipDetails(Internship i) {
     private void studentSettingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_studentSettingsMouseClicked
         CardLayout cl = (CardLayout)(cardPanel1.getLayout());
         cl.show(cardPanel1, "card6");  
+        setStudentDetails();
         resetNavColors();
         studentSettings.setBackground(activeColor); 
     }//GEN-LAST:event_studentSettingsMouseClicked
@@ -3956,7 +4070,7 @@ public void openStudentInternshipDetails(Internship i) {
     }//GEN-LAST:event_studentButtonActionPerformed
 
     private void adminButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButtonActionPerformed
-
+        
         CardLayout c2 = (CardLayout)(cardPanel2.getLayout());
         c2.show(cardPanel2, "AdminPanel");
     }//GEN-LAST:event_adminButtonActionPerformed
@@ -4149,6 +4263,7 @@ public void openStudentInternshipDetails(Internship i) {
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
         CardLayout c13 = (CardLayout)(parentcard.getLayout());
         c13.show(parentcard, "card5");
+        resetNavColors();
         dashboardNav.setBackground(activeColor);
         setNumber();
         
@@ -4200,13 +4315,15 @@ public void openStudentInternshipDetails(Internship i) {
             return;
         }
         
-        boolean success = StudentController.loginStudent(id, password);
+        boolean success = StudentController.loginStudent(id.toLowerCase(), password);
         if (success) {
             JOptionPane.showMessageDialog(this,"Login successful!", "Success",JOptionPane.INFORMATION_MESSAGE);
             clearloginFields();
             CardLayout c12 = (CardLayout)(parentcard.getLayout());
             c12.show(parentcard, "card3");
             loadRecentInternships();
+            resetNavColors();
+            studentDashboardNav.setBackground(activeColor);
 
         } else {
             JOptionPane.showMessageDialog(this,
@@ -4224,6 +4341,7 @@ public void openStudentInternshipDetails(Internship i) {
     }//GEN-LAST:event_jLabel81FocusLost
 
     private void jLabel81MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel81MouseClicked
+        
         CardLayout c22 = (CardLayout)(cardPanel2.getLayout());
         c22.show(cardPanel2, "SignUP");
     }//GEN-LAST:event_jLabel81MouseClicked
@@ -4234,20 +4352,23 @@ public void openStudentInternshipDetails(Internship i) {
 
     private void signUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpButtonActionPerformed
         
-        String id = collegeField.getText().trim();
+        String id = collegeField.getText().trim().toLowerCase();
         String name = nameField.getText().trim();
         char[] passwordChars = passField.getPassword();
         String password = new String(passwordChars);
-        String message = StudentController.registerNewStudent(id, name, password);
+        String login = StudentController.registerNewStudent(id, name, password);
 
-        if (message == null) {
+        if (login== null) {
             JOptionPane.showMessageDialog(this, "User registration  successful!", "Success",JOptionPane.INFORMATION_MESSAGE);
             clearloginFields();
             CardLayout c22 = (CardLayout)(cardPanel2.getLayout());
             c22.show(cardPanel2, "student");
             
+            adminButton.setSelected(false);adminButton.setFocusPainted(false);
+            studentButton.setSelected(true);studentButton.setFocusPainted(true);
+            
         } else {
-            JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, login, "Error", JOptionPane.ERROR_MESSAGE);
         }
         
     }//GEN-LAST:event_signUpButtonActionPerformed
@@ -4349,6 +4470,59 @@ public void openStudentInternshipDetails(Internship i) {
             }
         }
     }//GEN-LAST:event_appliedInternshipsTableMouseClicked
+private void updateTable(LinkedList<Internship> results) {
+    activeTableModel.setRowCount(0);
+    for (Internship i : results) {
+        Object[] row = {
+            i.getId(),
+            i.getTitle(),
+            i.getCompany(),
+            i.getType(),
+            i.getDuration(),
+            i.getDeadline()
+        };
+        activeTableModel.addRow(row);
+    }
+}
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        String search = searchField.getText().trim();
+
+        if (search.isEmpty() || search.equals("Search...")) {
+            loadInternshipsToTable(); 
+            return;
+        }
+        LinkedList<Internship> results = InternshipController.findSearch(search);
+
+        if (!results.isEmpty()) {
+            updateTable(results);
+            resetNavColors();
+            studentDashboardNav.setBackground(activeColor);
+            CardLayout cl = (CardLayout)(cardPanel.getLayout());
+            cl.show(cardPanel, "card3"); 
+        } else {
+            JOptionPane.showMessageDialog(this, "No results found for " + search);
+        }
+
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void btnSearch1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearch1ActionPerformed
+      String searchTxt = sSearchField.getText().trim();
+
+    if (searchTxt.isEmpty() || searchTxt.equals("Search...")) {
+        return;
+    }
+    LinkedList<Internship> results = InternshipController.findSearch(searchTxt);
+
+    if (!results.isEmpty()) {
+        CardLayout cl = (CardLayout)(cardPanel1.getLayout());
+        cl.show(cardPanel1, "card4");   
+        resetNavColors();
+        viewInternship.setBackground(activeColor); 
+        displayStudentSearchResults(results); 
+    } else {
+        JOptionPane.showMessageDialog(this, "No internships found matching: " + searchTxt);
+    }
+    }//GEN-LAST:event_btnSearch1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -4406,6 +4580,8 @@ public void openStudentInternshipDetails(Internship i) {
     private javax.swing.JTable appliedInternshipsTable;
     private javax.swing.JButton applyButton;
     private javax.swing.JPanel archiveNav;
+    private javax.swing.JButton btnSearch;
+    private javax.swing.JButton btnSearch1;
     private javax.swing.JButton cancelButton;
     private javax.swing.JPanel cardContainerPanel;
     private javax.swing.JPanel cardContainerPanel1;
@@ -4523,6 +4699,8 @@ public void openStudentInternshipDetails(Internship i) {
     private javax.swing.JLabel jLabel80;
     private javax.swing.JLabel jLabel81;
     private javax.swing.JLabel jLabel82;
+    private javax.swing.JLabel jLabel83;
+    private javax.swing.JLabel jLabel84;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
@@ -4588,7 +4766,6 @@ public void openStudentInternshipDetails(Internship i) {
     private javax.swing.JPanel jPanel47;
     private javax.swing.JPanel jPanel48;
     private javax.swing.JPanel jPanel49;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel50;
     private javax.swing.JPanel jPanel51;
     private javax.swing.JPanel jPanel52;
@@ -4604,7 +4781,6 @@ public void openStudentInternshipDetails(Internship i) {
     private javax.swing.JPanel jPanel61;
     private javax.swing.JPanel jPanel62;
     private javax.swing.JPanel jPanel63;
-    private javax.swing.JPanel jPanel64;
     private javax.swing.JPanel jPanel65;
     private javax.swing.JPanel jPanel66;
     private javax.swing.JPanel jPanel67;
@@ -4653,15 +4829,9 @@ public void openStudentInternshipDetails(Internship i) {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JTextArea jTextArea4;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     private javax.swing.JPanel left;
     private javax.swing.JPanel logo_panel;
     private javax.swing.JPanel logoutNav;
@@ -4683,12 +4853,18 @@ public void openStudentInternshipDetails(Internship i) {
     private javax.swing.JPanel right;
     private javax.swing.JButton sCompanyButton;
     private javax.swing.JButton sDeadlineButton;
+    private javax.swing.JTextField sSearchField;
     private javax.swing.JButton sTitleButton;
     private javax.swing.JButton sTypeButton;
     private javax.swing.JTextField salaryField;
     private javax.swing.JTextField salaryFieldS;
+    private javax.swing.JTextField searchField;
+    private javax.swing.JTextField settingCollegeID;
     private javax.swing.JPanel settingPanel;
+    private javax.swing.JTextField settingsEmail;
+    private javax.swing.JTextField settingsName;
     private javax.swing.JPanel settingsNav;
+    private javax.swing.JTextField settingsPass;
     private javax.swing.JPanel sideImagePanel;
     private javax.swing.JButton signUpButton;
     private javax.swing.JTextArea skillArea;
