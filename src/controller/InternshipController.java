@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package controller;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import model.Internship;
@@ -15,16 +16,14 @@ public class InternshipController {
     public static LinkedList<Internship> internshipList = new LinkedList<>();
     public static int sizeQueue = 8;
     public static Internship[] queueInternshipList = new Internship[sizeQueue];
-    
+
     public static int front = -1;
     public static int rear = -1;
     static final int STACK_MAX = 50;
     public static Internship[] deletedInternshipStack = new Internship[STACK_MAX];
     public static int top = -1;
 
-    
-    public static void addDefaultInternship ()
-    {
+    public static void addDefaultInternship() {
         internshipList = new LinkedList<>();
 
         // Pre-added internships
@@ -36,8 +35,7 @@ public class InternshipController {
                 "On site",
                 "3 Months",
                 "Work on Java projects with senior developers.",
-                "Java, OOP, Experience on Netbeans"
-        );
+                "Java, OOP, Experience on Netbeans");
         internshipList.add(i1);
         enqueue(i1);
 
@@ -49,11 +47,10 @@ public class InternshipController {
                 "Remote",
                 "6 Months",
                 "Assist in frontend web development tasks.",
-                "HTML, CSS,  JS"
-        );
+                "HTML, CSS,  JS");
         internshipList.add(i2);
         enqueue(i2);
-        
+
         Internship i3 = new Internship(
                 "UI/UX Intern",
                 "Design Hub Nationals",
@@ -62,11 +59,10 @@ public class InternshipController {
                 "Remote",
                 "1 Month",
                 "UI research and design.",
-                "Figma, Canva, Photoshop, creativity"
-        );
+                "Figma, Canva, Photoshop, creativity");
         internshipList.add(i3);
         enqueue(i3);
-        
+
         Internship i4 = new Internship(
                 "Data Analyst Intern",
                 "DataSite",
@@ -75,11 +71,10 @@ public class InternshipController {
                 "International",
                 "6 Months",
                 "Data analysis and reports.",
-                "Excel, SQL basics, Power BI"
-        );
+                "Excel, SQL basics, Power BI");
         internshipList.add(i4);
         enqueue(i4);
-        
+
         Internship i5 = new Internship(
                 "AI Intern",
                 "Skill Academy",
@@ -88,11 +83,10 @@ public class InternshipController {
                 "Remote",
                 "1 Months",
                 "Machine learning models",
-                "Python, pyCharm, ML basics"
-        );
+                "Python, pyCharm, ML basics");
         internshipList.add(i5);
         enqueue(i5);
-        
+
         Internship i6 = new Internship(
                 "Generative AI Instructor",
                 "Danson Solutions",
@@ -101,11 +95,10 @@ public class InternshipController {
                 "Onsite",
                 "3 Months",
                 "Teach core GenAI concepts in a simple, practical way",
-                "Good understanding of Generative AI concepts"
-        );
+                "Good understanding of Generative AI concepts");
         internshipList.add(i6);
         enqueue(i6);
-        
+
         Internship i7 = new Internship(
                 "AI Intern",
                 "Skill Academy",
@@ -114,11 +107,10 @@ public class InternshipController {
                 "Remote",
                 "1 Months",
                 "Machine learning models",
-                "Python, pyCharm, ML basics"
-        );
+                "Python, pyCharm, ML basics");
         internshipList.add(i7);
         enqueue(i7);
-        
+
         Internship i8 = new Internship(
                 "Generative AI Instructor",
                 "Danson Solutions",
@@ -127,23 +119,24 @@ public class InternshipController {
                 "Onsite",
                 "3 Months",
                 "Teach core GenAI concepts in a simple, practical way",
-                "Good understanding of Generative AI concepts"
-        );
+                "Good understanding of Generative AI concepts");
         internshipList.add(i8);
         enqueue(i8);
     }
-    
-    public static void addInternship(String title, String company, String deadline,int salary, String type, String duration, String description, String requirement)
-    {
-        Internship internship = new Internship(title, company, deadline,salary, type, duration, description, requirement);
+
+    public static void addInternship(String title, String company, String deadline, int salary, String type,
+            String duration, String description, String requirement) {
+        Internship internship = new Internship(title, company, deadline, salary, type, duration, description,
+                requirement);
         internshipList.add(internship);
     }
+
     public static void enqueue(Internship item) {
-        if (rear+1== sizeQueue) {
+        if (rear + 1 == sizeQueue) {
             dequeue();
         }
 
-        if (front == -1) { 
+        if (front == -1) {
             front = rear = 0;
             queueInternshipList[rear] = item;
         } else if (rear == queueInternshipList.length - 1 && front != 0) {
@@ -157,11 +150,11 @@ public class InternshipController {
 
     public static Internship dequeue() {
         if (front == -1) {
-            return null; 
+            return null;
         }
 
         Internship data = queueInternshipList[front];
-        queueInternshipList[front] = null; 
+        queueInternshipList[front] = null;
 
         if (front == rear) {
             front = rear = -1;
@@ -173,31 +166,35 @@ public class InternshipController {
 
         return data;
     }
-    public static boolean isSameAsOriginal(int index,String title,String company,String deadline,int salary,String type,String duration,String description,String requirement) 
-    {
+
+    public static boolean isSameAsOriginal(int index, String title, String company, String deadline, int salary,
+            String type, String duration, String description, String requirement) {
         Internship i = internshipList.get(index);
-        return i.getTitle().equalsIgnoreCase(title)&& i.getCompany().equalsIgnoreCase(company) && i.getDeadline().equals(deadline) && i.getSalary() == salary && i.getType().equalsIgnoreCase(type)        && i.getDuration().equalsIgnoreCase(duration)
-            && i.getDescription().equalsIgnoreCase(description) && i.getRequirement().equalsIgnoreCase(requirement);
+        return i.getTitle().equalsIgnoreCase(title) && i.getCompany().equalsIgnoreCase(company)
+                && i.getDeadline().equals(deadline) && i.getSalary() == salary
+                && i.getType().equalsIgnoreCase(type) && i.getDuration().equalsIgnoreCase(duration)
+                && i.getDescription().equalsIgnoreCase(description) && i.getRequirement().equalsIgnoreCase(requirement);
     }
-    
-    public static boolean isDuplicateForUpdate(int editingIndex,String title,String company,String deadline,int salary,String type,String duration,String description,String requirement) 
-    {
+
+    public static boolean isDuplicateForUpdate(int editingIndex, String title, String company, String deadline,
+            int salary, String type, String duration, String description, String requirement) {
         for (int i = 0; i < internshipList.size(); i++) {
 
-            if (i == editingIndex) continue;
-
+            if (i == editingIndex)
+                continue;
             Internship in = internshipList.get(i);
 
-            if (in.getTitle().equalsIgnoreCase(title) && in.getCompany().equalsIgnoreCase(company) && in.getDeadline().equals(deadline) && in.getSalary() == salary
-                && in.getType().equalsIgnoreCase(type) && in.getDuration().equalsIgnoreCase(duration) && in.getDescription().equalsIgnoreCase(description) 
-                && in.getRequirement().equalsIgnoreCase(requirement)) {
-
+            if (in.getTitle().equalsIgnoreCase(title) && in.getCompany().equalsIgnoreCase(company)
+                    && in.getDeadline().equals(deadline) && in.getSalary() == salary
+                    && in.getType().equalsIgnoreCase(type) && in.getDuration().equalsIgnoreCase(duration)
+                    && in.getDescription().equalsIgnoreCase(description)
+                    && in.getRequirement().equalsIgnoreCase(requirement)) {
                 return true;
             }
         }
         return false;
     }
-    
+
     public static boolean deleteInternship(int index) {
         if (index >= 0 && index < internshipList.size()) {
 
@@ -215,7 +212,7 @@ public class InternshipController {
         }
         return false;
     }
-    
+
     public static boolean restoreInternship() {
 
         if (top == -1) {
@@ -230,10 +227,8 @@ public class InternshipController {
         return true;
     }
 
-
-    
-    public static void updateInternship(int index, String title, String company,String deadline, int salary, String type, String duration,String description, String requirement) 
-    {
+    public static void updateInternship(int index, String title, String company, String deadline, int salary,
+            String type, String duration, String description, String requirement) {
         Internship i = internshipList.get(index);
         i.setTitle(title);
         i.setCompany(company);
@@ -244,7 +239,7 @@ public class InternshipController {
         i.setDescription(description);
         i.setRequirement(requirement);
     }
-    
+
     public static void sortById() {
         int size = internshipList.size();
         for (int step = 0; step < size - 1; step++) {
@@ -259,6 +254,7 @@ public class InternshipController {
             internshipList.set(step, temp);
         }
     }
+
     public static void sortByTitle() {
         int size = internshipList.size();
         for (int step = 0; step < size - 1; step++) {
@@ -273,16 +269,17 @@ public class InternshipController {
             internshipList.set(step, temp);
         }
     }
-    //insertation sort
+
+    // insertation sort
     public static void sortByCompany() {
         int size = internshipList.size();
         for (int step = 1; step < size; step++) {
 
             Internship key = internshipList.get(step);
-            int i = step- 1;
+            int i = step - 1;
 
             while (i >= 0 &&
-                   internshipList.get(i).getCompany().compareToIgnoreCase(key.getCompany()) > 0) {
+                    internshipList.get(i).getCompany().compareToIgnoreCase(key.getCompany()) > 0) {
 
                 internshipList.set(i + 1, internshipList.get(i));
                 i--;
@@ -291,7 +288,7 @@ public class InternshipController {
             internshipList.set(i + 1, key);
         }
     }
-    
+
     public static void sortByType() {
         int size = internshipList.size();
         for (int step = 1; step < size; step++) {
@@ -308,6 +305,7 @@ public class InternshipController {
             internshipList.set(i + 1, key);
         }
     }
+
     public static void sortByDuration() {
         int size = internshipList.size();
         for (int step = 1; step < size; step++) {
@@ -324,14 +322,16 @@ public class InternshipController {
             internshipList.set(i + 1, key);
         }
     }
-    
+
     public static void sortByDeadline() {
-    if (internshipList == null || internshipList.isEmpty()) return;
-    internshipList = new LinkedList<>(mergeSort(new LinkedList<>(internshipList)));
+        if (internshipList == null || internshipList.isEmpty())
+            return;
+        internshipList = new LinkedList<>(mergeSort(new LinkedList<>(internshipList)));
     }
 
     private static LinkedList<Internship> mergeSort(LinkedList<Internship> list) {
-        if (list.size() <= 1) return list;
+        if (list.size() <= 1)
+            return list;
 
         int mid = list.size() / 2;
         LinkedList<Internship> left = new LinkedList<>();
@@ -366,9 +366,11 @@ public class InternshipController {
     }
 
     private static String formatDateForCompare(String date) {
-        return date.replace("-Jan-", "-01-").replace("-Feb-", "-02-").replace("-Mar-", "-03-").replace("-Apr-", "-04-").replace("-May-", "-05-").replace("-Jun-", "-06-").replace("-Jul-", "-07-").replace("-Aug-", "-08-").replace("-Sep-", "-09-").replace("-Oct-", "-10-").replace("-Nov-", "-11-").replace("-Dec-", "-12-"); 
+        return date.replace("-Jan-", "-01-").replace("-Feb-", "-02-").replace("-Mar-", "-03-").replace("-Apr-", "-04-")
+                .replace("-May-", "-05-").replace("-Jun-", "-06-").replace("-Jul-", "-07-").replace("-Aug-", "-08-")
+                .replace("-Sep-", "-09-").replace("-Oct-", "-10-").replace("-Nov-", "-11-").replace("-Dec-", "-12-");
     }
-    
+
     public static LinkedList<Internship> findSearch(String searchTxt) {
         LinkedList<Internship> finalResults = new LinkedList<>();
 
@@ -376,9 +378,9 @@ public class InternshipController {
             Internship result = binarySearch(internshipList, searchTxt, "ID");
             if (result != null) {
                 finalResults.add(result);
-                return finalResults; 
+                return finalResults;
             }
-        } 
+        }
         Internship titleResult = binarySearch(internshipList, searchTxt, "Title");
         if (titleResult != null) {
             finalResults.add(titleResult);
@@ -386,12 +388,11 @@ public class InternshipController {
         }
         return linearSearch(searchTxt);
     }
-    
+
     public static Internship binarySearch(LinkedList<Internship> list, String target, String category) {
         if (category.equals("ID")) {
             sortById();
-        } 
-        else {
+        } else {
             sortByTitle();
         }
 
@@ -402,9 +403,8 @@ public class InternshipController {
             int mid = low + (high - low) / 2;
             Internship midInternship = internshipList.get(mid);
             String categoryValue;
-            
-            if (category.equals("ID")) 
-            {
+
+            if (category.equals("ID")) {
                 categoryValue = midInternship.getId();
             } else {
                 categoryValue = midInternship.getTitle();
@@ -413,43 +413,40 @@ public class InternshipController {
             int matchResult = categoryValue.compareToIgnoreCase(target);
             if (matchResult == 0) {
                 return midInternship;
-            }else if (matchResult < 0) {
-                low = mid + 1; 
+            } else if (matchResult < 0) {
+                low = mid + 1;
             } else {
-                high = mid - 1; 
+                high = mid - 1;
             }
         }
         return null;
     }
-    
+
     public static LinkedList<Internship> linearSearch(String query) {
         LinkedList<Internship> matchedResults = new LinkedList<>();
         String checkFor = query.toLowerCase();
         for (Internship i : internshipList) {
             if (i.getTitle().toLowerCase().contains(checkFor) || i.getCompany().toLowerCase().contains(checkFor)
-                || i.getType().toLowerCase().contains(checkFor)|| i.getDeadline().toLowerCase().contains(checkFor)  ) {
+                    || i.getType().toLowerCase().contains(checkFor)
+                    || i.getDeadline().toLowerCase().contains(checkFor)) {
                 matchedResults.add(i);
             }
         }
         return matchedResults;
     }
-    
-    
-    
-    
-    
+
     public static void refreshQueue() {
-    front = -1;
-    rear = -1;
-    queueInternshipList = new Internship[sizeQueue];
+        front = -1;
+        rear = -1;
+        queueInternshipList = new Internship[sizeQueue];
 
-    int start = internshipList.size() - sizeQueue;
-    if (start < 0) {
-        start = 0;
-    }
+        int start = internshipList.size() - sizeQueue;
+        if (start < 0) {
+            start = 0;
+        }
 
-    for (int i = start; i < internshipList.size(); i++) {
-        enqueue(internshipList.get(i));
+        for (int i = start; i < internshipList.size(); i++) {
+            enqueue(internshipList.get(i));
+        }
     }
-}
 }

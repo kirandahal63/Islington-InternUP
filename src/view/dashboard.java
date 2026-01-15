@@ -62,10 +62,10 @@ public class dashboard extends javax.swing.JFrame {
         loadAppliedInternships();
         loadStudentInternshipCards();
         
-        btnSearch.setContentAreaFilled(false); 
-        btnSearch.setOpaque(true);            
-        btnSearch.setBackground(Color.WHITE); 
-        btnSearch.setBorderPainted(false);
+        btnSearchAdmin.setContentAreaFilled(false); 
+        btnSearchAdmin.setOpaque(true);            
+        btnSearchAdmin.setBackground(Color.WHITE); 
+        btnSearchAdmin.setBorderPainted(false);
         placeholder( "Search...");
         
         studentCardContainerPanel.setLayout(new GridBagLayout());
@@ -99,7 +99,33 @@ public class dashboard extends javax.swing.JFrame {
                 }
             }
         });
+        
+        sSearchField.setText(placeholderText);
+        sSearchField.setForeground(java.awt.Color.GRAY);
+        sSearchField.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                if (sSearchField.getText().equals(placeholderText)) {
+                    sSearchField.setText("");
+                    sSearchField.setForeground(java.awt.Color.BLACK);
+                }
+            }
+            @Override
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                if (sSearchField.getText().isEmpty()) {
+                    sSearchField.setForeground(java.awt.Color.GRAY);
+                    sSearchField.setText(placeholderText);
+                }
+            }
+        });
     }
+    private void resetToPlaceholder() {
+        sSearchField.setText("Search...");
+        sSearchField.setForeground(java.awt.Color.GRAY);
+        searchField.setText("Search...");
+        searchField.setForeground(java.awt.Color.GRAY);
+        this.requestFocusInWindow();
+}
     
     private void setNumber(){
         int studentCount = StudentController.studentMap.size();
@@ -540,7 +566,7 @@ public void openStudentInternshipDetails(Internship i) {
         searchField = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel83 = new javax.swing.JLabel();
-        btnSearch = new javax.swing.JButton();
+        btnSearchAdmin = new javax.swing.JButton();
         cardPanel = new javax.swing.JPanel();
         dashboardPanel = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
@@ -808,6 +834,7 @@ public void openStudentInternshipDetails(Internship i) {
         jLabel3.setText("jLabel3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         parentcard.setLayout(new java.awt.CardLayout());
 
@@ -1440,17 +1467,17 @@ public void openStudentInternshipDetails(Internship i) {
         ImageIcon iconn = new ImageIcon("src/images/searchlogo.png");
         Image imgS = iconn.getImage();
         Image scaledB = imgS.getScaledInstance(42, 36, Image.SCALE_SMOOTH);
-        btnSearch.setIcon(new ImageIcon(scaledB));
-        btnSearch.setBorder(null);
-        btnSearch.setBorderPainted(false);
-        btnSearch.setContentAreaFilled(false);
-        btnSearch.setFocusPainted(false);
-        btnSearch.setFocusable(false);
-        btnSearch.setRequestFocusEnabled(false);
-        btnSearch.setVerifyInputWhenFocusTarget(false);
-        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+        btnSearchAdmin.setIcon(new ImageIcon(scaledB));
+        btnSearchAdmin.setBorder(null);
+        btnSearchAdmin.setBorderPainted(false);
+        btnSearchAdmin.setContentAreaFilled(false);
+        btnSearchAdmin.setFocusPainted(false);
+        btnSearchAdmin.setFocusable(false);
+        btnSearchAdmin.setRequestFocusEnabled(false);
+        btnSearchAdmin.setVerifyInputWhenFocusTarget(false);
+        btnSearchAdmin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSearchActionPerformed(evt);
+                btnSearchAdminActionPerformed(evt);
             }
         });
 
@@ -1469,7 +1496,7 @@ public void openStudentInternshipDetails(Internship i) {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 528, Short.MAX_VALUE)
                         .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSearchAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel83, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
                 .addGap(16, 16, 16))
@@ -1491,7 +1518,7 @@ public void openStudentInternshipDetails(Internship i) {
                                     .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(btnSearch, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnSearchAdmin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel83, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)))
                         .addGap(23, 23, 23))))
         );
@@ -2779,7 +2806,6 @@ public void openStudentInternshipDetails(Internship i) {
         jLabel42.setText("Student");
 
         sSearchField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        sSearchField.setText("Search");
         sSearchField.setPreferredSize(new java.awt.Dimension(64, 25));
         sSearchField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -3835,9 +3861,9 @@ public void openStudentInternshipDetails(Internship i) {
         CardLayout cl = (CardLayout)(cardPanel.getLayout());
         cl.show(cardPanel, "card3"); 
         resetNavColors();
+        manageNav.setBackground(activeColor);
         resetSortButtonColors();
         InternshipController.sortById();
-        manageNav.setBackground(activeColor);
         loadInternshipsToTable();
         
     }//GEN-LAST:event_manageNavMouseClicked
@@ -4126,39 +4152,39 @@ public void openStudentInternshipDetails(Internship i) {
         if (year.equals("Year") || month.equals("Month") || day.equals("Day")) 
         {
             JOptionPane.showMessageDialog(this, "Please select a valid date.","Error",JOptionPane.ERROR_MESSAGE);
+            return;
         }else{
             
             deadline = year + "-" + month + "-" + day;
+
             
             if (isUpdateMode) 
             {
-                if (InternshipController.isSameAsOriginal( editingIndex, title, company, deadline,salary, type, duration, description, requirement)) 
-                {
-                    JOptionPane.showMessageDialog(this,"You must change at least one field to update.","Error",JOptionPane.WARNING_MESSAGE);
-                    return;
-                }
-
-                //Full duplicate exists elsewhere
-                if (InternshipController.isDuplicateForUpdate(editingIndex, title, company, deadline,salary, type, duration, description, requirement)) 
-                {
-                    JOptionPane.showMessageDialog(this,"An internship with the same details already exists.","Error",JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
                 int userChoice2 = JOptionPane.showConfirmDialog(this,"Are you sure you want to update Internship.", 
                                                                     "Confirm",JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-                    if (userChoice2 == JOptionPane.YES_OPTION) {
-                    InternshipController.updateInternship(editingIndex, title, company,deadline, salary, type, duration, description, requirement);
-                    loadInternshipsToTable();
-                    clearInternshipForm();
-                    JOptionPane.showMessageDialog(this, "Internship updated successfully.","Success", JOptionPane.INFORMATION_MESSAGE);
+                    if (userChoice2 == JOptionPane.YES_OPTION) 
+                    {
+                        if (InternshipController.isSameAsOriginal( editingIndex, title, company, deadline,salary, type, duration, description, requirement)) 
+                        {
+                            JOptionPane.showMessageDialog(this,"You must change at least one field to update.","Error",JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }else if (InternshipController.isDuplicateForUpdate(editingIndex, title, company, deadline,salary, type, duration, description, requirement)) 
+                        {
+                            JOptionPane.showMessageDialog(this,"An internship with the same details already exists.","Error",JOptionPane.ERROR_MESSAGE);
+                            return;
+                        } else{
+                            InternshipController.updateInternship(editingIndex, title, company,deadline, salary, type, duration, description, requirement);
+                            loadInternshipsToTable();
+                            clearInternshipForm();
+                            JOptionPane.showMessageDialog(this, "Internship updated successfully.","Success", JOptionPane.INFORMATION_MESSAGE);
 
-                    isUpdateMode = false;
-                    editingIndex = -1;
-                    add_updateButton.setText("Post Internship");
-                    CardLayout cl = (CardLayout)(cardPanel.getLayout());
-                    cl.show(cardPanel, "card3"); 
-                    
+                            isUpdateMode = false;
+                            editingIndex = -1;
+                            add_updateButton.setText("Post Internship");
+                            CardLayout cl = (CardLayout)(cardPanel.getLayout());
+                            cl.show(cardPanel, "card3");    
+                            return;
+                        }
                     }
             }
             else{
@@ -4484,10 +4510,11 @@ private void updateTable(LinkedList<Internship> results) {
         activeTableModel.addRow(row);
     }
 }
-    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+    private void btnSearchAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchAdminActionPerformed
         String search = searchField.getText().trim();
 
         if (search.isEmpty() || search.equals("Search...")) {
+            resetToPlaceholder();
             loadInternshipsToTable(); 
             return;
         }
@@ -4496,19 +4523,21 @@ private void updateTable(LinkedList<Internship> results) {
         if (!results.isEmpty()) {
             updateTable(results);
             resetNavColors();
-            studentDashboardNav.setBackground(activeColor);
+            manageNav.setBackground(activeColor);
             CardLayout cl = (CardLayout)(cardPanel.getLayout());
             cl.show(cardPanel, "card3"); 
         } else {
             JOptionPane.showMessageDialog(this, "No results found for " + search);
         }
 
-    }//GEN-LAST:event_btnSearchActionPerformed
+    }//GEN-LAST:event_btnSearchAdminActionPerformed
 
     private void btnSearch1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearch1ActionPerformed
       String searchTxt = sSearchField.getText().trim();
 
     if (searchTxt.isEmpty() || searchTxt.equals("Search...")) {
+        resetToPlaceholder();
+        loadStudentInternshipCards();
         return;
     }
     LinkedList<Internship> results = InternshipController.findSearch(searchTxt);
@@ -4580,8 +4609,8 @@ private void updateTable(LinkedList<Internship> results) {
     private javax.swing.JTable appliedInternshipsTable;
     private javax.swing.JButton applyButton;
     private javax.swing.JPanel archiveNav;
-    private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnSearch1;
+    private javax.swing.JButton btnSearchAdmin;
     private javax.swing.JButton cancelButton;
     private javax.swing.JPanel cardContainerPanel;
     private javax.swing.JPanel cardContainerPanel1;
