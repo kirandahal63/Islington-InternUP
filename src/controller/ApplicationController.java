@@ -15,7 +15,6 @@ import java.util.LinkedHashSet;
 public class ApplicationController {
     public static LinkedHashMap<String, LinkedHashSet<String>> studentApplications = new LinkedHashMap<>();
 
-    //std apply for internship
     public static boolean applyInternship(String studentId, String internshipId) {
 
     if (!studentApplications.containsKey(internshipId)) {

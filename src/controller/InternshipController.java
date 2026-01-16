@@ -18,8 +18,8 @@ public class InternshipController {
     
     public static int front = -1;
     public static int rear = -1;
-    static final int STACK_MAX = 50;
-    public static Internship[] deletedInternshipStack = new Internship[STACK_MAX];
+    static final int stackMax= 50;
+    public static Internship[] deletedInternshipStack = new Internship[stackMax];
     public static int top = -1;
 
     
@@ -196,7 +196,7 @@ public class InternshipController {
 
             Internship removed = internshipList.remove(index);
 
-            if (top == STACK_MAX - 1) {
+            if (top == stackMax- 1) {
                 return false; // stack overflow
             }
 
@@ -359,7 +359,9 @@ public class InternshipController {
     }
 
     private static String formatDateForCompare(String date) {
-        return date.replace("-Jan-", "-01-").replace("-Feb-", "-02-").replace("-Mar-", "-03-").replace("-Apr-", "-04-").replace("-May-", "-05-").replace("-Jun-", "-06-").replace("-Jul-", "-07-").replace("-Aug-", "-08-").replace("-Sep-", "-09-").replace("-Oct-", "-10-").replace("-Nov-", "-11-").replace("-Dec-", "-12-"); 
+        return date.replace("-Jan-", "-01-").replace("-Feb-", "-02-").replace("-Mar-", "-03-").replace("-Apr-", "-04-")
+                   .replace("-May-", "-05-").replace("-Jun-", "-06-").replace("-Jul-", "-07-").replace("-Aug-", "-08-")
+                   .replace("-Sep-", "-09-").replace("-Oct-", "-10-").replace("-Nov-", "-11-").replace("-Dec-", "-12-"); 
     }
     
     public static LinkedList<Internship> findSearch(String searchTxt) {
@@ -432,17 +434,17 @@ public class InternshipController {
     
     
     public static void refreshQueue() {
-    front = -1;
-    rear = -1;
-    queueInternshipList = new Internship[sizeQueue];
+        front = -1;
+        rear = -1;
+        queueInternshipList = new Internship[sizeQueue];
 
-    int start = internshipList.size() - sizeQueue;
-    if (start < 0) {
-        start = 0;
-    }
+        int start = internshipList.size() - sizeQueue;
+        if (start < 0) {
+            start = 0;
+        }
 
-    for (int i = start; i < internshipList.size(); i++) {
-        enqueue(internshipList.get(i));
+        for (int i = start; i < internshipList.size(); i++) {
+            enqueue(internshipList.get(i));
+        }
     }
-}
 }
