@@ -386,7 +386,7 @@
                                               <Component id="jLabel38" min="-2" pref="296" max="-2" attributes="0"/>
                                               <Component id="jLabel39" min="-2" pref="296" max="-2" attributes="0"/>
                                               <Component id="jButton12" alignment="0" min="-2" pref="187" max="-2" attributes="0"/>
-                                              <Component id="jTextField2" alignment="0" min="-2" pref="187" max="-2" attributes="0"/>
+                                              <Component id="usernameField" alignment="0" min="-2" pref="187" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace max="-2" attributes="0"/>
                                       </Group>
@@ -398,7 +398,7 @@
                                           <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                                           <Component id="jLabel38" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jTextField2" min="-2" pref="40" max="-2" attributes="0"/>
+                                          <Component id="usernameField" min="-2" pref="40" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                                           <Component id="jLabel39" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -416,9 +416,9 @@
                                     <Property name="text" type="java.lang.String" value="Username"/>
                                   </Properties>
                                 </Component>
-                                <Component class="javax.swing.JTextField" name="jTextField2">
+                                <Component class="javax.swing.JTextField" name="usernameField">
                                   <Events>
-                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField2ActionPerformed"/>
+                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="usernameFieldActionPerformed"/>
                                   </Events>
                                 </Component>
                                 <Component class="javax.swing.JPasswordField" name="passwordField">

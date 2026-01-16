@@ -484,7 +484,7 @@ public void openStudentInternshipDetails(Internship i) {
     private void clearloginFields(){
         collegeIDField.setText("");
         passWordField.setText(""); 
-        jTextField2.setText("");  
+        usernameField.setText("");  
         passwordField.setText("");  
         collegeField.setText("");  
         nameField.setText(""); 
@@ -522,7 +522,7 @@ public void openStudentInternshipDetails(Internship i) {
         jPanel99 = new javax.swing.JPanel();
         jPanel43 = new javax.swing.JPanel();
         jLabel38 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        usernameField = new javax.swing.JTextField();
         passwordField = new javax.swing.JPasswordField();
         jLabel39 = new javax.swing.JLabel();
         jButton12 = new javax.swing.JButton();
@@ -1002,9 +1002,9 @@ public void openStudentInternshipDetails(Internship i) {
 
         jLabel38.setText("Username");
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        usernameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                usernameFieldActionPerformed(evt);
             }
         });
 
@@ -1036,7 +1036,7 @@ public void openStudentInternshipDetails(Internship i) {
                     .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel43Layout.setVerticalGroup(
@@ -1045,7 +1045,7 @@ public void openStudentInternshipDetails(Internship i) {
                 .addGap(12, 12, 12)
                 .addComponent(jLabel38)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
                 .addComponent(jLabel39)
                 .addGap(18, 18, 18)
@@ -4282,28 +4282,24 @@ public void openStudentInternshipDetails(Internship i) {
     }//GEN-LAST:event_titleButtonMouseClicked
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        CardLayout c13 = (CardLayout)(parentcard.getLayout());
-        c13.show(parentcard, "card5");
-        resetNavColors();
-        dashboardNav.setBackground(activeColor);
-        setNumber();
-        
-
-        /*
         String username = usernameField.getText().trim();
-        String password = new String(passwordField.getPassword()); // for JPasswordField
+        String password = new String(passwordField.getPassword());
 
         AdminController adminController = new AdminController();
         String result = adminController.login(username, password);
 
-        if (result == null) {
-            JOptionPane.showMessageDialog(this, "Admin Login successful!", "Success",JOptionPane.INFORMATION_MESSAGE);
-        clearloginFields();    
-        CardLayout c13 = (CardLayout)(parentcard.getLayout());
-            c13.show(parentcard, "card5");
-        } else {
-            JOptionPane.showMessageDialog(this, result, "Login Error", JOptionPane.ERROR_MESSAGE);
-        }*/
+            if (result == null) {
+                JOptionPane.showMessageDialog(this, "Admin Login successful!", "Success",JOptionPane.INFORMATION_MESSAGE);
+                clearloginFields(); 
+                CardLayout c13 = (CardLayout)(parentcard.getLayout());
+                c13.show(parentcard, "card5");
+                resetNavColors();
+                dashboardNav.setBackground(activeColor);
+                setNumber();
+                
+            } else {
+                JOptionPane.showMessageDialog(this, result, "Login Error", JOptionPane.ERROR_MESSAGE);
+            }
         
     }//GEN-LAST:event_jButton12ActionPerformed
 
@@ -4311,9 +4307,9 @@ public void openStudentInternshipDetails(Internship i) {
         // TODO add your handling code here:
     }//GEN-LAST:event_passwordFieldActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void usernameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_usernameFieldActionPerformed
 
     private void collegeIDFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_collegeIDFieldActionPerformed
         // TODO add your handling code here:
@@ -4854,7 +4850,6 @@ private void updateTable(LinkedList<Internship> results) {
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JTextArea jTextArea4;
     private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JPanel left;
     private javax.swing.JPanel logo_panel;
@@ -4907,6 +4902,7 @@ private void updateTable(LinkedList<Internship> results) {
     private javax.swing.JTextField titleFieldS;
     private javax.swing.JComboBox<String> typeCombo;
     private javax.swing.JComboBox<String> typeComboS;
+    private javax.swing.JTextField usernameField;
     private javax.swing.JButton viewDetails;
     private javax.swing.JPanel viewInternship;
     private javax.swing.JComboBox<String> yearCombo;
