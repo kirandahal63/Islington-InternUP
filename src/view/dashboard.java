@@ -57,8 +57,6 @@ public class dashboard extends javax.swing.JFrame {
         
         archivedTableModel = (DefaultTableModel) deletedInternshipTable.getModel();
         loadDeletedInternshipsToTable();
-        ApplicationController.applyInternship("NP01", "EPD1");
-        ApplicationController.applyInternship("NP02", "EPD1");
         loadAppliedInternships();
         loadStudentInternshipCards();
         
@@ -321,6 +319,7 @@ public class dashboard extends javax.swing.JFrame {
                 if (StudentController.currentStudentId == null) { 
                     CardLayout cl = (CardLayout)(cardPanel.getLayout());
                     cl.show(cardPanel, "card3"); 
+                    loadInternshipsToTable();
                     resetNavColors();
                     manageNav.setBackground(activeColor);
                 } else {
@@ -1491,10 +1490,9 @@ public void openStudentInternshipDetails(Internship i) {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel16)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel17)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 528, Short.MAX_VALUE)
-                        .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel17))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 528, Short.MAX_VALUE)
+                .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSearchAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1516,7 +1514,7 @@ public void openStudentInternshipDetails(Internship i) {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(btnSearchAdmin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel83, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)))
@@ -2682,7 +2680,7 @@ public void openStudentInternshipDetails(Internship i) {
             }
         });
 
-        jLabel19.setText("Application");
+        jLabel19.setText("Applications");
 
         javax.swing.GroupLayout applicationNavLayout = new javax.swing.GroupLayout(applicationNav);
         applicationNav.setLayout(applicationNavLayout);
@@ -2691,7 +2689,7 @@ public void openStudentInternshipDetails(Internship i) {
             .addGroup(applicationNavLayout.createSequentialGroup()
                 .addGap(46, 46, 46)
                 .addComponent(jLabel19)
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
         applicationNavLayout.setVerticalGroup(
             applicationNavLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2871,8 +2869,8 @@ public void openStudentInternshipDetails(Internship i) {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel61Layout.createSequentialGroup()
                         .addGroup(jPanel61Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel84, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
-                            .addComponent(sSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnSearch1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnSearch1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(sSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(21, 21, 21))))
         );
 
@@ -4164,15 +4162,6 @@ public void openStudentInternshipDetails(Internship i) {
                                                                     "Confirm",JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
                     if (userChoice2 == JOptionPane.YES_OPTION) 
                     {
-                        if (InternshipController.isSameAsOriginal( editingIndex, title, company, deadline,salary, type, duration, description, requirement)) 
-                        {
-                            JOptionPane.showMessageDialog(this,"You must change at least one field to update.","Error",JOptionPane.ERROR_MESSAGE);
-                            return;
-                        }else if (InternshipController.isDuplicateForUpdate(editingIndex, title, company, deadline,salary, type, duration, description, requirement)) 
-                        {
-                            JOptionPane.showMessageDialog(this,"An internship with the same details already exists.","Error",JOptionPane.ERROR_MESSAGE);
-                            return;
-                        } else{
                             InternshipController.updateInternship(editingIndex, title, company,deadline, salary, type, duration, description, requirement);
                             loadInternshipsToTable();
                             clearInternshipForm();
@@ -4182,12 +4171,18 @@ public void openStudentInternshipDetails(Internship i) {
                             editingIndex = -1;
                             add_updateButton.setText("Post Internship");
                             CardLayout cl = (CardLayout)(cardPanel.getLayout());
-                            cl.show(cardPanel, "card3");    
-                            return;
-                        }
+                            cl.show(cardPanel, "card3");  
                     }
             }
             else{
+                
+                if (InternshipController.isDuplicate(title, company, deadline, salary, type, duration, description, requirement)) 
+                {
+                    JOptionPane.showMessageDialog(this,
+                        "An internship with the same details already exists!",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
                 int userChoice1 = JOptionPane.showConfirmDialog(this,"Are you sure you want to add post new Internship.", 
                                                                     "Confirm",JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
                 if (userChoice1 == JOptionPane.YES_OPTION) 
